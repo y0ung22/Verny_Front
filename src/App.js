@@ -1,16 +1,18 @@
 import React from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import StartPage from "./pages/StartPage";
+import SignupPage from "./pages/SignupPage";
+import LoginPage from "./pages/LoginPage";
 
 function App() {
   return (
-    <BrowserRouter>
+    <Router>
       <Routes>
-        {/*로그인 & 회원가입*/}
-        {/*메인 탭*/}
-        {/*지도 탭*/}
-        {/*마이페이지*/}
+        <Route exact path="/" component={StartPage} />
+        <Route path="/signup" component={SignupPage} />
+        <Route path="/login" component={LoginPage} />
       </Routes>
-    </BrowserRouter>
+    </Router>
   );
 }
 
