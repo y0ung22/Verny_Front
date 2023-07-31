@@ -1,12 +1,25 @@
-import React from "react";
-import styled from "styled-components";
+import React, { useState } from "react";
+import axios from "axios";
+import { styled } from "styled-components";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
+import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 
-const Comment = () => {
+const Comment = (text) => {
+  const [showMore, setShowMore] = useState(false);
+  const [likeStatus, setLikeStatus] = useState(false);
+
+  const handleShowMore = () => {
+    setShowMore(true);
+  };
+
+  const handleLike = () => {
+    setLikeStatus(!likeStatus);
+  };
+
   return (
     <Wrapper>
       <Info>
@@ -16,13 +29,16 @@ const Comment = () => {
           <span id="time">{}</span>
         </Writer>
         <BtnBox>
-          <Btn>
-            <img src={like} />
-            <p>{}</p>
+          <Btn onClick={handleLike}>
+            <img src={likeStatus ? likeClicked : like} />
+            <span>{}</span>
           </Btn>
         </BtnBox>
       </Info>
-      <Content>{}</Content>
+      <Content showMore={showMore}>{text}</Content>
+      {!showMore && text.length > 100 && (
+        <ShowMoreButton onClick={handleShowMore}>더보기</ShowMoreButton>
+      )}
     </Wrapper>
   );
 };
@@ -42,7 +58,7 @@ const Wrapper = styled.div`
 const Content = styled.div`
   overflow: hidden;
   color: var(--n-neutral-10, #1a1c1e);
-  text-overflow: ellipsis;
+  text-overflow: ${({ showMore }) => (showMore ? "initial" : "ellipsis")};
   font-family: Pretendard;
   font-size: 0.88rem;
   font-style: normal;
@@ -97,11 +113,21 @@ const Btn = styled.div`
     align-items: center;
     gap: 8px;
   }
-  p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
+  span {
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
   }
+`;
+
+const ShowMoreButton = styled.div`
+  color: var(--n-neutral-40, #5d5e61);
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
 `;

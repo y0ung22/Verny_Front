@@ -1,12 +1,12 @@
 import React from "react";
 import axios from "axios";
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 
 const ArtBox = () => {
-  //미술작품 받아오기
+  //미술작품 정보 받아오기
   const getAllArts = async () => {
     await axios
       .get(`${BASE_URL}`)

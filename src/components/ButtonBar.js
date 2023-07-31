@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
@@ -23,7 +23,7 @@ export default ButtonBar;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 360px;
+  width: 100%;
   height: 48px;
   padding: 0px 32px;
   align-items: center;

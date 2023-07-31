@@ -1,6 +1,6 @@
-import React from "react";
-import styled from "styled-components";
-import { useNavigate, useState } from "react-router-dom";
+import React, { useState } from "react";
+import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import art from "../assets/icons/art.svg";
 import artClicked from "../assets/icons/artClicked.svg";
