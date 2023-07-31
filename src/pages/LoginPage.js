@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 
@@ -7,7 +7,7 @@ import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWord.svg";
 
 const LoginPage = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const [idLoginPage, setIdLoginPage] = useState(false);
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
@@ -23,7 +23,7 @@ const LoginPage = () => {
   };
 
   const handleSignUp = () => {
-    history.push("/signup");
+    navigate.push("/signup");
   };
 
   const onClickLogin = async () => {
@@ -47,7 +47,7 @@ const LoginPage = () => {
         // id랑 pw 모두 일치하는 경우
         localStorage.setItem("user_id", inputId); // sessionStorage 대신 localStorage 사용하는 거 맞나
       }
-      history.push("/"); // 로그인 완료 이후 어디로 이동할지
+      navigate.push("/"); // 로그인 완료 이후 어디로 이동할지
     } catch (error) {
       console.error("로그인 에러:", error);
       // alert("로그인 중 오류가 발생했습니다.");
@@ -80,7 +80,7 @@ const LoginPage = () => {
             <span>로그인하기</span>
           </button>
           <span>아직 회원이 아니신가요?</span>
-          <button className="handle-signup" onClick={handleSignup}>
+          <button className="handle-signup" onClick={handleSignUp}>
             회원가입하기
           </button>
         </SecondWrapper>
@@ -105,7 +105,7 @@ const LoginPage = () => {
             아이디로 로그인
           </button>
           <span>아직 회원이 아니신가요?</span>
-          <button className="handle-signup" onClick={handleSignup}>
+          <button className="handle-signup" onClick={handleSignUp}>
             회원가입하기
           </button>
         </FirstWrapper>
