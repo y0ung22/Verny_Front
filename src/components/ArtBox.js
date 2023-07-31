@@ -1,18 +1,42 @@
-import React from "react";
+import React, { useState, useNavigate } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
+import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
 const ArtBox = () => {
-  //미술작품 정보 받아오기
-  const getAllArts = async () => {
-    await axios
-      .get(`${BASE_URL}`)
-      .then((response) => {})
-      .catch((error) => console.log(error));
+  const navigate = useNavigate();
+  const [bookmarkCnt, setBookmarkCnt] = useState(0);
+  const [bookMark, setBookMark] = useState(false);
+  const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
+
+  //댓글 이동 함수
+  const moveComment = () => {
+    navigate("/main/<int:pk>/comments/");
   };
+
+  //북마크 함수
+  const savekBookMark = () => {
+    if (bookMark) {
+      setBookMark(false);
+      setBookmarkCnt((prev) => prev - 1);
+      setBookMarkSrc(bookmark);
+    } else {
+      setBookMark(true);
+      setBookmarkCnt((prev) => prev + 1);
+      setBookMarkSrc(bookmarkClicked);
+    }
+  };
+
+  //미술작품 정보 받아오기
+  //const getAllArts = async () => {
+  //await axios
+  //.get(`${BASE_URL}`)
+  //.then((response) => {})
+  //.catch((error) => console.log(error));
+  //};
 
   return (
     <Wrapper>
@@ -23,13 +47,13 @@ const ArtBox = () => {
           <Artist>{}</Artist>
         </TextBox>
         <BtnBox>
-          <Btn>
+          <Btn onClick={moveComment}>
             <img src={comment} />
             <span>{}</span>
           </Btn>
-          <Btn>
-            <img src={bookmark} />
-            <span>{}</span>
+          <Btn onClick={savekBookMark}>
+            <img src={bookMarkSrc} />
+            <span>{bookmarkCnt}</span>
           </Btn>
         </BtnBox>
       </Info>
