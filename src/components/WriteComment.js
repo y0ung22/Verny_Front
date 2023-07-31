@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { styled } from "styled-components";
 
 const WriteComment = () => {
   return (
@@ -16,7 +16,7 @@ export default WriteComment;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 360px;
+  width: 100%;
   padding: 8px 16px;
   justify-content: center;
   align-items: center;
@@ -50,6 +50,7 @@ const SubmitButton = styled.button`
   gap: 8px;
   border-radius: 12px;
   background: var(--p-primary-40, #00639c);
+  border: none;
 
   color: var(--p-primary-100, #fff);
   font-family: Pretendard;
