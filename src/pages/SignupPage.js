@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { useHistory } from "react-router-dom";
 import axios from "axios";
+import styled from "styled-components";
 
 const SignupPage = () => {
-  const history = useHistory();
-  const [username, setUsername] = useState("");
+  const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
   const [confirmedPassword, setConfirmedPassword] = useState("");
+
+  const BASE_URL = "http://localhost:3001";
 
   const handleSignUp = async () => {
     if (password !== confirmedPassword) {
@@ -16,13 +17,13 @@ const SignupPage = () => {
 
     try {
       // REST API를 이용하여 백엔드에 회원가입 데이터 전달
-      const response = await axios.post("https://api.example.com/signup", {
-        username,
+      const response = await axios.post(`${BASE_URL}/account/signup`, {
+        userid,
         password,
       });
 
       // 회원가입이 완료되면 로그인 페이지로 이동
-      history.push("/login");
+      window.location.href = "/login";
     } catch (error) {
       console.error("회원가입 에러:", error);
       alert("회원가입 중 오류가 발생했습니다.");
@@ -31,11 +32,10 @@ const SignupPage = () => {
 
   return (
     <div>
-      <h1>회원가입 페이지</h1>
       <input
         type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
+        value={userid}
+        onChange={(e) => setUserid(e.target.value)}
         placeholder="아이디를 입력하세요."
       />
       <input

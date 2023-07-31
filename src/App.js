@@ -1,6 +1,6 @@
 import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import MenuBar from "./components/MenuBar";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+// import MenuBar from "./components/MenuBar";
 import StartPage from "./pages/StartPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
@@ -8,11 +8,11 @@ import LoginPage from "./pages/LoginPage";
 function App() {
   return (
     <Router>
-      <Switch>
+      <Routes>
         <Route exact path="/" component={StartPage} />
         <Route path="/signup" component={SignupPage} />
         <Route path="/login" component={LoginPage} />
-      </Switch>
+      </Routes>
     </Router>
   );
 }
