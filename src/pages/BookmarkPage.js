@@ -3,29 +3,32 @@ import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
-import ProfileBasic from "../assets/icons/profileBasic.svg";
-import Comment from "../components/Comment";
+import profileBasic from "../assets/icons/profileBasic.svg";
+import ArtBox from "../components/ArtBox";
 
-const ProfilePage = () => {
+const BookmarkPage = () => {
   return (
     <Wrapper>
       <TopBar />
       <UserInfo>
         <UserImg>
-          <img src={ProfileBasic} />
+          <img src={profileBasic} />
         </UserImg>
         <UserId>아이디 님</UserId>
       </UserInfo>
-      <CommentBar>아이디 님이 쓴 댓글</CommentBar>
-      <CommentList>
-        <Comment />
-      </CommentList>
+      <ArtList>
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+      </ArtList>
+
       <MenuBar />
     </Wrapper>
   );
 };
 
-export default ProfilePage;
+export default BookmarkPage;
 
 const Wrapper = styled.div`
   width: 360px;
@@ -65,22 +68,12 @@ const UserId = styled.div`
   line-height: 140%;
 `;
 
-const CommentBar = styled.div`
-  display: flex;
-  padding: 16px 32px;
-  align-items: center;
-  align-self: stretch;
-  background: var(--nv-neutral-variant-99, #fcfcff);
-  color: var(--s-secondary-20, #243240);
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-`;
-
-const CommentList = styled.div`
-  height: 409px;
+const ArtList = styled.div`
+  margin: 0px 16px;
+  height: 450px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
