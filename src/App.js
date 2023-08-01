@@ -10,6 +10,7 @@ import PlacePage from "./pages/PlacePage";
 import PlaceDetailPage from "./pages/PlaceDetailPage";
 import MyPage from "./pages/MyPage";
 import ProfilePage from "./pages/ProfilePage";
+import EditProfilePage from "./pages/EditProfilePage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         <Route path="/art/detail/comment" element={<CommentPage />} />
         <Route path="/place/detail" element={<PlaceDetailPage />} />
         <Route path="/mypage/profile" element={<ProfilePage />} />
+        <Route path="mypage/profile/edit" element={<EditProfilePage />} />
       </Routes>
     </Router>
   );

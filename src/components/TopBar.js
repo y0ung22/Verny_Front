@@ -19,16 +19,15 @@ const TopBar = () => {
       </BackBtn>
       <Title>
         {() => {
-          if (path == "/account/signup/") return "회원가입" && setShow(true);
-          if (path == "/account/login/") return "로그인" && setShow(true);
-          if (path == "/main/") return "미술" && setShow(false);
-          if (path == "/main/<int:pk>/") return "미술품" && setShow(true);
-          if (path == "/main/<int:pk>/comments/")
-            return "댓글" && setShow(true);
-          if (path == "/map/") return "문예관광지도" && setShow(false);
-          if (path == "/account/mypage") return "마이페이지" && setShow(false);
-          if (path == "/account/profile") return "프로필" && setShow(true);
-          if (path == "/account/mypage_edit")
+          if (path == "/signup") return "회원가입" && setShow(true);
+          if (path == "/login") return "로그인" && setShow(true);
+          if (path == "/art") return "미술" && setShow(false);
+          if (path == "/art/detail") return "미술품" && setShow(true);
+          if (path == "/art/detail/comment") return "댓글" && setShow(true);
+          if (path == "/place") return "문예관광지도" && setShow(false);
+          if (path == "/mypage") return "마이페이지" && setShow(false);
+          if (path == "/mypage/profile") return "프로필" && setShow(true);
+          if (path == "/mypage/profile/edit")
             return "프로필 수정" && setShow(true);
         }}
       </Title>

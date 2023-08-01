@@ -21,7 +21,7 @@ const MenuBar = () => {
 
   //메뉴 버튼에 각 페이지 링크 라우팅
   const goArt = () => {
-    navigate("/main/");
+    navigate("/art");
     if (isClicked1) {
       setImgSrc1(art);
       setIsClicked1(false);
@@ -33,7 +33,7 @@ const MenuBar = () => {
     }
   };
   const goPlace = () => {
-    navigate("/map/");
+    navigate("/place");
     if (isClicked2) {
       setImgSrc2(map);
       setIsClicked2(false);
@@ -45,7 +45,7 @@ const MenuBar = () => {
     }
   };
   const goMypage = () => {
-    navigate("/account/mypage");
+    navigate("/mypage");
     if (isClicked3) {
       setImgSrc3(mypage);
       setIsClicked3(false);

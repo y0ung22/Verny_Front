@@ -14,7 +14,7 @@ const ArtBox = () => {
 
   //댓글 이동 함수
   const moveComment = () => {
-    navigate("/main/<int:pk>/comments/");
+    navigate("/art/detail/comment");
   };
 
   //북마크 함수
