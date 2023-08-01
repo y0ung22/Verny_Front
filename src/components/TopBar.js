@@ -13,6 +13,12 @@ const TopBar = () => {
     navigate(-1);
   };
 
+  const isDeeperPage = pathname.split("/").length > 2;
+
+  useState(() => {
+    setShow(isDeeperPage);
+  }, [pathname]);
+
   let titleText = "";
   if (pathname === "/signup") titleText = "회원가입";
   else if (pathname === "/login") titleText = "로그인";
@@ -27,9 +33,11 @@ const TopBar = () => {
 
   return (
     <Wrapper>
-      <BackBtn show={show} onClick={goBack}>
-        <img src={backArrow} alt="뒤로가기 버튼" />
-      </BackBtn>
+      {isDeeperPage && (
+        <BackBtn show={show} onClick={goBack}>
+          <img src={backArrow} alt="뒤로가기 버튼" />
+        </BackBtn>
+      )}
       <Title>{titleText}</Title>
     </Wrapper>
   );
@@ -60,8 +68,8 @@ const BackBtn = styled.div`
   flex-shrink: 0;
   z-index: 5;
   img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
   }
   visibility: ${({ show }) => (show ? "visible" : "hidden")};
