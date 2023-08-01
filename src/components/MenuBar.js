@@ -16,6 +16,7 @@ const MenuBar = () => {
   const [imgSrc1, setImgSrc1] = useState(artClicked);
   const [imgSrc2, setImgSrc2] = useState(map);
   const [imgSrc3, setImgSrc3] = useState(mypage);
+  const [activeTab, setActiveTab] = useState("");
 
   //메뉴 버튼에 각 페이지 링크 라우팅
   const goArt = () => {
@@ -41,19 +42,20 @@ const MenuBar = () => {
         ? mypageClicked
         : mypage
     );
+    setActiveTab(pathname);
   }, [pathname]);
 
   return (
     <Wrapper>
-      <Btn onClick={goArt}>
+      <Btn onClick={goArt} active={activeTab.includes("/art")}>
         <Image src={imgSrc1} />
         <span>미술</span>
       </Btn>
-      <Btn onClick={goPlace}>
+      <Btn onClick={goPlace} active={activeTab.includes("/place")}>
         <Image src={imgSrc2} />
         <span>문예관광지도</span>
       </Btn>
-      <Btn onClick={goMypage}>
+      <Btn onClick={goMypage} active={activeTab.includes("/mypage")}>
         <Image src={imgSrc3} />
         <span>마이페이지</span>
       </Btn>
@@ -84,7 +86,8 @@ const Btn = styled.div`
   align-self: stretch;
   gap: 2px;
   span {
-    color: var(--p-primary-10, #001d33);
+    color: ${({ active }) =>
+      active ? "var(--p-primary-40, #00639C)" : "var(--p-primary-10, #001d33)"};
     text-align: center;
     font-family: Pretendard;
     font-size: 0.75rem;

@@ -56,6 +56,7 @@ const Wrapper = styled.div`
 `;
 
 const Content = styled.div`
+  padding: 0px 12px;
   overflow: hidden;
   color: var(--n-neutral-10, #1a1c1e);
   text-overflow: ${({ showMore }) => (showMore ? "initial" : "ellipsis")};
