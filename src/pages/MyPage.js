@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
-import profileBasic from "../assets/icons/profileBasic.svg";
+import ProfileBasic from "../assets/icons/profileBasic.svg";
 
 const MyPage = () => {
   return (
@@ -12,7 +12,7 @@ const MyPage = () => {
       <TopBar />
       <UserInfo>
         <UserImg>
-          <img src={profileBasic} />
+          <img src={ProfileBasic} alt="프로필 사진" />
         </UserImg>
         <UserId>아이디 님</UserId>
       </UserInfo>

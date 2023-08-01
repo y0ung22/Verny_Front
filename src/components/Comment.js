@@ -25,17 +25,17 @@ const Comment = (text) => {
       <Info>
         <Writer>
           <Profile src={profile} />
-          <span id="name">{}</span>
-          <span id="time">{}</span>
+          <span id="name">아이디</span>
+          <span id="time">시간</span>
         </Writer>
         <BtnBox>
           <Btn onClick={handleLike}>
             <img src={likeStatus ? likeClicked : like} />
-            <span>{}</span>
+            <span>100</span>
           </Btn>
         </BtnBox>
       </Info>
-      <Content showMore={showMore}>{text}</Content>
+      <Content showMore={showMore}>댓글 내용이 1줄이면 이렇게요!!</Content>
       {!showMore && text.length > 100 && (
         <ShowMoreButton onClick={handleShowMore}>더보기</ShowMoreButton>
       )}
@@ -46,9 +46,9 @@ const Comment = (text) => {
 export default Comment;
 
 const Wrapper = styled.div`
-  width: 100%;
+  width: 320px;
   display: flex;
-  padding: 20px 32px;
+  padding: 20px 20px;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
@@ -69,7 +69,7 @@ const Content = styled.div`
 const Info = styled.div`
   display: flex;
   justify-content: space-between;
-  align-items: flex-start;
+  align-items: center;
   align-self: stretch;
 `;
 

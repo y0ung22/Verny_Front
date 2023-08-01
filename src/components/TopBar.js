@@ -23,6 +23,7 @@ const TopBar = () => {
   else if (pathname === "/mypage") titleText = "마이페이지";
   else if (pathname === "/mypage/profile") titleText = "프로필";
   else if (pathname === "/mypage/profile/edit") titleText = "프로필 수정";
+  else if (pathname === "/mypage/bookmark") titleText = "즐겨찾기한 미술";
 
   return (
     <Wrapper>

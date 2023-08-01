@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 import art from "../assets/icons/art.svg";
 import artClicked from "../assets/icons/artClicked.svg";
@@ -11,6 +11,7 @@ import mypageClicked from "../assets/icons/mypageClicked.svg";
 
 const MenuBar = () => {
   const navigate = useNavigate();
+  const { pathname } = useLocation();
   //클릭 시 선택한 탭 버튼 색 변경 위한 상태 업데이트
   const [imgSrc1, setImgSrc1] = useState(artClicked);
   const [imgSrc2, setImgSrc2] = useState(map);
@@ -19,22 +20,28 @@ const MenuBar = () => {
   //메뉴 버튼에 각 페이지 링크 라우팅
   const goArt = () => {
     navigate("/art");
-    setImgSrc1(artClicked);
-    setImgSrc2(map);
-    setImgSrc3(mypage);
   };
   const goPlace = () => {
     navigate("/place");
-    setImgSrc1(art);
-    setImgSrc2(mapClicked);
-    setImgSrc3(mypage);
   };
   const goMypage = () => {
     navigate("/mypage");
-    setImgSrc1(art);
-    setImgSrc2(map);
-    setImgSrc3(mypageClicked);
   };
+
+  useEffect(() => {
+    setImgSrc1(
+      pathname === "/art" || pathname === "/art/detail" ? artClicked : art
+    );
+    setImgSrc2(pathname === "/place" ? mapClicked : map);
+    setImgSrc3(
+      pathname === "/mypage" ||
+        pathname === "/mypage/profile" ||
+        pathname === "/mypage/profile/edit" ||
+        pathname === "/mypage/bookmark"
+        ? mypageClicked
+        : mypage
+    );
+  }, [pathname]);
 
   return (
     <Wrapper>
@@ -64,6 +71,7 @@ const Wrapper = styled.div`
   height: 60px;
   align-items: flex-start;
   flex-shrink: 0;
+  background: var(--nv-neutral-variant-99, #fcfcff);
 `;
 
 const Btn = styled.div`
@@ -74,7 +82,7 @@ const Btn = styled.div`
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  gap: 4px;
+  gap: 2px;
   span {
     color: var(--p-primary-10, #001d33);
     text-align: center;
@@ -87,7 +95,8 @@ const Btn = styled.div`
 `;
 
 const Image = styled.img`
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
+  padding: 4px;
   flex-shrink: 0;
 `;
