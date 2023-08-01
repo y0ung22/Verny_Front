@@ -17,7 +17,9 @@ const ProfilePage = () => {
         <UserId>아이디 님</UserId>
       </UserInfo>
       <CommentBar>아이디 님이 쓴 댓글</CommentBar>
-      <Comment />
+      <CommentList>
+        <Comment />
+      </CommentList>
       <MenuBar />
     </Wrapper>
   );
@@ -75,4 +77,12 @@ const CommentBar = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+`;
+
+const CommentList = styled.div`
+  height: 409px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

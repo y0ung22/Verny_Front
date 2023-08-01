@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
+import testImg from "../assets/etc/text.jpg";
 
 const ArtBox = () => {
   const navigate = useNavigate();
@@ -41,20 +42,23 @@ const ArtBox = () => {
 
   return (
     <Wrapper>
-      <Image />
+      <Image
+        src={testImg}
+        alt="수련이 연못에 떠 있고 버드나무가 드리워진 푸른빛과 초록빛의 그림"
+      />
       <Info>
         <TextBox>
-          <Title>{}</Title>
-          <Artist>{}</Artist>
+          <Title>Blue Water Lilies</Title>
+          <Artist>Claude Monet</Artist>
         </TextBox>
         <BtnBox>
           <Btn onClick={moveComment}>
-            <img src={comment} />
-            <span>{}</span>
+            <img src={comment} alt="댓글" />
+            <span>100</span>
           </Btn>
           <Btn onClick={savekBookMark}>
-            <img src={bookMarkSrc} />
-            <span>{bookmarkCnt}</span>
+            <img src={bookMarkSrc} alt="즐겨찾기" />
+            <span>100</span>
           </Btn>
         </BtnBox>
       </Info>
@@ -68,13 +72,17 @@ const Wrapper = styled.div`
   display: flex;
   width: 156px;
   height: 321px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  flex: 1 0 0;
 `;
 
 const Image = styled.img`
-  flex: 1 0 0;
-  align-self: stretch;
+  width: 156px;
+  height: 210px;
   border-radius: 12px;
-  background: url(<path-to-image>), lightgray 50% / cover no-repeat;
 `;
 
 const Info = styled.div`

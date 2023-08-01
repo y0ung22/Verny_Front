@@ -16,7 +16,13 @@ const BookmarkPage = () => {
         </UserImg>
         <UserId>아이디 님</UserId>
       </UserInfo>
-      <ArtBox />
+      <ArtList>
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+      </ArtList>
+
       <MenuBar />
     </Wrapper>
   );
@@ -60,4 +66,16 @@ const UserId = styled.div`
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+`;
+
+const ArtList = styled.div`
+  margin: 0px 16px;
+  height: 450px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;

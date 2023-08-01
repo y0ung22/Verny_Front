@@ -84,6 +84,9 @@ const Writer = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+  span {
+    padding-top: 4px;
+  }
   #time {
     color: var(--p-primary-30, #004a77);
   }
@@ -91,8 +94,8 @@ const Writer = styled.div`
 
 const Profile = styled.img`
   display: flex;
-  width: 24px;
-  height: 24px;
+  width: 16px;
+  height: 16px;
   padding: 6px;
   justify-content: center;
   align-items: center;
