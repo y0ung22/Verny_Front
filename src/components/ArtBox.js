@@ -1,6 +1,7 @@
-import React, { useState, useNavigate } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { styled } from "styled-components";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";

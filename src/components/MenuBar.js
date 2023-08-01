@@ -12,49 +12,28 @@ import mypageClicked from "../assets/icons/mypageClicked.svg";
 const MenuBar = () => {
   const navigate = useNavigate();
   //클릭 시 선택한 탭 버튼 색 변경 위한 상태 업데이트
-  const [imgSrc1, setImgSrc1] = useState("");
-  const [isClicked1, setIsClicked1] = useState(false);
-  const [imgSrc2, setImgSrc2] = useState("");
-  const [isClicked2, setIsClicked2] = useState(false);
-  const [imgSrc3, setImgSrc3] = useState("");
-  const [isClicked3, setIsClicked3] = useState(false);
+  const [imgSrc1, setImgSrc1] = useState(artClicked);
+  const [imgSrc2, setImgSrc2] = useState(map);
+  const [imgSrc3, setImgSrc3] = useState(mypage);
 
   //메뉴 버튼에 각 페이지 링크 라우팅
   const goArt = () => {
     navigate("/art");
-    if (isClicked1) {
-      setImgSrc1(art);
-      setIsClicked1(false);
-    } else {
-      setImgSrc1(artClicked);
-      setIsClicked1(true);
-      setIsClicked2(false);
-      setIsClicked3(false);
-    }
+    setImgSrc1(artClicked);
+    setImgSrc2(map);
+    setImgSrc3(mypage);
   };
   const goPlace = () => {
     navigate("/place");
-    if (isClicked2) {
-      setImgSrc2(map);
-      setIsClicked2(false);
-    } else {
-      setImgSrc2(mapClicked);
-      setIsClicked1(false);
-      setIsClicked2(true);
-      setIsClicked3(false);
-    }
+    setImgSrc1(art);
+    setImgSrc2(mapClicked);
+    setImgSrc3(mypage);
   };
   const goMypage = () => {
     navigate("/mypage");
-    if (isClicked3) {
-      setImgSrc3(mypage);
-      setIsClicked3(false);
-    } else {
-      setImgSrc3(mypageClicked);
-      setIsClicked1(false);
-      setIsClicked2(false);
-      setIsClicked3(true);
-    }
+    setImgSrc1(art);
+    setImgSrc2(map);
+    setImgSrc3(mypageClicked);
   };
 
   return (
@@ -78,22 +57,24 @@ const MenuBar = () => {
 export default MenuBar;
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 695px;
   display: flex;
-  width: 100%;
+  width: 360px;
   height: 60px;
-  padding: 0px 16px;
   align-items: flex-start;
   flex-shrink: 0;
 `;
 
 const Btn = styled.div`
   display: flex;
+  flex-direction: column;
   padding: 8.5px 0px;
   justify-content: center;
   align-items: center;
   flex: 1 0 0;
   align-self: stretch;
-  gap: 2px;
+  gap: 4px;
   span {
     color: var(--p-primary-10, #001d33);
     text-align: center;
