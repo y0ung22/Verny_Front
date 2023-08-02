@@ -1,37 +1,44 @@
-import React, { useState, useNavigate } from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import backArrow from "../assets/icons/goBack.svg";
 
 const TopBar = () => {
-  const path = window.location.pathname;
   const [show, setShow] = useState(false);
   const navigate = useNavigate();
+  const { pathname } = useLocation();
 
   const goBack = () => {
     navigate(-1);
   };
 
+  const isDeeperPage = pathname.split("/").length > 2;
+
+  useState(() => {
+    setShow(isDeeperPage);
+  }, [pathname]);
+
+  let titleText = "";
+  if (pathname === "/signup") titleText = "회원가입";
+  else if (pathname === "/login") titleText = "로그인";
+  else if (pathname === "/art") titleText = "미술";
+  else if (pathname === "/art/detail") titleText = "미술품";
+  else if (pathname === "/art/detail/comment") titleText = "댓글";
+  else if (pathname === "/place") titleText = "문예관광지도";
+  else if (pathname === "/mypage") titleText = "마이페이지";
+  else if (pathname === "/mypage/profile") titleText = "프로필";
+  else if (pathname === "/mypage/profile/edit") titleText = "프로필 수정";
+  else if (pathname === "/mypage/bookmark") titleText = "즐겨찾기한 미술";
+
   return (
     <Wrapper>
-      <BackBtn show={show} onClick={goBack}>
-        <img src={backArrow} />
-      </BackBtn>
-      <Title>
-        {() => {
-          if (path == "/account/signup/") return "회원가입" && setShow(true);
-          if (path == "/account/login/") return "로그인" && setShow(true);
-          if (path == "/main/") return "미술" && setShow(false);
-          if (path == "/main/<int:pk>/") return "미술품" && setShow(true);
-          if (path == "/main/<int:pk>/comments/")
-            return "댓글" && setShow(true);
-          if (path == "/map/") return "문예관광지도" && setShow(false);
-          if (path == "/account/mypage") return "마이페이지" && setShow(false);
-          if (path == "/account/profile") return "프로필" && setShow(true);
-          if (path == "/account/mypage_edit")
-            return "프로필 수정" && setShow(true);
-        }}
-      </Title>
+      {isDeeperPage && (
+        <BackBtn show={show} onClick={goBack}>
+          <img src={backArrow} alt="뒤로가기 버튼" />
+        </BackBtn>
+      )}
+      <Title>{titleText}</Title>
     </Wrapper>
   );
 };
@@ -40,9 +47,10 @@ export default TopBar;
 
 const Wrapper = styled.div`
   display: flex;
-  width: 100%;
+  width: 360px;
   height: 48px;
-  padding: 13px 0px;
+  padding-top: 37px;
+  padding-bottom: 13px;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
@@ -50,18 +58,21 @@ const Wrapper = styled.div`
 `;
 
 const BackBtn = styled.div`
+  position: absolute;
+  left: 16.24px;
   width: 48px;
   height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  z-index: 5;
   img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
   }
-  visibility: ${({ show }) => (show ? visible : hidden)};
+  visibility: ${({ show }) => (show ? "visible" : "hidden")};
 `;
 
 const Title = styled.div`
