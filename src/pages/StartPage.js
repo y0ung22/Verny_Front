@@ -3,25 +3,11 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 import logoMixed from "../assets/icons/logoMixed.svg";
-import leaf1 from "../assets/designs/leaf1.svg";
-import leaf2 from "../assets/designs/leaf2.svg";
-import leaf3 from "../assets/designs/leaf3.svg";
-import lotus1 from "../assets/designs/lotus1.svg";
-import lotus2 from "../assets/designs/lotus2.svg";
-import lines from "../assets/designs/lines1.svg";
+import mainImage from "../assets/designs/[S22]mainImage.svg";
 
 function StartPage() {
   return (
     <Wrapper>
-      <Overlay />
-      <Icons>
-        <img className="leaf1" src={leaf1} alt=""></img>
-        <img className="leaf2" src={leaf2} alt=""></img>
-        <img className="leaf3" src={leaf3} alt=""></img>
-        <img className="lotus1" src={lotus1} alt=""></img>
-        <img className="lotus2" src={lotus2} alt=""></img>
-        <img className="lines" src={lines} alt=""></img>
-      </Icons>
       <Welcome>
         <img className="logo-mixed" src={logoMixed} alt="베르니 콤비 로고" />
         <p className="sentence1">에 오신 것을 환영합니다!</p>
@@ -32,16 +18,14 @@ function StartPage() {
           넓혀 보세요!
         </p>
       </Explain>
-      <div>
+      <Buttons>
         <Link to="/signup">
           <button className="signup-btn">회원가입</button>
         </Link>
-      </div>
-      <div>
         <Link to="/login">
           <button className="login-btn">로그인</button>
         </Link>
-      </div>
+      </Buttons>
     </Wrapper>
   );
 }
@@ -50,10 +34,12 @@ export default StartPage;
 
 const Wrapper = styled.div`
   width: 360px;
-  height: 24px;
+  height: 731px;
   flex-shrink: 0;
-  background-image: url(../assets/etc/main.jpg);
+  background-image: url(${mainImage});
+`;
 
+const Buttons = styled.div`
   .signup-btn {
     display: flex;
     padding: 12px 16px;
@@ -74,55 +60,6 @@ const Wrapper = styled.div`
     align-self: stretch;
     border-radius: 12px;
     background: var(--p-primary-90, #cfe5ff);
-  }
-`;
-
-const Overlay = styled.div`
-  width: 360px;
-  height: 24px;
-  background-color: rgba(0, 0, 0, 0.7);
-`;
-
-const Icons = styled.div`
-  .leaf1 {
-    width: 48px;
-    height: 48px;
-    transform: rotate(-135deg);
-    flex-shrink: 0;
-    /* fill: var(--p-primary-80, #98CBFF); */
-  }
-  .leaf2 {
-    width: 24px;
-    height: 24px;
-    transform: rotate(60deg);
-    flex-shrink: 0;
-    /* fill: var(--p-primary-50, #267CBC); */
-  }
-  .leaf3 {
-    width: 32px;
-    height: 32px;
-    transform: rotate(-15deg);
-    flex-shrink: 0;
-    /* fill: var(--p-primary-70, #66B1F4); */
-  }
-  .lotus1 {
-    width: 40px;
-    height: 80px;
-    transform: rotate(-45.001deg);
-    flex-shrink: 0;
-    /* fill: var(--t-teritary-90, #FFD6F7); */
-  }
-  .lotus2 {
-    width: 72px;
-    height: 144px;
-    transform: rotate(60deg);
-    flex-shrink: 0;
-    /* fill: var(--t-teritary-80, #e2bbdb); */
-  }
-  .lines {
-    width: 120px;
-    height: 120px;
-    flex-shrink: 0;
   }
 `;
 
