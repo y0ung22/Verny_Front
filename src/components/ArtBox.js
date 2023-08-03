@@ -14,6 +14,10 @@ const ArtBox = () => {
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
+  const moveDetail = () => {
+    navigate("/art/detail");
+  };
+
   //댓글 이동 함수
   const moveComment = () => {
     navigate("/art/detail/comment");
@@ -45,9 +49,10 @@ const ArtBox = () => {
       <Image
         src={testImg}
         alt="수련이 연못에 떠 있고 버드나무가 드리워진 푸른빛과 초록빛의 그림"
+        onClick={moveDetail}
       />
       <Info>
-        <TextBox>
+        <TextBox onClick={moveDetail}>
           <Title>Blue Water Lilies</Title>
           <Artist>Claude Monet</Artist>
         </TextBox>

@@ -9,11 +9,11 @@ const ButtonBar = () => {
     <Wrapper>
       <Btn>
         <img src={comment} />
-        <span>{}</span>
+        <span>100</span>
       </Btn>
       <Btn>
         <img src={bookmark} />
-        <span>{}</span>
+        <span>100</span>
       </Btn>
     </Wrapper>
   );
@@ -22,8 +22,10 @@ const ButtonBar = () => {
 export default ButtonBar;
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 647px;
   display: flex;
-  width: 100%;
+  width: 296px;
   height: 48px;
   padding: 0px 32px;
   align-items: center;

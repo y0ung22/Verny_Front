@@ -20,25 +20,28 @@ const SearchBar = () => {
   //const [searchResult, setSearchResult] = useState([]);
 
   //검색 진행하고 결과 받아오는 함수
-  const goSearch = () => {
+  const goSearch = (e) => {
     e.preventDefault();
   };
 
   return (
     <Wrapper>
       <form className="input-container" onSubmit={goSearch}>
-        <Input
-          type="text"
-          placeholder="제목이나 작가를 검색해보세요!"
-          onChange={onChange}
-        />
-        {{ setText } && (
-          <DeleteBtn onClick={deleteText}>
-            <img src={delBtn} />
-          </DeleteBtn>
-        )}
+        <InputContainer>
+          <Input
+            type="text"
+            placeholder="제목이나 작가를 검색해보세요!"
+            onChange={onChange}
+            value={text}
+          />
+          {text && (
+            <DeleteBtn onClick={deleteText}>
+              <img src={delBtn} alt="검색어 삭제 버튼" />
+            </DeleteBtn>
+          )}
+        </InputContainer>
         <SubmitButton>
-          <img src={search} />
+          <img src={search} alt="검색 버튼" />
         </SubmitButton>
       </form>
     </Wrapper>
@@ -48,16 +51,24 @@ const SearchBar = () => {
 export default SearchBar;
 
 const Wrapper = styled.div`
+  position: relative;
   display: flex;
-  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  width: 328px;
   padding: 8px 16px;
-  justify-content: flex-end;
-  align-items: flex-start;
   gap: 8px;
   background: var(--n-neutral-100, #fff);
 `;
 
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
 const Input = styled.input`
+  width: 242px;
   display: flex;
   padding: 12px 16px;
   align-items: center;
@@ -77,6 +88,7 @@ const Input = styled.input`
 `;
 
 const DeleteBtn = styled.div`
+  margin-left: -40px;
   display: flex;
   width: 16px;
   height: 16px;
@@ -84,23 +96,25 @@ const DeleteBtn = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
-  position: absolute;
-  right: 64px;
   img {
-    width: 12px;
-    height: 12px;
+    width: 16px;
+    height: 16px;
     flex-shrink: 0;
   }
 `;
 
 const SubmitButton = styled.button`
-  width: 48px;
-  height: 48px;
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
   border: none;
   background-color: transparent;
   img {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
   }
 `;
