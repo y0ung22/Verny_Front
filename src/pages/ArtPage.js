@@ -30,6 +30,7 @@ const ArtPage = () => {
           </Category>
         ))}
       </CategoryBar>
+      <ArtCnt>작품 4개를 감상해보세요!</ArtCnt>
       <ArtList>
         <ArtBox />
         <ArtBox />
@@ -86,10 +87,28 @@ const Category = styled.div`
     props.isSelected ? "1.5px solid var(--t-teritary-40, #745470);" : "none"};
 `;
 
+const ArtCnt = styled.div`
+  display: flex;
+  width: 312px;
+  height: 48px;
+  height: 44px;
+  padding: 0px 24px;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--n-neutral-100, #fff);
+  box-shadow: 0px 4px 4px 0px rgba(0, 51, 84, 0.04);
+  color: var(--s-secondary-40, #52606f);
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
+
 const ArtList = styled.div`
   margin: 0px 16px;
-  margin-top: 20px;
-  height: 500px;
+  padding-top: 20px;
+  height: 450px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
