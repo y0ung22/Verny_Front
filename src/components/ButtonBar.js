@@ -1,19 +1,26 @@
 import React from "react";
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 
 const ButtonBar = () => {
+  const navigate = useNavigate();
+
+  const moveComment = () => {
+    navigate("/art/detail/comment");
+  };
+
   return (
     <Wrapper>
-      <Btn>
+      <Btn onClick={moveComment}>
         <img src={comment} />
-        <span>{}</span>
+        <span>100</span>
       </Btn>
       <Btn>
         <img src={bookmark} />
-        <span>{}</span>
+        <span>100</span>
       </Btn>
     </Wrapper>
   );
@@ -22,8 +29,10 @@ const ButtonBar = () => {
 export default ButtonBar;
 
 const Wrapper = styled.div`
+  position: absolute;
+  top: 647px;
   display: flex;
-  width: 100%;
+  width: 296px;
   height: 48px;
   padding: 0px 32px;
   align-items: center;

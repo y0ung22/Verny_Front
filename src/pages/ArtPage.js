@@ -1,0 +1,119 @@
+import React, { useState } from "react";
+import { styled } from "styled-components";
+
+import TopBar from "../components/TopBar";
+import SearchBar from "../components/SearchBar";
+import ArtBox from "../components/ArtBox";
+import MenuBar from "../components/MenuBar";
+
+const ArtPage = () => {
+  const categories = ["전체", "고전미술", "현대미술"];
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]); // Initially, the first category is selected.
+
+  const handleCategoryClick = (category) => {
+    setSelectedCategory(category);
+  };
+
+  return (
+    <Wrapper>
+      <TopBar />
+      <SearchBar />
+      <CategoryBar>
+        {categories.map((category, index) => (
+          <Category
+            key={index}
+            id={category}
+            isSelected={category === selectedCategory}
+            onClick={() => handleCategoryClick(category)}
+          >
+            {category}
+          </Category>
+        ))}
+      </CategoryBar>
+      <ArtCnt>작품 4개를 감상해보세요!</ArtCnt>
+      <ArtList>
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+        <ArtBox />
+      </ArtList>
+      <MenuBar />
+    </Wrapper>
+  );
+};
+
+export default ArtPage;
+
+const Wrapper = styled.div`
+  margin: auto;
+  width: 360px;
+  height: 800px;
+  background: var(--n-neutral-100, #fff);
+  display: flex;
+  flex-direction: column;
+`;
+
+const CategoryBar = styled.div`
+  display: flex;
+  width: 328px;
+  padding: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  background: var(--n-neutral-100, #fff);
+`;
+
+const Category = styled.div`
+  display: flex;
+  padding: 12px 16px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  align-self: stretch;
+  color: ${(props) =>
+    props.isSelected
+      ? "var(--t-teritary-40, #745470)"
+      : "var(--p-primary-10, #001d33)"};
+
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 0.88rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  border-bottom: ${(props) =>
+    props.isSelected ? "1.5px solid var(--t-teritary-40, #745470);" : "none"};
+`;
+
+const ArtCnt = styled.div`
+  display: flex;
+  width: 312px;
+  height: 48px;
+  height: 44px;
+  padding: 0px 24px;
+  align-items: center;
+  flex-shrink: 0;
+  background: var(--n-neutral-100, #fff);
+  box-shadow: 0px 4px 4px 0px rgba(0, 51, 84, 0.04);
+  color: var(--s-secondary-40, #52606f);
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
+
+const ArtList = styled.div`
+  margin: 0px 16px;
+  padding-top: 20px;
+  height: 450px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  column-gap: 10px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
