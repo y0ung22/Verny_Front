@@ -1,13 +1,20 @@
 import React from "react";
 import { styled } from "styled-components";
+import { useNavigate } from "react-router-dom";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 
 const ButtonBar = () => {
+  const navigate = useNavigate();
+
+  const moveComment = () => {
+    navigate("/art/detail/comment");
+  };
+
   return (
     <Wrapper>
-      <Btn>
+      <Btn onClick={moveComment}>
         <img src={comment} />
         <span>100</span>
       </Btn>

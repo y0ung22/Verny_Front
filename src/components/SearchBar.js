@@ -78,7 +78,7 @@ const Input = styled.input`
   border-radius: 12px;
   border: 1.5px solid var(--s-secondary-80, #b9c8da);
   background: var(--s-secondary-99, #fcfcff);
-
+  outline: none;
   color: var(--s-secondary-10, #0e1d2a);
   font-family: Pretendard;
   font-size: 0.88rem;

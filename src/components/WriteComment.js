@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 const WriteComment = () => {
   return (
     <Wrapper>
-      <form className="input-container" onSubmit={uploadComment}>
+      <form className="input-container">
         <Input type="text" placeholder="댓글을 입력해주세요!" />
         <SubmitButton>등록</SubmitButton>
       </form>
@@ -15,16 +15,19 @@ const WriteComment = () => {
 export default WriteComment;
 
 const Wrapper = styled.div`
-  display: flex;
-  width: 100%;
+  position: absolute;
+  top: 632.6px;
+  width: 328px;
   padding: 8px 16px;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
   background: var(--nv-neutral-variant-95, #edf1f9);
+  form {
+    display: flex;
+    gap: 8px;
+  }
 `;
 
 const Input = styled.input`
+  width: 228px;
   display: flex;
   padding: 12px 16px;
   align-items: center;
@@ -33,7 +36,7 @@ const Input = styled.input`
   border-radius: 12px;
   border: 1.5px solid var(--s-secondary-80, #b9c8da);
   background: var(--s-secondary-99, #fcfcff);
-
+  outline: none;
   color: var(--s-secondary-10, #0e1d2a);
   font-family: Pretendard;
   font-size: 0.88rem;
