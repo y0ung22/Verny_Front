@@ -21,7 +21,7 @@ const Dropdown = () => {
 
   return (
     <Wrapper>
-      <p id="txt">작품 12개를 감상해보세요!</p>
+      <p id="txt">작품 4개를 감상해보세요!</p>
       <Dropdown>
         <DropBtn onClick={dropClick}>
           <span>정렬</span>
