@@ -1,23 +1,33 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { styled } from "styled-components";
+import axios from "axios";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
+import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = (text) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
 
+  //더보기 버튼
   const handleShowMore = () => {
     setShowMore(true);
   };
 
+  //댓글 좋아요 기능
   const handleLike = () => {
     setLikeStatus(!likeStatus);
+  };
+
+  const moveReComment = () => {
+    navigate("/art/detail/comment/re");
   };
 
   return (
@@ -25,11 +35,15 @@ const Comment = (text) => {
       <Info>
         <Writer>
           <Profile src={profile} />
-          <span id="name">아이디</span>
-          <span id="time">시간</span>
+          <span id="name" alt="">
+            아이디
+          </span>
+          <span id="time" alt="">
+            시간
+          </span>
         </Writer>
         <BtnBox>
-          <Btn onClick={handleLike}>
+          <Btn alt="댓글 좋아요 버튼" onClick={handleLike}>
             <img src={likeStatus ? likeClicked : like} />
             <span>100</span>
           </Btn>
@@ -37,7 +51,18 @@ const Comment = (text) => {
       </Info>
       <Content showMore={showMore}>댓글 내용이 1줄이면 이렇게요!!</Content>
       {!showMore && text.length > 100 && (
-        <ShowMoreButton onClick={handleShowMore}>더보기</ShowMoreButton>
+        <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
+          더보기
+        </ShowMoreButton>
+      )}
+      {pathname === "/art/detail/comment" && (
+        <ReComment>
+          <ReCommentBtn onClick={moveReComment}>
+            <img src={commentWrite} />
+            <span>100</span>
+            <span>답글 쓰기</span>
+          </ReCommentBtn>
+        </ReComment>
       )}
     </Wrapper>
   );
@@ -134,4 +159,29 @@ const ShowMoreButton = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+`;
+
+const ReComment = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const ReCommentBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  color: var(--p-primary-40, #00639c);
+  text-align: center;
+  font-family: Pretendard;
+  font-size: 0.75rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  img {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
 `;

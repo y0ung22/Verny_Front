@@ -10,7 +10,6 @@ import testImg from "../assets/etc/text.jpg";
 
 const ArtBox = () => {
   const navigate = useNavigate();
-  const [bookmarkCnt, setBookmarkCnt] = useState(0);
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
@@ -27,11 +26,9 @@ const ArtBox = () => {
   const savekBookMark = () => {
     if (bookMark) {
       setBookMark(false);
-      setBookmarkCnt((prev) => prev - 1);
       setBookMarkSrc(bookmark);
     } else {
       setBookMark(true);
-      setBookmarkCnt((prev) => prev + 1);
       setBookMarkSrc(bookmarkClicked);
     }
   };
@@ -74,6 +71,7 @@ const ArtBox = () => {
 export default ArtBox;
 
 const Wrapper = styled.div`
+  margin-bottom: 10px;
   display: flex;
   width: 156px;
   height: 321px;
