@@ -25,6 +25,7 @@ const TopBar = () => {
   else if (pathname === "/art") titleText = "미술";
   else if (pathname === "/art/detail") titleText = "미술품";
   else if (pathname === "/art/detail/comment") titleText = "댓글";
+  else if (pathname === "/art/detail/comment/re") titleText = "답글";
   else if (pathname === "/place") titleText = "문예관광지도";
   else if (pathname === "/mypage") titleText = "마이페이지";
   else if (pathname === "/mypage/profile") titleText = "프로필";

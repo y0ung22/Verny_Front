@@ -31,7 +31,12 @@ const MenuBar = () => {
 
   useEffect(() => {
     setImgSrc1(
-      pathname === "/art" || pathname === "/art/detail" ? artClicked : art
+      pathname === "/art" ||
+        pathname === "/art/detail" ||
+        pathname === "/art/detail/comment" ||
+        pathname === "/art/detail/comment/re"
+        ? artClicked
+        : art
     );
     setImgSrc2(pathname === "/place" ? mapClicked : map);
     setImgSrc3(
