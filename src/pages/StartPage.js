@@ -34,33 +34,9 @@ export default StartPage;
 
 const Wrapper = styled.div`
   width: 360px;
-  height: 731px;
+  height: 800px;
   flex-shrink: 0;
   background-image: url(${mainImage});
-`;
-
-const Buttons = styled.div`
-  .signup-btn {
-    display: flex;
-    padding: 12px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    align-self: stretch;
-    border-radius: 12px;
-    background: var(--p-primary-20, #003354);
-  }
-
-  .login-btn {
-    display: flex;
-    padding: 12px 16px;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    align-self: stretch;
-    border-radius: 12px;
-    background: var(--p-primary-90, #cfe5ff);
-  }
 `;
 
 const Welcome = styled.div`
@@ -74,10 +50,14 @@ const Welcome = styled.div`
     display: flex;
     align-items: center;
     gap: 4px;
+    margin-top: 365px;
+    width: 80.5px;
+    height: 24px;
   }
 
   .sentence1 {
     color: var(--n-neutral-100, #fff);
+    margin-top: 384px;
 
     /* Heading/1 */
     font-family: Pretendard;
@@ -90,6 +70,7 @@ const Welcome = styled.div`
 
 const Explain = styled.div`
   align-self: stretch;
+  margin-top: -20px;
 
   .sentence2 {
     color: var(--n-neutral-80, #c6c6c9);
@@ -101,5 +82,44 @@ const Explain = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 19.6px */
+  }
+`;
+
+const Buttons = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 160px;
+  .signup-btn {
+    display: flex;
+    padding: 12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 12px;
+    background: var(--p-primary-20, #003354);
+    width: 300px;
+    height: 46px;
+    color: white;
+    border: none;
+    text-decoration: none;
+  }
+
+  .login-btn {
+    display: flex;
+    padding: 12px 16px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    align-self: stretch;
+    border-radius: 12px;
+    background: var(--p-primary-90, #cfe5ff);
+    width: 300px;
+    height: 46px;
+    margin-top: 10px;
+    border: none;
+    text-decoration: none;
   }
 `;

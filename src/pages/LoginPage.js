@@ -14,18 +14,22 @@ const LoginPage = () => {
 
   const BASE_URL = "http://localhost:3001";
 
+  // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
     // 카카오 계정으로 로그인 기능 구현 카카오 api?
   };
 
+  // 하단 회원가입 페이지로 이동 버튼
+  const handleSignup = () => {
+    navigate.push("/signup");
+  };
+
+  // 아이디로 로그인할 때 페이지 이동
   const handleIdLogin = () => {
     setIdLoginPage(true);
   };
 
-  const handleSignUp = () => {
-    navigate.push("/signup");
-  };
-
+  // 아이디로 로그인
   const onClickLogin = async () => {
     try {
       // REST API를 이용하여 백엔드에 로그인 데이터 전달
@@ -33,7 +37,7 @@ const LoginPage = () => {
         params: {
           user_id: inputId,
           user_pw: inputPw,
-        },
+        }, // 쿼리 파라미터 이용하는지 백엔드와 상의 필요
       });
 
       // 로그인 성공 여부에 따라 처리
@@ -80,7 +84,7 @@ const LoginPage = () => {
             <span>로그인하기</span>
           </button>
           <span>아직 회원이 아니신가요?</span>
-          <button className="handle-signup" onClick={handleSignUp}>
+          <button className="handle-signup" onClick={handleSignup}>
             회원가입하기
           </button>
         </SecondWrapper>
