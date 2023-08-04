@@ -12,6 +12,7 @@ import MyPage from "./pages/MyPage";
 import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import BookmarkPage from "./pages/BookmarkPage";
+import ReCommentPage from "./pages/ReCommentPage";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
         {/*세부 화면*/}
         <Route path="/art/detail" element={<ArtDetailPage />} />
         <Route path="/art/detail/comment" element={<CommentPage />} />
+        <Route path="/art/detail/comment/re" element={<ReCommentPage />} />
         <Route path="/place/detail" element={<PlaceDetailPage />} />
         <Route path="/mypage/profile" element={<ProfilePage />} />
         <Route path="/mypage/bookmark" element={<BookmarkPage />} />

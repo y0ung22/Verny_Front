@@ -1,12 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
+import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
 const ButtonBar = () => {
   const navigate = useNavigate();
+  const [bookMark, setBookMark] = useState(false);
+  const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
+
+  //북마크 함수
+  const savekBookMark = () => {
+    if (bookMark) {
+      setBookMark(false);
+      setBookMarkSrc(bookmark);
+    } else {
+      setBookMark(true);
+      setBookMarkSrc(bookmarkClicked);
+    }
+  };
 
   const moveComment = () => {
     navigate("/art/detail/comment");
@@ -18,8 +32,8 @@ const ButtonBar = () => {
         <img src={comment} />
         <span>100</span>
       </Btn>
-      <Btn>
-        <img src={bookmark} />
+      <Btn onClick={savekBookMark}>
+        <img src={bookMarkSrc} />
         <span>100</span>
       </Btn>
     </Wrapper>

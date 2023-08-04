@@ -16,10 +16,16 @@ const ProfilePage = () => {
         </UserImg>
         <UserId>아이디 님</UserId>
       </UserInfo>
-      <CommentBar>아이디 님이 쓴 댓글</CommentBar>
-      <CommentList>
-        <Comment />
-      </CommentList>
+      <MyComment>
+        <CommentList>
+          <CommentBar>아이디 님이 쓴 댓글</CommentBar>
+          <Comment />
+        </CommentList>
+        <CommentList>
+          <CommentBar id="recomment">아이디 님이 쓴 답글</CommentBar>
+          <Comment />
+        </CommentList>
+      </MyComment>
       <MenuBar />
     </Wrapper>
   );
@@ -66,24 +72,31 @@ const UserId = styled.div`
   line-height: 140%;
 `;
 
+const MyComment = styled.div`
+  height: 500px;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const CommentList = styled.div`
+  margin-bottom: 50px;
+`;
+
 const CommentBar = styled.div`
   display: flex;
   padding: 16px 32px;
   align-items: center;
   align-self: stretch;
-  background: var(--nv-neutral-variant-99, #fcfcff);
+  background: var(--nv-neutral-variant-95, #edf1f9);
   color: var(--s-secondary-20, #243240);
   font-family: Pretendard;
   font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-`;
-
-const CommentList = styled.div`
-  height: 409px;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
+  #recomment {
+    padding-top: 100px;
   }
 `;

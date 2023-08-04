@@ -108,7 +108,8 @@ const ArtCnt = styled.div`
 const ArtList = styled.div`
   margin: 0px 16px;
   padding-top: 20px;
-  height: 450px;
+  padding-bottom: 30px;
+  height: 430px;
   display: grid;
   grid-template-columns: 1fr 1fr;
   column-gap: 10px;
