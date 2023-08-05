@@ -5,6 +5,7 @@ import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import ProfileBasic from "../assets/icons/profileBasic.svg";
 import Comment from "../components/Comment";
+import ReComment from "../components/ReComment";
 
 const ProfilePage = () => {
   return (
@@ -23,7 +24,7 @@ const ProfilePage = () => {
         </CommentList>
         <CommentList>
           <CommentBar id="recomment">아이디 님이 쓴 답글</CommentBar>
-          <Comment />
+          <ReComment />
         </CommentList>
       </MyComment>
       <MenuBar />
