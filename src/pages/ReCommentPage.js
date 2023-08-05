@@ -2,6 +2,7 @@ import React from "react";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
+import Comment from "../components/Comment";
 import ReComment from "../components/ReComment";
 import WriteComment from "../components/WriteComment";
 import MenuBar from "../components/MenuBar";
@@ -10,6 +11,7 @@ const CommentPage = () => {
   return (
     <Wrapper>
       <TopBar />
+      <Comment />
       <CommentList>
         <ReComment />
       </CommentList>

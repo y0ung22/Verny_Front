@@ -35,11 +35,11 @@ const Comment = (text) => {
         <Writer>
           <Profile src={profile} />
           <span id="name" alt="">
-            아이디
+            닉네임
           </span>
           <span>·</span>
           <span id="time" alt="">
-            시간
+            30분 전
           </span>
         </Writer>
         <BtnBox>
@@ -62,9 +62,9 @@ const Comment = (text) => {
 export default Comment;
 
 const Wrapper = styled.div`
-  width: 320px;
+  width: 284px;
   display: flex;
-  padding: 20px 20px;
+  padding: 20px 32px 20px 44px;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;

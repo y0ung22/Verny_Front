@@ -31,16 +31,16 @@ const Comment = (text) => {
   };
 
   return (
-    <Wrapper>
+    <Wrapper pathname={pathname}>
       <Info>
         <Writer>
           <Profile src={profile} />
           <span id="name" alt="">
-            아이디
+            닉네임
           </span>
           <span>·</span>
           <span id="time" alt="">
-            시간
+            30분 전
           </span>
         </Writer>
         <BtnBox>
@@ -56,13 +56,15 @@ const Comment = (text) => {
           더보기
         </ShowMoreButton>
       )}
-      <ReComment>
-        <ReCommentBtn onClick={moveReComment}>
-          <img src={commentWrite} />
-          <span>100</span>
-          <span>답글 쓰기</span>
-        </ReCommentBtn>
-      </ReComment>
+      {pathname !== "/art/detail/comment/re" && (
+        <ReComment>
+          <ReCommentBtn onClick={moveReComment}>
+            <img src={commentWrite} />
+            <span>100</span>
+            <span>답글 쓰기</span>
+          </ReCommentBtn>
+        </ReComment>
+      )}
     </Wrapper>
   );
 };
@@ -70,6 +72,10 @@ const Comment = (text) => {
 export default Comment;
 
 const Wrapper = styled.div`
+  background-color: ${({ pathname }) =>
+    pathname === "/art/detail/comment/re"
+      ? "var(--nv-neutral-variant-95, #EDF1F9)"
+      : "var(--n-neutral-100, #FFF)"};
   width: 320px;
   display: flex;
   padding: 20px 20px;
