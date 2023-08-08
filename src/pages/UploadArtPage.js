@@ -7,26 +7,6 @@ import plus from "../assets/icons/plus.svg";
 import deleteBtn from "../assets/icons/deleteSecondary.svg";
 
 const UploadArtPage = () => {
-  const [descriptionCount, setDescriptionCount] = useState(0);
-  const [descriptions, setDescriptions] = useState([]);
-
-  const handleAddDescription = () => {
-    setDescriptionCount(descriptionCount + 1);
-  };
-
-  const handleDeleteDescription = () => {
-    if (descriptions.length > 0) {
-      const newDescriptions = descriptions.slice(0, -1);
-      setDescriptions(newDescriptions);
-    }
-  };
-
-  const handleDescriptionChange = (index, event) => {
-    const updatedDescriptions = [...descriptions];
-    updatedDescriptions[index] = { content: event.target.value };
-    setDescriptions(updatedDescriptions);
-  };
-
   return (
     <Wrapper>
       <TopBar />
@@ -66,19 +46,6 @@ const UploadArtPage = () => {
             key={index}
             placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
           />
-          {descriptions.map((description, index) => (
-            <AddedDescription key={index}>
-              <textarea
-                value={description.content}
-                onChange={(event) => handleDescriptionChange(index, event)}
-                placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
-              />
-              <img src={deleteBtn} onClick={() => handleDeleteDescription()} />
-            </AddedDescription>
-          ))}
-          <AddDescription onClick={handleAddDescription}>
-            문단 추가
-          </AddDescription>
         </DescriptionInput>
       </Container>
       <MenuBar />
@@ -255,29 +222,4 @@ const DescriptionInput = styled.div`
     font-weight: 400;
     line-height: 140%;
   }
-`;
-
-const AddedDescription = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  align-self: stretch;
-`;
-
-const AddDescription = styled.button`
-  display: flex;
-  width: 328px;
-  padding: 12px 16px;
-  margin: 0px 16px;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 12px;
-  background: var(--p-primary-90, #cfe5ff);
-  color: var(--p-primary-10, #001d33);
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
 `;
