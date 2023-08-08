@@ -42,10 +42,7 @@ const UploadArtPage = () => {
         </ContentInput>
         <DescriptionInput>
           <span>설명</span>
-          <textarea
-            key={index}
-            placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
-          />
+          <textarea placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!" />
         </DescriptionInput>
       </Container>
       <MenuBar />
