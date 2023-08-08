@@ -1,15 +1,43 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
+import beforeBtn from "../assets/icons/before.svg";
+import beforeBtnHover from "../assets/icons/beforeHover.svg";
+import nextBtn from "../assets/icons/next.svg";
+import nextBtnHover from "../assets/icons/nextHover.svg";
 import ButtonBar from "../components/ButtonBar";
 import MenuBar from "../components/MenuBar";
 import testImg from "../assets/etc/text.jpg";
 
 const ArtDetailPage = () => {
+  const [beforeHover, setBeforeHover] = useState(false);
+  const [nextHover, setNextHover] = useState(false);
+
+  const beforeHovered = () => {
+    setBeforeHover(true);
+  };
+
+  const beforeLeave = () => {
+    setBeforeHover(false);
+  };
+
+  const nextHovered = () => {
+    setNextHover(true);
+  };
+  const nextLeave = () => {
+    setNextHover(false);
+  };
+
   return (
     <Wrapper>
       <TopBar />
+      <BeforeBtn onMouseEnter={beforeHovered} onMouseLeave={beforeLeave}>
+        <img alt="이전 미술품" src={beforeHover ? beforeBtnHover : beforeBtn} />
+      </BeforeBtn>
+      <NextBtn onMouseEnter={nextHovered} onMouseLeave={nextLeave}>
+        <img alt="다음 미술품" src={nextHover ? nextBtnHover : nextBtn} />
+      </NextBtn>
       <ArtInfo>
         <ArtImg src={testImg} />
         <ArtDetail>
@@ -43,6 +71,32 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+`;
+
+const BeforeBtn = styled.div`
+  position: absolute;
+  left: 0px;
+  top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 12px;
+    height: 48px;
+  }
+`;
+
+const NextBtn = styled.div`
+  position: absolute;
+  right: 0px;
+  top: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: 12px;
+    height: 48px;
+  }
 `;
 
 const ArtInfo = styled.div`
