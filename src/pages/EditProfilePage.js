@@ -6,9 +6,20 @@ import MenuBar from "../components/MenuBar";
 import ProfileBasic from "../assets/icons/profileBasic.svg";
 import profileEdit from "../assets/icons/profileEdit.svg";
 import profileEditHover from "../assets/icons/profileEditHover.svg";
+import profileImg1 from "../assets/icons/profileImg1.svg";
+import profileImg1Clicked from "../assets/icons/profileImg1Clicked.svg";
+import profileImg2 from "../assets/icons/profileImg2.svg";
+import profileImg2Clicked from "../assets/icons/profileImg2Clicked.svg";
+import profileImg3 from "../assets/icons/profileImg3.svg";
+import profileImg3Clicked from "../assets/icons/profileImg3Clicked.svg";
+import profileImg4 from "../assets/icons/profileImg4.svg";
+import profileImg4Clicked from "../assets/icons/profileImg4Clicked.svg";
+import profileImg5 from "../assets/icons/profileImg5.svg";
+import profileImg5Clicked from "../assets/icons/profileImg5Clicked.svg";
 
 const EditProfilePage = () => {
   const [isHovered, setIsHovered] = useState(false);
+  const [modal, setModal] = useState(false);
 
   const MouseHover = () => {
     setIsHovered(true);

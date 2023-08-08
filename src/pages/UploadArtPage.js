@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import plus from "../assets/icons/plus.svg";
+import deleteBtn from "../assets/icons/deleteSecondary.svg";
 
 const UploadArtPage = () => {
+  const [descriptionCount, setDescriptionCount] = useState(0);
+  const [descriptions, setDescriptions] = useState([]);
+
+  const handleAddDescription = () => {
+    setDescriptionCount(descriptionCount + 1);
+  };
+
+  const handleDeleteDescription = () => {
+    if (descriptions.length > 0) {
+      const newDescriptions = descriptions.slice(0, -1);
+      setDescriptions(newDescriptions);
+    }
+  };
+
+  const handleDescriptionChange = (index, event) => {
+    const updatedDescriptions = [...descriptions];
+    updatedDescriptions[index] = { content: event.target.value };
+    setDescriptions(updatedDescriptions);
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -39,6 +60,26 @@ const UploadArtPage = () => {
             <input id="year" placeholder="작품을 제작한 연도를 입력해주세요!" />
           </Content>
         </ContentInput>
+        <DescriptionInput>
+          <span>설명</span>
+          <textarea
+            key={index}
+            placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
+          />
+          {descriptions.map((description, index) => (
+            <AddedDescription key={index}>
+              <textarea
+                value={description.content}
+                onChange={(event) => handleDescriptionChange(index, event)}
+                placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
+              />
+              <img src={deleteBtn} onClick={() => handleDeleteDescription()} />
+            </AddedDescription>
+          ))}
+          <AddDescription onClick={handleAddDescription}>
+            문단 추가
+          </AddDescription>
+        </DescriptionInput>
       </Container>
       <MenuBar />
     </Wrapper>
@@ -96,7 +137,7 @@ const Container = styled.div`
 const UploadImg = styled.div`
   display: flex;
   width: 328px;
-  height: 197px;
+  height: 248 px;
   justify-content: center;
   align-items: center;
   gap: 8px;
@@ -184,4 +225,59 @@ const Content = styled.div`
     font-weight: 400;
     line-height: 140%;
   }
+`;
+
+const DescriptionInput = styled.div`
+  span {
+    width: 49px;
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+  }
+  textarea {
+    resize: vertical;
+    outline: none;
+    display: flex;
+    padding: 16px;
+    justify-content: center;
+    align-self: stretch;
+    border-radius: 12px;
+    border: 1.5px solid var(--s-secondary-50, #6a7889);
+    background: var(--n-neutral-99, #fcfcff);
+    color: var(--s-secondary-10, #0e1d2a);
+    opacity: 0.6000000238418579;
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+`;
+
+const AddedDescription = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+`;
+
+const AddDescription = styled.button`
+  display: flex;
+  width: 328px;
+  padding: 12px 16px;
+  margin: 0px 16px;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  border-radius: 12px;
+  background: var(--p-primary-90, #cfe5ff);
+  color: var(--p-primary-10, #001d33);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
 `;
