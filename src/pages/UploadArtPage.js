@@ -5,7 +5,6 @@ import TextareaAutosize from "react-textarea-autosize";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import plus from "../assets/icons/plus.svg";
-import deleteBtn from "../assets/icons/deleteSecondary.svg";
 
 const UploadArtPage = () => {
   return (
@@ -90,7 +89,7 @@ const UploadBtn = styled.button`
 const Container = styled.div`
   display: flex;
   width: 328px;
-  height: 570px;
+  height: 400px;
   padding: 0px 16px 40px 16px;
   flex-direction: column;
   align-items: flex-start;
@@ -105,7 +104,7 @@ const Container = styled.div`
 const UploadImg = styled.div`
   display: flex;
   width: 328px;
-  height: 248px;
+  height: 264px;
   justify-content: center;
   align-items: center;
   gap: 8px;
