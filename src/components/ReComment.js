@@ -8,7 +8,6 @@ import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
-import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = (text) => {
   const [showMore, setShowMore] = useState(false);
@@ -31,7 +30,7 @@ const Comment = (text) => {
   };
 
   return (
-    <Wrapper pathname={pathname}>
+    <Wrapper>
       <Info>
         <Writer>
           <Profile src={profile} />
@@ -56,15 +55,6 @@ const Comment = (text) => {
           더보기
         </ShowMoreButton>
       )}
-      {pathname !== "/art/detail/comment/re" && (
-        <ReComment>
-          <ReCommentBtn onClick={moveReComment}>
-            <img src={commentWrite} />
-            <span>100</span>
-            <span>답글 쓰기</span>
-          </ReCommentBtn>
-        </ReComment>
-      )}
     </Wrapper>
   );
 };
@@ -72,13 +62,9 @@ const Comment = (text) => {
 export default Comment;
 
 const Wrapper = styled.div`
-  background-color: ${({ pathname }) =>
-    pathname === "/art/detail/comment/re"
-      ? "var(--nv-neutral-variant-95, #EDF1F9)"
-      : "var(--n-neutral-100, #FFF)"};
-  width: 320px;
+  width: 284px;
   display: flex;
-  padding: 20px 20px;
+  padding: 20px 32px 20px 44px;
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
@@ -164,29 +150,4 @@ const ShowMoreButton = styled.div`
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-`;
-
-const ReComment = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
-`;
-
-const ReCommentBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  color: var(--p-primary-40, #00639c);
-  text-align: center;
-  font-family: Pretendard;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-  img {
-    width: 12px;
-    height: 12px;
-    flex-shrink: 0;
-  }
 `;

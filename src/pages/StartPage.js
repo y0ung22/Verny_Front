@@ -33,6 +33,7 @@ function StartPage() {
 export default StartPage;
 
 const Wrapper = styled.div`
+  margin: auto;
   width: 360px;
   height: 800px;
   flex-shrink: 0;

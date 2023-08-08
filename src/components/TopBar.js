@@ -23,6 +23,7 @@ const TopBar = () => {
   if (pathname === "/signup") titleText = "회원가입";
   else if (pathname === "/login") titleText = "로그인";
   else if (pathname === "/art") titleText = "미술";
+  else if (pathname === "/art/upload") titleText = "미술품 업로드";
   else if (pathname === "/art/detail") titleText = "미술품";
   else if (pathname === "/art/detail/comment") titleText = "댓글";
   else if (pathname === "/art/detail/comment/re") titleText = "답글";
