@@ -7,6 +7,7 @@ import { Container } from "../styles";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWord.svg";
+import kakao from "../assets/icons/kakao.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -86,7 +87,7 @@ const LoginPage = () => {
           </Input>
           <Bottom>
             <button className="finish-login-btn" onClick={onClickLogin}>
-              <span>로그인하기</span>
+              로그인하기
             </button>
             <HandleSignupStyle>
               <span>아직 회원이 아니신가요?</span>
@@ -112,10 +113,11 @@ const LoginPage = () => {
           </Logo>
           <Buttons>
             <button className="kakao-btn" onClick={handleKakaoLogin}>
-              카카오 계정으로 로그인
+              <img className="kakao" src={kakao} alt="카카오" />
+              <span>카카오 계정으로 로그인</span>
             </button>
             <button className="id-btn" onClick={handleIdLogin}>
-              아이디로 로그인
+              <span>아이디로 로그인</span>
             </button>
             <HandleSignupStyle>
               <span>아직 회원이 아니신가요?</span>
@@ -143,7 +145,7 @@ const FirstWrapper = styled.div`
 
     /* Caption/1 */
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 16.8px */
@@ -152,21 +154,26 @@ const FirstWrapper = styled.div`
   .handle-signup {
     color: var(--p-primary-80, #98cbff);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 16.8px */
     text-decoration-line: underline;
+    cursor: pointer;
   }
 `;
 
 const Logo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 150px;
 
   .logo-symbol {
     display: flex;
-    width: 98px;
-    height: 98px;
+    width: 40px;
+    height: 40px;
     padding: 28.584px 28.583px 28.583px 28.583px;
     flex-shrink: 0;
   }
@@ -175,7 +182,6 @@ const Logo = styled.div`
     width: 48.014px;
     height: 16px;
     flex-shrink: 0;
-    margin-left: 50px;
   }
 `;
 
@@ -189,15 +195,32 @@ const Buttons = styled.div`
 
   .kakao-btn {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 328px;
     height: 46px;
-    flex-direction: column;
     align-self: stretch;
     border-radius: 12px;
     background: #fee500;
     border: none;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .kakao {
+    width: 20px;
+    height: 18px;
+  }
+
+  span {
+    color: rgba(0, 0, 0, 0.85);
+    font-family: Roboto;
+    font-size: 13.5px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.64px;
   }
 
   .id-btn {
@@ -211,6 +234,7 @@ const Buttons = styled.div`
     border-radius: 12px;
     background: var(--p-primary-90, #cfe5ff);
     border: none;
+    cursor: pointer;
   }
 `;
 
@@ -218,6 +242,8 @@ const Buttons = styled.div`
 const SecondWrapper = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
+  margin-top: 40px;
 `;
 
 const Input = styled.div`
@@ -226,22 +252,22 @@ const Input = styled.div`
   justify-content: center;
   align-items: center;
   margin-top: 50px;
-  gap: 8px;
+  gap: 15px;
+
   p {
     color: var(--s-secondary-20, #243240);
-
-    /* Display/2 */
     font-family: Pretendard;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 140%; /* 44.8px */
+    line-height: 140%;
+    margin-bottom: 10px;
   }
 
   input {
-    width: 320px;
+    width: 20rem;
     display: flex;
-    padding: 16px 4px;
+    padding: 1rem 0.25rem;
     justify-content: center;
     align-items: flex-end;
     flex: 1 0 0;
@@ -256,7 +282,7 @@ const Input = styled.div`
     color: var(--s-secondary-20, #243240);
     /* Body/2 */
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 22.4px */
@@ -269,7 +295,7 @@ const Bottom = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 120px;
 
   .finish-login-btn {
     display: flex;
@@ -284,6 +310,7 @@ const Bottom = styled.div`
     background: var(--p-primary-30, #004a77);
     border: none;
     color: white;
+    cursor: pointer;
   }
 `;
 
@@ -291,13 +318,11 @@ const HandleSignupStyle = styled.div`
   margin-top: 10px;
   .span {
     color: var(--n-neutral-0, #000);
-
-    /* Caption/1 */
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%; /* 16.8px */
+    line-height: 140%;
   }
 
   .handle-signup {
@@ -306,9 +331,10 @@ const HandleSignupStyle = styled.div`
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%; /* 16.8px */
+    line-height: 140%;
     text-decoration-line: underline;
     border: none;
     background-color: transparent;
+    cursor: pointer;
   }
 `;

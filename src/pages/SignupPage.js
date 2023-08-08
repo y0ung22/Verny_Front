@@ -6,6 +6,8 @@ import { Container } from "../styles";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWord.svg";
+import kakao from "../assets/icons/kakao.svg";
+import check from "../assets/icons/check.svg";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const SignupPage = () => {
     // 카카오 계정으로 회원가입 기능 구현
   };
 
-  // 아이디로 회원가입 버튼 클릭하면 아이디 입력 페이지로 이동
+  // 아이디로 회원가입 버튼 클릭하면 닉네임(아이디) 입력 페이지로 이동
   const handleMakeId = () => {
     setMakeIdPage(true);
   };
@@ -48,10 +50,11 @@ const SignupPage = () => {
         </Logo>
         <Buttons>
           <button className="kakao-btn" onClick={handleKakaoSignup}>
-            카카오 계정으로 회원가입
+            <img className="kakao" src={kakao} alt="카카오" />
+            <span>카카오 계정으로 회원가입</span>
           </button>
           <button className="id-btn" onClick={handleMakeId}>
-            아이디로 회원가입
+            <span>아이디로 회원가입</span>
           </button>
         </Buttons>
         <HandleLoginStyle>
@@ -122,10 +125,18 @@ const MakeIdPage = () => {
   return (
     <Container>
       <MakeIdPageStyle>
-        <p className="id-text">아이디</p>
+        <div className="id-text">
+          <p>아이디</p>
+        </div>
         <div className="id-condition">
-          <p>9자 이내여야 해요</p>
-          <p>한글과 영문만 사용가능해요</p>
+          <div className="first-condition">
+            <img className="check" src={check} alt="체크" />
+            <span>9자 이내여야 해요</span>
+          </div>
+          <div className="second-condition">
+            <img className="check" src={check} alt="체크" />
+            <span>한글과 영문만 사용가능해요</span>
+          </div>
         </div>
         <InputStyle>
           <input
@@ -134,14 +145,14 @@ const MakeIdPage = () => {
             onChange={(e) => setNewId(e.target.value)}
             placeholder="아이디를 입력해주세요."
           />
-          <button onClick={handleIdCheck}>
-            <span>중복확인</span>
-          </button>
+          <button onClick={handleIdCheck}>중복확인</button>
         </InputStyle>
         <Bottom>
-          <button className="btn" onClick={handleMakePw}>
-            다음
-          </button>
+          <div>
+            <button className="btn" onClick={handleMakePw}>
+              다음
+            </button>
+          </div>
           <HandleLoginStyle>
             <span>이미 회원이신가요?</span>
             <button onClick={handleLogin}>로그인하기</button>
@@ -174,17 +185,23 @@ const MakePwPage = () => {
   return (
     <Container>
       <MakePwPageStyle>
-        <p className="pw-text">비밀번호</p>
-        <input
-          type="password"
-          value={newPw}
-          onChange={(e) => setNewPw(e.target.value)}
-          placeholder="비밀번호를 입력하세요."
-        />
+        <div className="pw-text">
+          <p>비밀번호</p>
+        </div>
+        <div className="input-style">
+          <input
+            type="password"
+            value={newPw}
+            onChange={(e) => setNewPw(e.target.value)}
+            placeholder="비밀번호를 입력하세요."
+          />
+        </div>
         <Bottom>
-          <button className="btn" onClick={handleCheckPwPage}>
-            다음
-          </button>
+          <div>
+            <button className="btn" onClick={handleCheckPwPage}>
+              다음
+            </button>
+          </div>
           <HandleLoginStyle>
             <span>이미 회원이신가요?</span>
             <button onClick={handleLogin}>로그인하기</button>
@@ -238,21 +255,31 @@ const CheckPwPage = () => {
   return (
     <Container>
       <CheckPwPageStyle>
-        <p className="pw-check">비밀번호 확인</p>
-        <p className="pw-condition">비밀번호와 일치해야 해요</p>
-        <input
-          type="password"
-          value={confirmedPw}
-          onChange={(e) => setConfirmedPw(e.target.value)}
-          placeholder="비밀번호를 다시 입력하세요."
-        />
+        <div className="top-text">
+          <p>비밀번호 확인</p>
+          <div className="pw-condition">
+            <img src={check} alt="체크" />
+            <span>비밀번호와 일치해야 해요</span>
+          </div>
+        </div>
+        <div className="input-style">
+          <input
+            type="password"
+            value={confirmedPw}
+            onChange={(e) => setConfirmedPw(e.target.value)}
+            placeholder="비밀번호를 다시 입력하세요."
+          />
+        </div>
         <Bottom>
-          <button className="btn" onClick={handleCompleteSignup}>
-            회원가입하기
-          </button>
-          {!pwMatch && (
-            <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
-          )}
+          <div>
+            <button className="btn" onClick={handleCompleteSignup}>
+              회원가입하기
+            </button>
+
+            {!pwMatch && (
+              <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
+            )}
+          </div>
           <HandleLoginStyle>
             <span>이미 회원이신가요?</span>
             <button onClick={handleLogin}>로그인하기</button>
@@ -271,18 +298,21 @@ const Bottom = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 120px;
   .btn {
     display: flex;
-    width: 328px;
-    height: 46px;
     padding: 12px 16px;
     justify-content: center;
     align-items: center;
+    gap: 8px;
+    width: 328px;
+    height: 46px;
     align-self: stretch;
     border-radius: 12px;
     background: var(--p-primary-30, #004a77);
     border: none;
     color: white;
+    cursor: pointer;
   }
 `;
 
@@ -290,13 +320,11 @@ const HandleLoginStyle = styled.div`
   margin-top: 10px;
   span {
     color: var(--n-neutral-0, #000);
-
-    /* Caption/1 */
     font-family: Pretendard;
     font-size: 12px;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%; /* 16.8px */
+    line-height: 140%;
   }
 
   button {
@@ -309,6 +337,7 @@ const HandleLoginStyle = styled.div`
     text-decoration-line: underline;
     border: none;
     background-color: transparent;
+    cursor: pointer;
   }
 `;
 
@@ -321,12 +350,16 @@ const SignupPageStyle = styled.div`
 `;
 
 const Logo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   margin-top: 150px;
 
   .logo-symbol {
     display: flex;
-    width: 98px;
-    height: 98px;
+    width: 40px;
+    height: 40px;
     padding: 28.584px 28.583px 28.583px 28.583px;
     flex-shrink: 0;
   }
@@ -335,7 +368,6 @@ const Logo = styled.div`
     width: 48.014px;
     height: 16px;
     flex-shrink: 0;
-    margin-left: 50px;
   }
 `;
 
@@ -349,15 +381,32 @@ const Buttons = styled.div`
 
   .kakao-btn {
     display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 328px;
     height: 46px;
-    flex-direction: column;
     align-self: stretch;
     border-radius: 12px;
     background: #fee500;
     border: none;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .kakao {
+    width: 20px;
+    height: 18px;
+  }
+
+  span {
+    color: rgba(0, 0, 0, 0.85);
+    font-family: Roboto;
+    font-size: 13.5px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.64px;
   }
 
   .id-btn {
@@ -371,6 +420,7 @@ const Buttons = styled.div`
     border-radius: 12px;
     background: var(--p-primary-90, #cfe5ff);
     border: none;
+    cursor: pointer;
   }
 `;
 
@@ -378,40 +428,69 @@ const Buttons = styled.div`
 const MakeIdPageStyle = styled.div`
   display: flex;
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
+  justify-content: center;
+  margin-top: 150px;
   .id-text {
-    width: 320px;
-    flex-shrink: 0;
-    color: var(--s-secondary-20, #243240);
-
-    /* Display/2 */
-    font-family: Pretendard;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%; /* 44.8px */
+    display: flex;
+    align-items: flex-start;
+    p {
+      color: var(--s-secondary-20, #243240);
+      font-family: Pretendard;
+      font-size: 27px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%;
+      padding: 0px 0px 0px 20px;
+    }
   }
   .id-condition {
-    flex: 1 0 0;
-    color: var(--s-secondary-40, #52606f);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0px 0px 0px 20px;
 
-    /* Caption/1 */
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 16.8px */
+    .first-condition {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .second-condition {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 5px;
+    }
+
+    img {
+      width: 4px;
+      height: 4px;
+    }
+
+    span {
+      flex: 1 0 0;
+      color: var(--s-secondary-40, #52606f);
+      font-family: Pretendard;
+      font-size: 12px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+    }
   }
 `;
 
 const InputStyle = styled.div`
   display: flex;
   flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  padding: 20px 20px 50px 20px;
+
   input {
-    width: 215px;
     display: flex;
-    padding: 16px 4px;
+    padding: 15px 0px 12px 0px;
     justify-content: center;
     align-items: flex-end;
     flex: 1 0 0;
@@ -424,7 +503,6 @@ const InputStyle = styled.div`
   input::placeholder {
     flex: 1 0 0;
     color: var(--s-secondary-20, #243240);
-    /* Body/2 */
     font-family: Pretendard;
     font-size: 16px;
     font-style: normal;
@@ -434,15 +512,21 @@ const InputStyle = styled.div`
   }
 
   button {
+    width: 82px;
+    height: 40px;
     display: flex;
-    padding: 12px 16px;
     justify-content: center;
     align-items: center;
-    gap: 8px;
     border-radius: 12px;
     border: 1.5px solid var(--p-primary-40, #00639c);
-    color: #00639c;
     background-color: transparent;
+    color: var(--p-primary-40, #00639c);
+    font-family: Pretendard;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    cursor: pointer;
   }
 `;
 
@@ -450,97 +534,125 @@ const InputStyle = styled.div`
 const MakePwPageStyle = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
   .pw-text {
-    width: 320px;
-    flex-shrink: 0;
-    color: var(--s-secondary-20, #243240);
-
-    /* Display/2 */
-    font-family: Pretendard;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%; /* 44.8px */
-  }
-
-  input {
-    width: 215px;
     display: flex;
-    padding: 16px 4px;
-    justify-content: center;
-    align-items: flex-end;
-    flex: 1 0 0;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
+    align-items: flex-start;
+    margin-top: 213px;
+    p {
+      width: 320px;
+      flex-shrink: 0;
+      color: var(--s-secondary-20, #243240);
+      font-family: Pretendard;
+      font-size: 27px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%;
+    }
   }
 
-  input::placeholder {
-    flex: 1 0 0;
-    color: var(--s-secondary-20, #243240);
-    /* Body/2 */
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 22.4px */
-    opacity: 0.6000000238418579;
+  .input-style {
+    padding: 0px 0px 53px 0px;
+
+    input {
+      width: 312px;
+      display: flex;
+      padding: 5px 0px 12px 0px;
+      justify-content: center;
+      align-items: flex-end;
+      flex: 1 0 0;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
+    }
+
+    input::placeholder {
+      flex: 1 0 0;
+      color: var(--s-secondary-20, #243240);
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%;
+      opacity: 0.6000000238418579;
+    }
   }
 `;
 
 const CheckPwPageStyle = styled.div`
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
 
-  .pw-check {
-    width: 320px;
-    flex-shrink: 0;
-    color: var(--s-secondary-20, #243240);
-
-    /* Display/2 */
-    font-family: Pretendard;
-    font-size: 32px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 140%; /* 44.8px */
-  }
-
-  .pw-condition {
-    flex: 1 0 0;
-    color: var(--s-secondary-40, #52606f);
-
-    /* Caption/1 */
-    font-family: Pretendard;
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 16.8px */
-  }
-
-  input {
-    width: 215px;
+  .top-text {
     display: flex;
-    padding: 16px 4px;
-    justify-content: center;
-    align-items: flex-end;
-    flex: 1 0 0;
-    border-top: none;
-    border-right: none;
-    border-left: none;
-    border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 165px;
+
+    p {
+      width: 320px;
+      flex-shrink: 0;
+      color: var(--s-secondary-20, #243240);
+      font-family: Pretendard;
+      font-size: 27px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 140%;
+    }
+    .pw-condition {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      gap: 5px;
+
+      img {
+        width: 4px;
+        height: 4px;
+      }
+
+      span {
+        flex: 1 0 0;
+        color: var(--s-secondary-40, #52606f);
+        font-family: Pretendard;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 140%;
+      }
+    }
   }
 
-  input::placeholder {
-    flex: 1 0 0;
-    color: var(--s-secondary-20, #243240);
-    /* Body/2 */
-    font-family: Pretendard;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 22.4px */
-    opacity: 0.6000000238418579;
+  .input-style {
+    padding: 30px 0px 55px 0px;
+
+    input {
+      width: 312px;
+      display: flex;
+      padding: 5px 0px 12px 0px;
+      justify-content: center;
+      align-items: flex-end;
+      flex: 1 0 0;
+      border-top: none;
+      border-right: none;
+      border-left: none;
+      border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
+    }
+
+    input::placeholder {
+      flex: 1 0 0;
+      color: var(--s-secondary-20, #243240);
+      font-family: Pretendard;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 140%; /* 22.4px */
+      opacity: 0.6000000238418579;
+    }
   }
 `;
