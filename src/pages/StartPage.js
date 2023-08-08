@@ -14,8 +14,8 @@ function StartPage() {
       </Welcome>
       <Explain>
         <p className="sentence2">
-          고전미술, 최신미술, 배리어프리 문화예술관광지와 함께 <br />
-          나만의 세계를 넓혀 보세요!
+          고전미술, 현대미술, 배리어프리 문화예술관광지와 함께 나만의 세계를
+          넓혀 보세요!
         </p>
       </Explain>
       <Buttons>
@@ -38,6 +38,7 @@ const Wrapper = styled.div`
   height: 800px;
   flex-shrink: 0;
   background-image: url(${mainImage});
+  margin: auto;
 `;
 
 const Welcome = styled.div`
