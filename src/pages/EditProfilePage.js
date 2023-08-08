@@ -3,6 +3,8 @@ import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
+import close from "../assets/icons/close.svg";
+import filterInit from "../assets/icons/filterInit.svg";
 import ProfileBasic from "../assets/icons/profileBasic.svg";
 import profileEdit from "../assets/icons/profileEdit.svg";
 import profileEditHover from "../assets/icons/profileEditHover.svg";
@@ -21,6 +23,14 @@ const EditProfilePage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [modal, setModal] = useState(false);
 
+  const openModal = () => {
+    setModal(true);
+  };
+
+  const closeModal = () => {
+    setModal(false);
+  };
+
   const MouseHover = () => {
     setIsHovered(true);
   };
@@ -30,6 +40,30 @@ const EditProfilePage = () => {
 
   return (
     <Wrapper>
+      {modal && (
+        <EditModal>
+          <Modal>
+            <Title>
+              <span>프로필 사진 수정</span>
+              <BtnBox>
+                <ResetBtn>
+                  <img src={filterInit} />
+                  <span>초기화</span>
+                </ResetBtn>
+                <img onClick={closeModal} src={close} />
+              </BtnBox>
+            </Title>
+            <SelectImg>
+              <img src={profileImg1} />
+              <img src={profileImg2} />
+              <img src={profileImg3} />
+              <img src={profileImg4} />
+              <img src={profileImg4} />
+            </SelectImg>
+            <SelectBtn>프로필 적용</SelectBtn>
+          </Modal>
+        </EditModal>
+      )}
       <TopBar />
       <Container>
         <EditProfile>
@@ -38,11 +72,11 @@ const EditProfilePage = () => {
             src={isHovered ? profileEditHover : profileEdit}
             onMouseEnter={MouseHover}
             onMouseLeave={MouseLeave}
+            onClick={openModal}
           />
         </EditProfile>
-        <EditId alt="프로필 닉네임 수정" placeholder="아이디"></EditId>
+        <UserId>아이디 님</UserId>
       </Container>
-      <EditBtn>수정 완료</EditBtn>
       <MenuBar />
     </Wrapper>
   );
@@ -58,6 +92,89 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const EditModal = styled.div`
+  position: relative;
+  width: 360px;
+  height: 695.425px;
+  flex-shrink: 0;
+  opacity: 0.5;
+  z-index: 5;
+  background: var(--n-neutral-0, #000);
+`;
+
+const Modal = styled.div`
+  position: absolute;
+  bottom: 0px;
+  z-index: 10;
+  display: flex;
+  width: 360px;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 24px;
+  border-radius: 12px 12px 0px 0px;
+  background: var(--nv-neutral-variant-99, #fcfcff);
+`;
+
+const Title = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  span {
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 1.38rem;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%;
+  }
+`;
+
+const BtnBox = styled.div`
+  display: flex;
+  align-items: center;
+  img {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+  }
+`;
+
+const ResetBtn = styled.button`
+  display: flex;
+  padding: 4px 8px 4px 4px;
+  align-items: center;
+  img {
+    width: 12px;
+    height: 12px;
+    flex-shrink: 0;
+  }
+  span {
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+`;
+
+const SelectImg = styled.div`
+  width: 328px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  align-self: stretch;
+  img {
+    width: 48px;
+    height: 48px;
+  }
+`;
+
+const SelectBtn = styled.button``;
 
 const Container = styled.div`
   margin-top: 195px;
@@ -92,40 +209,15 @@ const EditImg = styled.img`
   }
 `;
 
-const EditId = styled.input`
-  width: 120px;
+const UserId = styled.div`
   display: flex;
   padding: 4px;
   margin-top: 10px;
-  justify-content: center;
-  align-items: flex-end;
-  gap: 8px;
-  border: none;
-  outline: none;
-  border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
-  color: var(--s-secondary-10, #0e1d2a);
+  color: var(--s-secondary-30, #3a4857);
+  text-align: center;
   font-family: Pretendard;
   font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
-  line-height: 140%;
-  text-align: center;
-`;
-
-const EditBtn = styled.button`
-  display: flex;
-  width: 328px;
-  padding: 12px 16px;
-  margin: 0px 16px;
-  justify-content: center;
-  align-items: center;
-  border: none;
-  border-radius: 12px;
-  background: var(--p-primary-30, #004a77);
-  color: var(--p-primary-100, #fff);
-  font-family: Pretendard;
-  font-size: 1rem;
-  font-style: normal;
-  font-weight: 400;
   line-height: 140%;
 `;
