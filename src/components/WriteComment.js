@@ -5,7 +5,7 @@ const WriteComment = () => {
   return (
     <Wrapper>
       <form className="input-container">
-        <Input type="text" placeholder="댓글을 입력해주세요!" />
+        <Input type="text" placeholder="내용을 입력해주세요!" />
         <SubmitButton>등록</SubmitButton>
       </form>
     </Wrapper>

@@ -1,17 +1,31 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
+import { Link } from "react-router-dom";
 
 import TopBar from "../components/TopBar";
 import SearchBar from "../components/SearchBar";
 import ArtBox from "../components/ArtBox";
 import MenuBar from "../components/MenuBar";
+import Write from "../assets/icons/write.svg";
+import WriteHover from "../assets/icons/writeHover.svg";
 
 const ArtPage = () => {
+  //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]); // Initially, the first category is selected.
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
+  };
+
+  //미술품 작성 버튼 호버 시 이미지 경로 변경
+  const [isHovered, setIsHovered] = useState(false);
+
+  const MouseHover = () => {
+    setIsHovered(true);
+  };
+  const MouseLeave = () => {
+    setIsHovered(false);
   };
 
   return (
@@ -37,6 +51,12 @@ const ArtPage = () => {
         <ArtBox />
         <ArtBox />
       </ArtList>
+      <Link to="/art/upload" style={{ textDecoration: "none" }}>
+        <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
+          <img src={isHovered ? WriteHover : Write} />
+        </WriteArtBtn>
+      </Link>
+
       <MenuBar />
     </Wrapper>
   );
@@ -45,6 +65,7 @@ const ArtPage = () => {
 export default ArtPage;
 
 const Wrapper = styled.div`
+  position: relative;
   margin: auto;
   width: 360px;
   height: 800px;
@@ -117,4 +138,15 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const WriteArtBtn = styled.button`
+  position: absolute;
+  right: 45px;
+  bottom: 120px;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  background-color: transparent;
+  border: none;
 `;

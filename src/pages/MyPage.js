@@ -29,9 +29,6 @@ const MyPage = () => {
           <Link to="/mypage/profile/edit" style={{ textDecoration: "none" }}>
             <button>프로필 수정</button>
           </Link>
-          <Link to="/mypage/profile/edit" style={{ textDecoration: "none" }}>
-            <button>개인정보 수정</button>
-          </Link>
           <button>로그아웃</button>
         </Edit>
         <QuitBtn>
