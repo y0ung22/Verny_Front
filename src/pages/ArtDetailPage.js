@@ -64,6 +64,7 @@ const ArtDetailPage = () => {
 export default ArtDetailPage;
 
 const Wrapper = styled.div`
+  position: relative;
   margin: auto;
   width: 360px;
   height: 800px;
@@ -74,6 +75,8 @@ const Wrapper = styled.div`
 `;
 
 const BeforeBtn = styled.div`
+  height: 575px;
+  width: 57px;
   position: absolute;
   left: 0px;
   top: 64px;
@@ -87,6 +90,8 @@ const BeforeBtn = styled.div`
 `;
 
 const NextBtn = styled.div`
+  height: 575px;
+  width: 57px;
   position: absolute;
   right: 0px;
   top: 64px;

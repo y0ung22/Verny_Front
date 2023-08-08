@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
+import TextareaAutosize from "react-textarea-autosize";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
@@ -42,7 +43,10 @@ const UploadArtPage = () => {
         </ContentInput>
         <DescriptionInput>
           <span>설명</span>
-          <textarea placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!" />
+          <TextareaAutosize
+            cacheMeasurements
+            placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
+          ></TextareaAutosize>
         </DescriptionInput>
       </Container>
       <MenuBar />
@@ -101,7 +105,7 @@ const Container = styled.div`
 const UploadImg = styled.div`
   display: flex;
   width: 328px;
-  height: 248 px;
+  height: 248px;
   justify-content: center;
   align-items: center;
   gap: 8px;
@@ -202,7 +206,7 @@ const DescriptionInput = styled.div`
     line-height: 140%;
   }
   textarea {
-    resize: vertical;
+    width: 312px;
     outline: none;
     display: flex;
     padding: 16px;

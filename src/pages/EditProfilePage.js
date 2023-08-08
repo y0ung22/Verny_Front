@@ -40,6 +40,7 @@ const EditProfilePage = () => {
 
   return (
     <Wrapper>
+      <TopBar />
       {modal && (
         <EditModal>
           <Modal>
@@ -64,7 +65,6 @@ const EditProfilePage = () => {
           </Modal>
         </EditModal>
       )}
-      <TopBar />
       <Container>
         <EditProfile>
           <ProfileImg src={ProfileBasic} alt="프로필 이미지 수정" />
@@ -108,7 +108,7 @@ const Modal = styled.div`
   bottom: 0px;
   z-index: 10;
   display: flex;
-  width: 360px;
+  width: 328px;
   padding: 16px;
   flex-direction: column;
   justify-content: flex-end;
@@ -136,6 +136,7 @@ const Title = styled.div`
 const BtnBox = styled.div`
   display: flex;
   align-items: center;
+  gap: 20px;
   img {
     width: 24px;
     height: 24px;
@@ -144,6 +145,9 @@ const BtnBox = styled.div`
 `;
 
 const ResetBtn = styled.button`
+  gap: 4px;
+  border: none;
+  background: transparent;
   display: flex;
   padding: 4px 8px 4px 4px;
   align-items: center;
@@ -174,7 +178,24 @@ const SelectImg = styled.div`
   }
 `;
 
-const SelectBtn = styled.button``;
+const SelectBtn = styled.button`
+  display: flex;
+  width: 328px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border: none;
+  border-radius: 12px;
+  background: var(--p-primary-40, #00639c);
+  color: var(--p-primary-100, #fff);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
 
 const Container = styled.div`
   margin-top: 195px;
