@@ -164,6 +164,7 @@ const EditProfilePage = () => {
 export default EditProfilePage;
 
 const Wrapper = styled.div`
+  position: relative;
   margin: auto;
   width: 360px;
   height: 800px;
@@ -176,9 +177,9 @@ const EditModal = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  position: fixed;
+  position: absolute;
   top: 0;
-  left: 143px;
+  left: 0;
   width: 360px;
   height: 695.425px;
   flex-shrink: 0;
