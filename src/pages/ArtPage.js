@@ -56,7 +56,6 @@ const ArtPage = () => {
           <img src={isHovered ? WriteHover : Write} />
         </WriteArtBtn>
       </Link>
-
       <MenuBar />
     </Wrapper>
   );
