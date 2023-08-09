@@ -5,7 +5,7 @@ import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import close from "../assets/icons/close.svg";
 import filterInit from "../assets/icons/filterInit.svg";
-import ProfileBasic from "../assets/icons/profileBasic.svg";
+import profileBasic from "../assets/icons/profileBasic.svg";
 import profileEdit from "../assets/icons/profileEdit.svg";
 import profileEditHover from "../assets/icons/profileEditHover.svg";
 import profileImg1 from "../assets/icons/profileImg1.svg";
@@ -22,6 +22,12 @@ import profileImg5Clicked from "../assets/icons/profileImg5Clicked.svg";
 const EditProfilePage = () => {
   const [isHovered, setIsHovered] = useState(false);
   const [modal, setModal] = useState(false);
+  const [profileImgSrc, setProfileImgSrc] = useState(profileBasic);
+  const [profile1Clicked, setProfile1Clicked] = useState(false);
+  const [profile2Clicked, setProfile2Clicked] = useState(false);
+  const [profile3Clicked, setProfile3Clicked] = useState(false);
+  const [profile4Clicked, setProfile4Clicked] = useState(false);
+  const [profile5Clicked, setProfile5Clicked] = useState(false);
 
   const openModal = () => {
     setModal(true);
@@ -38,15 +44,68 @@ const EditProfilePage = () => {
     setIsHovered(false);
   };
 
+  const initSelect = () => {
+    setProfile1Clicked(false);
+    setProfile2Clicked(false);
+    setProfile3Clicked(false);
+    setProfile4Clicked(false);
+    setProfile5Clicked(false);
+  };
+
+  const handleImageClick = (imageId) => {
+    setProfile1Clicked(false);
+    setProfile2Clicked(false);
+    setProfile3Clicked(false);
+    setProfile4Clicked(false);
+    setProfile5Clicked(false);
+
+    switch (imageId) {
+      case "profile1":
+        setProfile1Clicked(true);
+        break;
+      case "profile2":
+        setProfile2Clicked(true);
+        break;
+      case "profile3":
+        setProfile3Clicked(true);
+        break;
+      case "profile4":
+        setProfile4Clicked(true);
+        break;
+      case "profile5":
+        setProfile5Clicked(true);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleProfileImg = () => {
+    if (profile1Clicked) {
+      setProfileImgSrc(profileImg1);
+    } else if (profile2Clicked) {
+      setProfileImgSrc(profileImg2);
+    } else if (profile3Clicked) {
+      setProfileImgSrc(profileImg3);
+    } else if (profile4Clicked) {
+      setProfileImgSrc(profileImg4);
+    } else if (profile5Clicked) {
+      setProfileImgSrc(profileImg5);
+    }
+
+    closeModal();
+  };
+
   return (
     <Wrapper>
+      <TopBar />
       {modal && (
         <EditModal>
           <Modal>
             <Title>
               <span>프로필 사진 수정</span>
               <BtnBox>
-                <ResetBtn>
+                <ResetBtn onClick={initSelect}>
                   <img src={filterInit} />
                   <span>초기화</span>
                 </ResetBtn>
@@ -54,21 +113,41 @@ const EditProfilePage = () => {
               </BtnBox>
             </Title>
             <SelectImg>
-              <img src={profileImg1} />
-              <img src={profileImg2} />
-              <img src={profileImg3} />
-              <img src={profileImg4} />
-              <img src={profileImg4} />
+              <img
+                id="profile1"
+                src={profile1Clicked ? profileImg1Clicked : profileImg1}
+                onClick={() => handleImageClick("profile1")}
+              />
+              <img
+                id="profile2"
+                src={profile2Clicked ? profileImg2Clicked : profileImg2}
+                onClick={() => handleImageClick("profile2")}
+              />
+              <img
+                id="profile3"
+                src={profile3Clicked ? profileImg3Clicked : profileImg3}
+                onClick={() => handleImageClick("profile3")}
+              />
+              <img
+                id="profile4"
+                src={profile4Clicked ? profileImg4Clicked : profileImg4}
+                onClick={() => handleImageClick("profile4")}
+              />
+              <img
+                id="profile5"
+                src={profile5Clicked ? profileImg5Clicked : profileImg5}
+                onClick={() => handleImageClick("profile5")}
+              />
             </SelectImg>
-            <SelectBtn>프로필 적용</SelectBtn>
+            <SelectBtn onClick={handleProfileImg}>프로필 적용</SelectBtn>
           </Modal>
         </EditModal>
       )}
-      <TopBar />
       <Container>
         <EditProfile>
-          <ProfileImg src={ProfileBasic} alt="프로필 이미지 수정" />
+          <ProfileImg src={profileImgSrc} alt="프로필 이미지" />
           <EditImg
+            alt="프로필 이미지 수정"
             src={isHovered ? profileEditHover : profileEdit}
             onMouseEnter={MouseHover}
             onMouseLeave={MouseLeave}
@@ -94,13 +173,17 @@ const Wrapper = styled.div`
 `;
 
 const EditModal = styled.div`
-  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 143px;
   width: 360px;
   height: 695.425px;
   flex-shrink: 0;
-  opacity: 0.5;
   z-index: 5;
-  background: var(--n-neutral-0, #000);
+  background: rgba(0, 0, 0, 0.5);
 `;
 
 const Modal = styled.div`
@@ -108,7 +191,7 @@ const Modal = styled.div`
   bottom: 0px;
   z-index: 10;
   display: flex;
-  width: 360px;
+  width: 328px;
   padding: 16px;
   flex-direction: column;
   justify-content: flex-end;
@@ -136,6 +219,7 @@ const Title = styled.div`
 const BtnBox = styled.div`
   display: flex;
   align-items: center;
+  gap: 15px;
   img {
     width: 24px;
     height: 24px;
@@ -144,6 +228,9 @@ const BtnBox = styled.div`
 `;
 
 const ResetBtn = styled.button`
+  gap: 4px;
+  border: none;
+  background: transparent;
   display: flex;
   padding: 4px 8px 4px 4px;
   align-items: center;
@@ -153,6 +240,7 @@ const ResetBtn = styled.button`
     flex-shrink: 0;
   }
   span {
+    margin-top: 2px;
     color: var(--n-neutral-10, #1a1c1e);
     font-family: Pretendard;
     font-size: 0.75rem;
@@ -174,7 +262,24 @@ const SelectImg = styled.div`
   }
 `;
 
-const SelectBtn = styled.button``;
+const SelectBtn = styled.button`
+  display: flex;
+  width: 328px;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border: none;
+  border-radius: 12px;
+  background: var(--p-primary-40, #00639c);
+  color: var(--p-primary-100, #fff);
+  font-family: Pretendard;
+  font-size: 1rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
 
 const Container = styled.div`
   margin-top: 195px;
@@ -201,7 +306,7 @@ const EditImg = styled.img`
   width: 30px;
   height: 30px;
   flex-shrink: 0;
-  z-index: 5;
+  z-index: 1;
   fill: var(--n-neutral-100, #fff);
   filter: drop-shadow(0px 4px 4px rgba(0, 51, 84, 0.04));
   &:hover {
