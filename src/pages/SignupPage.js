@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styled from "styled-components";
 import { Container } from "../styles";
+import TopBar from "../components/TopBar";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
-import logoWord from "../assets/icons/logoWord.svg";
+import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
 import check from "../assets/icons/check.svg";
 
@@ -35,6 +36,7 @@ const SignupPage = () => {
   // SignupPage 내용
   return (
     <Container>
+      <TopBar />
       <SignupPageStyle>
         <Logo>
           <img
@@ -124,6 +126,7 @@ const MakeIdPage = () => {
   // MakeIdPage 내용
   return (
     <Container>
+      <TopBar />
       <MakeIdPageStyle>
         <div className="id-text">
           <p>아이디</p>
@@ -184,6 +187,7 @@ const MakePwPage = () => {
   // MakePwPage 내용
   return (
     <Container>
+      <TopBar />
       <MakePwPageStyle>
         <div className="pw-text">
           <p>비밀번호</p>
@@ -243,8 +247,8 @@ const CheckPwPage = () => {
   };
 
   if (signupCompleted) {
-    // 회원가입 완료되면 로그인 페이지로 이동
-    return navigate("/login");
+    // 회원가입 완료되면 메인페이지로 이동
+    return navigate("/art");
   }
 
   const handleLogin = () => {
@@ -254,6 +258,7 @@ const CheckPwPage = () => {
   // CheckPwPage 내용
   return (
     <Container>
+      <TopBar />
       <CheckPwPageStyle>
         <div className="top-text">
           <p>비밀번호 확인</p>

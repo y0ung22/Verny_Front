@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import TopBar from "../components/TopBar";
 
 import styled from "styled-components";
 import { Container } from "../styles";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
-import logoWord from "../assets/icons/logoWord.svg";
+import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
 
 const LoginPage = () => {
@@ -54,7 +55,7 @@ const LoginPage = () => {
         // id랑 pw 모두 일치하는 경우
         localStorage.setItem("user_id", inputId); // sessionStorage 대신 localStorage 사용하는 거 맞나
       }
-      navigate("/"); // 로그인 완료 이후 어디로 이동할지
+      navigate("/art"); // 로그인 완료 이후 어디로 이동할지
     } catch (error) {
       console.error("로그인 에러:", error);
       // alert("로그인 중 오류가 발생했습니다.");
@@ -63,6 +64,7 @@ const LoginPage = () => {
 
   return (
     <Container>
+      <TopBar />
       {idLoginPage ? (
         <SecondWrapper>
           <Input>

@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Map } from "react-kakao-maps-sdk";
+import TopBar from "../components/TopBar";
+import MenuBar from "../components/MenuBar";
 
 import styled from "styled-components";
 import { Container } from "../styles";
@@ -28,6 +30,16 @@ const PlacePage = () => {
   const handleCloseModal = () => {
     setFilterOpen(false);
     setSortOpen(false);
+  };
+
+  const handleCopy = async (text: String) => {
+    try {
+      await navigator.clipboard.writeText(text);
+
+      alert("복사 성공");
+    } catch (error) {
+      alert("복사 실패");
+    }
   };
 
   function ListBlock({ children }) {
@@ -60,15 +72,26 @@ const PlacePage = () => {
         address: "경기도 파주시 탄현면 헤이리마을길 38-25",
       },
       {
+        name: "072골프훈련소",
+        category: "레저/체육",
+        address: "경기도 안양시 동안구 흥안대로434번길 19-33",
+      },
+      {
         name: "1004섬수석미술관",
         category: "전시/공연",
         address: "전라남도 신안군 자은면 자은서부2길 508-68",
+      },
+      {
+        name: "123GC",
+        category: "레저/체육",
+        address: "경기도 고양시 덕양구 통일로 43-168",
       },
       {
         name: "148아트스퀘어",
         category: "전시/공연",
         address: "경상북도 영주시 대학로 77",
       },
+
       // ... 더 많은 장소들
     ];
 
@@ -120,6 +143,7 @@ const PlacePage = () => {
               </p>
             </div>
             <button
+              onClick={() => handleCopy(place.address)}
               style={{
                 width: "70px",
                 height: "32px",
@@ -149,6 +173,7 @@ const PlacePage = () => {
 
   return (
     <Container>
+      <TopBar />
       <Wrapper>
         <Banner />
         <TopContent>
@@ -187,6 +212,7 @@ const PlacePage = () => {
               alt="드롭다운 기호"
             />
           </Sort>
+
           {filterOpen && <Backdrop onClick={handleCloseModal} />}
           <FilterModal
             isOpen={filterOpen}
@@ -356,23 +382,25 @@ const PlacePage = () => {
             </button>
           </SortModal> */}
         </TopContent>
-
-        <Map // 지도를 표시할 Container
-          center={{
-            // 지도의 중심좌표
-            lat: 33.450701,
-            lng: 126.570667,
-          }}
-          style={{
-            // 지도의 크기
-            width: "328px",
-            height: "234px",
-            borderRadius: "12px",
-          }}
-          level={3} // 지도의 확대 레벨
-        />
-        <PlaceList />
+        <MainContent>
+          <Map // 지도를 표시할 Container
+            center={{
+              // 지도의 중심좌표
+              lat: 33.450701,
+              lng: 126.570667,
+            }}
+            style={{
+              // 지도의 크기
+              width: "328px",
+              height: "234px",
+              borderRadius: "12px",
+            }}
+            level={3} // 지도의 확대 레벨
+          />
+          <PlaceList />
+        </MainContent>
       </Wrapper>
+      <MenuBar />
     </Container>
   );
 };
@@ -380,11 +408,17 @@ const PlacePage = () => {
 export default PlacePage;
 
 const Wrapper = styled.div`
+  /* height: 100%; */
+  max-height: 625px; // 800에서 topbar랑 menubar height를 빼면 692
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   overflow-x: hidden;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Banner = styled.div`
@@ -402,8 +436,16 @@ const TopContent = styled.div`
   flex-direction: column;
   width: 360px;
   padding: 8px 16px;
+  margin-top: 155px;
   justify-content: flex-end;
   align-items: flex-start;
+`;
+
+const MainContent = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;
 
 const SearchFilter = styled.div`
@@ -423,6 +465,7 @@ const SearchFilter = styled.div`
     border-radius: 12px;
     border: 1.5px solid var(--s-secondary-80, #b9c8da);
     background: var(--s-secondary-99, #fcfcff);
+    outline: none;
   }
 
   input::placeholder {
