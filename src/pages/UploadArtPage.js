@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useRef } from "react";
 import { styled } from "styled-components";
-import TextareaAutosize from "react-textarea-autosize";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import plus from "../assets/icons/plus.svg";
 
 const UploadArtPage = () => {
+  const textareaRef = useRef(null);
+
+  const handleTextareaInput = () => {
+    if (textareaRef.current) {
+      const element = textareaRef.current;
+      element.style.height = "auto";
+      element.style.height = element.scrollHeight + "px";
+    }
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -42,10 +51,11 @@ const UploadArtPage = () => {
         </ContentInput>
         <DescriptionInput>
           <span>설명</span>
-          <TextareaAutosize
-            cacheMeasurements
+          <textarea
+            ref={textareaRef}
             placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
-          ></TextareaAutosize>
+            onInput={handleTextareaInput}
+          ></textarea>
         </DescriptionInput>
       </Container>
       <MenuBar />
@@ -89,12 +99,11 @@ const UploadBtn = styled.button`
 const Container = styled.div`
   display: flex;
   width: 328px;
-  height: 400px;
+  height: 600px;
   padding: 0px 16px 40px 16px;
   flex-direction: column;
   align-items: flex-start;
   gap: 30px;
-  flex: 1 0 0;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
@@ -107,15 +116,11 @@ const UploadImg = styled.div`
   height: 264px;
   justify-content: center;
   align-items: center;
-  gap: 8px;
-  align-self: stretch;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.5);
   img {
-    display: flex;
     width: 24px;
     height: 24px;
-    align-items: flex-start;
   }
 `;
 
@@ -145,7 +150,7 @@ const AltInput = styled.div`
     color: var(--s-secondary-10, #0e1d2a);
     opacity: 0.6000000238418579;
     font-family: Pretendard;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -178,8 +183,7 @@ const Content = styled.div`
   input {
     width: 247px;
     display: flex;
-    padding: 16px 4px;
-    gap: 8px;
+    padding: 14px 4px;
     align-self: stretch;
     border: none;
     outline: none;
@@ -187,7 +191,7 @@ const Content = styled.div`
     color: var(--s-secondary-10, #0e1d2a);
     opacity: 0.6000000238418579;
     font-family: Pretendard;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -195,6 +199,13 @@ const Content = styled.div`
 `;
 
 const DescriptionInput = styled.div`
+  display: flex;
+  padding: 0px 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 16px;
+  align-self: stretch;
   span {
     width: 49px;
     color: var(--n-neutral-10, #1a1c1e);
@@ -205,19 +216,20 @@ const DescriptionInput = styled.div`
     line-height: 140%;
   }
   textarea {
-    width: 312px;
+    resize: none;
+    min-height: 3%;
+    overflow-y: hidden;
     outline: none;
+    width: 290px;
     display: flex;
-    padding: 16px;
+    padding: 10px;
     justify-content: center;
-    align-self: stretch;
     border-radius: 12px;
     border: 1.5px solid var(--s-secondary-50, #6a7889);
     background: var(--n-neutral-99, #fcfcff);
     color: var(--s-secondary-10, #0e1d2a);
-    opacity: 0.6000000238418579;
     font-family: Pretendard;
-    font-size: 1rem;
+    font-size: 0.88rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
