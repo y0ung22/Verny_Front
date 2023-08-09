@@ -20,6 +20,7 @@ const UploadArtPage = () => {
     <Wrapper>
       <TopBar />
       <UploadBtn>업로드</UploadBtn>
+      <ScrollArea></ScrollArea>
       <Container>
         <UploadImg>
           <img src={plus} />
@@ -96,18 +97,21 @@ const UploadBtn = styled.button`
   line-height: 140%;
 `;
 
-const Container = styled.div`
-  display: flex;
-  width: 328px;
-  height: 600px;
-  padding: 0px 16px 40px 16px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
+const ScrollArea = styled.div`
+  height: 500px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 328px;
+  padding: 0px 16px 40px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
 `;
 
 const UploadImg = styled.div`
