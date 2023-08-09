@@ -6,7 +6,6 @@ export const Container = styled.div`
   height: 800px;
   background: var(--n-neutral-100, #fff);
   margin: auto;
-  overflow: auto;
 `;
 
 // 대부분 영역에 공통적으로 적용되는 흰 색 바탕 따로 빼서 만듦
