@@ -20,44 +20,63 @@ const UploadArtPage = () => {
     <Wrapper>
       <TopBar />
       <UploadBtn>업로드</UploadBtn>
-      <Container>
-        <UploadImg>
-          <img src={plus} />
-        </UploadImg>
-        <AltInput>
-          <span>대체텍스트</span>
-          <input
-            id="altText"
-            placeholder="작품 이미지 관련 대체텍스트를 입력해주세요!"
-          />
-        </AltInput>
-        <ContentInput>
-          <Content>
-            <span>작품명</span>
-            <input id="title" placeholder="작품명을 입력해주세요!" />
-          </Content>
-          <Content>
-            <span>작가명</span>
-            <input id="artist" placeholder="작가명을 입력해주세요!" />
-          </Content>
-          <Content>
-            <span>기법</span>
-            <input id="method" placeholder="작품에 쓰인 기법을 입력해주세요!" />
-          </Content>
-          <Content>
-            <span>연도</span>
-            <input id="year" placeholder="작품을 제작한 연도를 입력해주세요!" />
-          </Content>
-        </ContentInput>
-        <DescriptionInput>
-          <span>설명</span>
-          <textarea
-            ref={textareaRef}
-            placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
-            onInput={handleTextareaInput}
-          ></textarea>
-        </DescriptionInput>
-      </Container>
+      <ScrollArea>
+        <Container>
+          <UploadImg>
+            <img src={plus} />
+          </UploadImg>
+          <InfoInput>
+            <AltInput>
+              <span>대체텍스트</span>
+              <input
+                id="altText"
+                placeholder="작품 이미지 관련 대체텍스트를 입력해주세요!"
+              />
+            </AltInput>
+            <CategoryInput>
+              <span>분류</span>
+              <label>
+                <input type="radio" name="category" value="고전미술" /> 고전미술
+              </label>
+              <label>
+                <input type="radio" name="category" value="현대미술" /> 현대미술
+              </label>
+            </CategoryInput>
+          </InfoInput>
+          <ContentInput>
+            <Content>
+              <span>작품명</span>
+              <input id="title" placeholder="작품명을 입력해주세요!" />
+            </Content>
+            <Content>
+              <span>작가명</span>
+              <input id="artist" placeholder="작가명을 입력해주세요!" />
+            </Content>
+            <Content>
+              <span>기법</span>
+              <input
+                id="method"
+                placeholder="작품에 쓰인 기법을 입력해주세요!"
+              />
+            </Content>
+            <Content>
+              <span>연도</span>
+              <input
+                id="year"
+                placeholder="작품을 제작한 연도를 입력해주세요!"
+              />
+            </Content>
+          </ContentInput>
+          <DescriptionInput>
+            <span>설명</span>
+            <textarea
+              ref={textareaRef}
+              placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
+              onInput={handleTextareaInput}
+            ></textarea>
+          </DescriptionInput>
+        </Container>
+      </ScrollArea>
       <MenuBar />
     </Wrapper>
   );
@@ -96,18 +115,22 @@ const UploadBtn = styled.button`
   line-height: 140%;
 `;
 
-const Container = styled.div`
-  display: flex;
-  width: 328px;
-  height: 600px;
-  padding: 0px 16px 40px 16px;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 30px;
+const ScrollArea = styled.div`
+  height: 650px;
+  margin-bottom: 100px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const Container = styled.div`
+  display: flex;
+  width: 328px;
+  padding: 0px 16px 40px 16px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 30px;
 `;
 
 const UploadImg = styled.div`
@@ -124,9 +147,18 @@ const UploadImg = styled.div`
   }
 `;
 
-const AltInput = styled.div`
+const InfoInput = styled.div`
   display: flex;
   padding: 0px 8px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  gap: 8px;
+  align-self: stretch;
+`;
+
+const AltInput = styled.div`
+  display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
@@ -154,6 +186,44 @@ const AltInput = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+  }
+`;
+
+const CategoryInput = styled.div`
+  display: flex;
+  height: 52px;
+  min-height: 52px;
+  align-items: center;
+  gap: 16px;
+  align-self: stretch;
+  span {
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 1rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 140%;
+  }
+  label {
+    display: flex;
+    gap: 5px;
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 0.88rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+  [type="radio"] {
+    border: max(2px, 0.1em) solid gray;
+    border-radius: 50%;
+    width: 0.88rem;
+    height: 0.88rem;
+    background-color: white;
+    transition: border-color 0.3s ease;
+  }
+  [type="radio"]:checked {
+    background-color: var(--s/secondary50, #6a7889);
   }
 `;
 
@@ -217,12 +287,11 @@ const DescriptionInput = styled.div`
   }
   textarea {
     resize: none;
-    min-height: 3%;
     overflow-y: hidden;
     outline: none;
-    width: 290px;
+    width: 280px;
     display: flex;
-    padding: 10px;
+    padding: 16px;
     justify-content: center;
     border-radius: 12px;
     border: 1.5px solid var(--s-secondary-50, #6a7889);
