@@ -76,7 +76,7 @@ const MakeIdPage = () => {
   const [newId, setNewId] = useState("");
   const [usableId, setUsableId] = useState(false);
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
@@ -102,7 +102,7 @@ const MakeIdPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_id: newId }),
+        body: JSON.stringify({ username: newId }),
       });
 
       if (response.status === 200) {
@@ -224,7 +224,7 @@ const CheckPwPage = () => {
   const [newId, setNewId] = useState("");
   const [newPw, setNewPw] = useState("");
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 회원가입 완료
   const handleCompleteSignup = async () => {
@@ -236,8 +236,8 @@ const CheckPwPage = () => {
     try {
       // REST API를 이용하여 백엔드에 회원가입 데이터 전달
       const response = await axios.post(`${BASE_URL}/account/signup`, {
-        user_id: newId,
-        user_pw: newPw,
+        username: newId,
+        password: newPw,
       });
 
       setSignupCompleted(true);

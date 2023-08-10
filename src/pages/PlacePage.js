@@ -561,7 +561,7 @@ const Backdrop = styled.div`
   top: 0;
   left: auto;
   width: 360px;
-  height: 100%;
+  height: 590px;
   /* margin-left: 194px; */
   opacity: 0.5;
   background: var(--n-neutral-0, #000);
@@ -571,10 +571,10 @@ const Backdrop = styled.div`
 const FilterModal = styled.div`
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   position: absolute;
-  top: 100px;
+  top: 75px;
   left: auto;
   width: 360px;
-  height: 100%;
+  height: 625px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
