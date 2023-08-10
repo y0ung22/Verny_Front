@@ -1,4 +1,5 @@
 import React from "react";
+import axios from "axios";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -7,6 +8,14 @@ import WriteComment from "../components/WriteComment";
 import MenuBar from "../components/MenuBar";
 
 const CommentPage = () => {
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+
+  const getComments = async () => {
+    await axios
+      .get(`${BASE_URL}/main/posts/<int:pk>/comments/`)
+      .then((response) => {})
+      .catch((error) => console.log(error));
+  };
   return (
     <Wrapper>
       <TopBar />
