@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Map } from "react-kakao-maps-sdk";
+import { Map, MapMarker } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 
 import styled from "styled-components";
-import { Container } from "../styles";
 
 import search from "../assets/icons/search.svg";
 import filter from "../assets/icons/filter.svg";
@@ -91,6 +90,31 @@ const PlacePage = () => {
         category: "전시/공연",
         address: "경상북도 영주시 대학로 77",
       },
+      {
+        name: "153가족캠프",
+        category: "문화관광/명소",
+        address: "경기도 과천시 새술막길 10-17",
+      },
+      {
+        name: "168아트스퀘어",
+        category: "전시/공연",
+        address: "충청북도 충주시 예성로 168",
+      },
+      {
+        name: "1MSPACE",
+        category: "전시/공연",
+        address: "서울특별시 서대문구 연세로4길 27",
+      },
+      {
+        name: "2.28민주운동기념회관",
+        category: "전시/공연",
+        address: "대구광역시 중구 2.28길 9",
+      },
+      {
+        name: "2001아울렛 구로 어린이 소극장",
+        category: "전시/공연",
+        address: "서울특별시 구로구 중앙로1길 36",
+      },
 
       // ... 더 많은 장소들
     ];
@@ -171,31 +195,91 @@ const PlacePage = () => {
     );
   }
 
+  const locations = [
+    { title: "001스테이지", latlng: { lat: 37.58153269, lng: 127.002336 } },
+    { title: "05스튜디오", latlng: { lat: 37.78641343, lng: 126.698359 } },
+    { title: "072골프훈련소", latlng: { lat: 37.39403098, lng: 126.976543 } },
+    { title: "1004섬수석미술관", latlng: { lat: 34.8800925, lng: 125.996874 } },
+    { title: "123GC", latlng: { lat: 37.64140522, lng: 126.903049 } },
+    { title: "148아트스퀘어", latlng: { lat: 36.80700113, lng: 128.616142 } },
+    { title: "153가족캠프", latlng: { lat: 37.42870998, lng: 126.991199 } },
+    { title: "168아트스퀘어", latlng: { lat: 36.97189318, lng: 127.933612 } },
+    { title: "1MSPACE", latlng: { lat: 37.55760078, lng: 126.938198 } },
+    {
+      title: "2.28민주운동기념회관",
+      latlng: { lat: 35.85840431, lng: 128.590354 },
+    },
+    {
+      title: "2001아울렛 구로 어린이 소극장",
+      latlng: { lat: 37.49807255, lng: 126.862677 },
+    },
+  ];
+
   return (
-    <Container>
+    <Wrapper>
       <TopBar />
-      <Wrapper>
-        <Banner />
-        <TopContent>
-          <SearchFilter>
-            <input
-              type="text"
-              //   value={confirmedPw}
-              //   onChange={(e) => setConfirmedPw(e.target.value)}
-              placeholder="검색어를 입력해주세요!"
-            />
-            <img className="search-icon" src={search} alt="검색" />
-            <img
-              className="filter-icon"
-              src={filterOpen ? filterchecked : filter}
-              alt="필터"
-              onClick={handleFilterClick}
-            />
-          </SearchFilter>
-          <Sort>
-            <span
+      <Banner />
+      <SearchFilter>
+        <input
+          type="text"
+          //   value={confirmedPw}
+          //   onChange={(e) => setConfirmedPw(e.target.value)}
+          placeholder="검색어를 입력해주세요!"
+        />
+        <img className="search-icon" src={search} alt="검색" />
+        <img
+          className="filter-icon"
+          src={filterOpen ? filterchecked : filter}
+          alt="필터"
+          onClick={handleFilterClick}
+        />
+      </SearchFilter>
+      <Sort>
+        <span
+          style={{
+            color: "var(--s-secondary-40, #52606F)",
+            fontFamily: "Pretendard",
+            fontSize: "12px",
+            fontStyle: "normal",
+            fontWeight: 400,
+            lineHeight: "140%",
+          }}
+        >
+          1만 개 이상의 문예관광지를 만나보세요!
+        </span>
+        <button onClick={handleSortClick}>정렬</button>
+        <img
+          className="dropdown-icon"
+          src={sortOpen ? dropdownOpened : dropdownClosed}
+          alt="드롭다운 기호"
+        />
+      </Sort>
+
+      {filterOpen && <Backdrop onClick={handleCloseModal} />}
+      <FilterModal
+        isOpen={filterOpen}
+        onRequestClose={handleCloseModal}
+        contentLabel="필터"
+      >
+        <FilterTop>
+          <p
+            style={{
+              color: " var(--n-neutral-10, #1A1C1E)",
+              fontFamily: "Pretendard",
+              fontSize: "20px",
+              fontStyle: "normal",
+              fontWeight: 600,
+              lineHeight: "140%",
+              marginLeft: "10px",
+            }}
+          >
+            필터
+          </p>
+          <div className="filter-top-img">
+            <img className="filter-init" src={filterInit} alt="필터 초기화" />
+            <p
               style={{
-                color: "var(--s-secondary-40, #52606F)",
+                color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
                 fontSize: "12px",
                 fontStyle: "normal",
@@ -203,170 +287,124 @@ const PlacePage = () => {
                 lineHeight: "140%",
               }}
             >
-              1만 개 이상의 문예관광지를 만나보세요!
-            </span>
-            <button onClick={handleSortClick}>정렬</button>
+              필터 초기화
+            </p>
             <img
-              className="dropdown-icon"
-              src={sortOpen ? dropdownOpened : dropdownClosed}
-              alt="드롭다운 기호"
+              className="close-icon"
+              src={close}
+              alt="닫기"
+              onClick={handleCloseModal}
             />
-          </Sort>
-
-          {filterOpen && <Backdrop onClick={handleCloseModal} />}
-          <FilterModal
-            isOpen={filterOpen}
-            onRequestClose={handleCloseModal}
-            contentLabel="필터"
+          </div>
+        </FilterTop>
+        <FilterContent>
+          <Category>
+            <p
+              style={{
+                color: " var(--n-neutral-10, #1A1C1E)",
+                fontFamily: "Pretendard",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "140%",
+              }}
+            >
+              카테고리
+            </p>
+            <div className="first-line">
+              <button>모두 선택</button>
+              <button>레저/체육/공원</button>
+              <button>문화관광/명소</button>
+            </div>
+            <div className="second-line">
+              <button>전시/공연</button>
+            </div>
+          </Category>
+          <Parking>
+            <p
+              style={{
+                color: " var(--n-neutral-10, #1A1C1E)",
+                fontFamily: "Pretendard",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "140%",
+              }}
+            >
+              주차시설
+            </p>
+            <div className="first-line">
+              <button>모두 선택</button>
+              <button>무료주차</button>
+              <button>유료주차</button>
+            </div>
+            <div className="second-line">
+              <button>장애인 주차</button>
+              <button>대형차 주차</button>
+            </div>
+          </Parking>
+          <Inside>
+            <p
+              style={{
+                color: " var(--n-neutral-10, #1A1C1E)",
+                fontFamily: "Pretendard",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "140%",
+              }}
+            >
+              내부시설
+            </p>
+            <div className="line">
+              <button>모두 선택</button>
+              <button>장애인화장실</button>
+              <button>휠체어 대여</button>
+            </div>
+          </Inside>
+          <Guide>
+            <p
+              style={{
+                color: " var(--n-neutral-10, #1A1C1E)",
+                fontFamily: "Pretendard",
+                fontSize: "15px",
+                fontStyle: "normal",
+                fontWeight: 400,
+                lineHeight: "140%",
+              }}
+            >
+              가이드
+            </p>
+            <div className="line">
+              <button>모두 선택</button>
+              <button>점자가이드</button>
+              <button>한국어 오디오가이드</button>
+            </div>
+          </Guide>
+        </FilterContent>
+        <FilterBtn>
+          <button
+            style={{
+              width: "320px",
+              height: "46px",
+              display: "flex",
+              padding: "12px 16px",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: "8px",
+              alignSelf: "stretch",
+              borderRadius: "12px",
+              border: "none",
+              background: "var(--p-primary-40, #00639C)",
+              color: "white",
+            }}
           >
-            <FilterTop>
-              <p
-                style={{
-                  color: " var(--n-neutral-10, #1A1C1E)",
-                  fontFamily: "Pretendard",
-                  fontSize: "20px",
-                  fontStyle: "normal",
-                  fontWeight: 600,
-                  lineHeight: "140%",
-                  marginLeft: "10px",
-                }}
-              >
-                필터
-              </p>
-              <div className="filter-top-img">
-                <img
-                  className="filter-init"
-                  src={filterInit}
-                  alt="필터 초기화"
-                />
-                <p
-                  style={{
-                    color: " var(--n-neutral-10, #1A1C1E)",
-                    fontFamily: "Pretendard",
-                    fontSize: "12px",
-                    fontStyle: "normal",
-                    fontWeight: 400,
-                    lineHeight: "140%",
-                  }}
-                >
-                  필터 초기화
-                </p>
-                <img
-                  className="close-icon"
-                  src={close}
-                  alt="닫기"
-                  onClick={handleCloseModal}
-                />
-              </div>
-            </FilterTop>
-            <FilterContent>
-              <Category>
-                <p
-                  style={{
-                    color: " var(--n-neutral-10, #1A1C1E)",
-                    fontFamily: "Pretendard",
-                    fontSize: "15px",
-                    fontStyle: "normal",
-                    fontWeight: 400,
-                    lineHeight: "140%",
-                  }}
-                >
-                  카테고리
-                </p>
-                <div className="first-line">
-                  <button>모두 선택</button>
-                  <button>레저/체육/공원</button>
-                  <button>문화관광/명소</button>
-                </div>
-                <div className="second-line">
-                  <button>전시/공연</button>
-                </div>
-              </Category>
-              <Parking>
-                <p
-                  style={{
-                    color: " var(--n-neutral-10, #1A1C1E)",
-                    fontFamily: "Pretendard",
-                    fontSize: "15px",
-                    fontStyle: "normal",
-                    fontWeight: 400,
-                    lineHeight: "140%",
-                  }}
-                >
-                  주차시설
-                </p>
-                <div className="first-line">
-                  <button>모두 선택</button>
-                  <button>무료주차</button>
-                  <button>유료주차</button>
-                </div>
-                <div className="second-line">
-                  <button>장애인 주차</button>
-                  <button>대형차 주차</button>
-                </div>
-              </Parking>
-              <Inside>
-                <p
-                  style={{
-                    color: " var(--n-neutral-10, #1A1C1E)",
-                    fontFamily: "Pretendard",
-                    fontSize: "15px",
-                    fontStyle: "normal",
-                    fontWeight: 400,
-                    lineHeight: "140%",
-                  }}
-                >
-                  내부시설
-                </p>
-                <div className="line">
-                  <button>모두 선택</button>
-                  <button>장애인화장실</button>
-                  <button>휠체어 대여</button>
-                </div>
-              </Inside>
-              <Guide>
-                <p
-                  style={{
-                    color: " var(--n-neutral-10, #1A1C1E)",
-                    fontFamily: "Pretendard",
-                    fontSize: "15px",
-                    fontStyle: "normal",
-                    fontWeight: 400,
-                    lineHeight: "140%",
-                  }}
-                >
-                  가이드
-                </p>
-                <div className="line">
-                  <button>모두 선택</button>
-                  <button>점자가이드</button>
-                  <button>한국어 오디오가이드</button>
-                </div>
-              </Guide>
-            </FilterContent>
-            <FilterBtn>
-              <button
-                style={{
-                  width: "320px",
-                  height: "46px",
-                  display: "flex",
-                  padding: "12px 16px",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  gap: "8px",
-                  alignSelf: "stretch",
-                  borderRadius: "12px",
-                  border: "none",
-                  background: "var(--p-primary-40, #00639C)",
-                  color: "white",
-                }}
-              >
-                필터 적용
-              </button>
-            </FilterBtn>
-          </FilterModal>
+            필터 적용
+          </button>
+        </FilterBtn>
+      </FilterModal>
 
-          {/* <SortModal
+      {/* <SortModal
             isOpen={sortOpen}
             onRequestClose={handleCloseModal}
             contentLabel="정렬"
@@ -381,44 +419,53 @@ const PlacePage = () => {
               <p>가나다순</p>
             </button>
           </SortModal> */}
-        </TopContent>
-        <MainContent>
-          <Map // 지도를 표시할 Container
-            center={{
-              // 지도의 중심좌표
-              lat: 33.450701,
-              lng: 126.570667,
+
+      <Map
+        center={{
+          // 지도의 중심좌표
+          lat: 37.58153269,
+          lng: 127.002336,
+        }}
+        style={{
+          // 지도의 크기
+          width: "320px",
+          height: "234px",
+          borderRadius: "12px",
+          marginTop: "10px",
+        }}
+        level={3} // 지도의 확대 레벨
+      >
+        {locations.map((loc, idx) => (
+          <MapMarker
+            key={`${loc.title}-${loc.latlng}`}
+            position={loc.latlng}
+            image={{
+              src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+              size: { width: 24, height: 35 },
             }}
-            style={{
-              // 지도의 크기
-              width: "328px",
-              height: "234px",
-              borderRadius: "12px",
-            }}
-            level={3} // 지도의 확대 레벨
+            title={loc.title}
           />
-          <PlaceList />
-        </MainContent>
-      </Wrapper>
+        ))}
+      </Map>
+      <MainContent>
+        <PlaceList />
+      </MainContent>
       <MenuBar />
-    </Container>
+    </Wrapper>
   );
 };
 
 export default PlacePage;
 
 const Wrapper = styled.div`
-  /* height: 100%; */
-  max-height: 625px; // 800에서 topbar랑 menubar height를 빼면 692
+  position: relative;
+  margin: auto;
+  width: 360px;
+  height: 800px;
+  background: var(--n-neutral-100, #fff);
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  overflow-x: hidden;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
 `;
 
 const Banner = styled.div`
@@ -431,24 +478,8 @@ const Banner = styled.div`
   background-position: center center;
 `;
 
-const TopContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 360px;
-  padding: 8px 16px;
-  margin-top: 155px;
-  justify-content: flex-end;
-  align-items: flex-start;
-`;
-
-const MainContent = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-`;
-
 const SearchFilter = styled.div`
+  width: 321px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -492,7 +523,8 @@ const Sort = styled.div`
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  padding: 8px 16px 10px 20px;
+  height: 20px;
+  margin-top: 10px;
   gap: 18px;
 
   button {
@@ -513,6 +545,17 @@ const Sort = styled.div`
   }
 `;
 
+const MainContent = styled.div`
+  height: 370px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  margin-bottom: 70px;
+`;
+
 const Backdrop = styled.div`
   position: fixed;
   top: 0;
@@ -528,7 +571,7 @@ const Backdrop = styled.div`
 const FilterModal = styled.div`
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   position: absolute;
-  top: 65px;
+  top: 100px;
   left: auto;
   width: 360px;
   height: 100%;
@@ -662,10 +705,7 @@ const Guide = styled.div`
   }
 `;
 
-const FilterBtn = styled.div`
-  justify-content: center;
-  align-items: center;
-`;
+const FilterBtn = styled.div``;
 // const SortModal = styled.div`
 //   position: absolute;
 //   padding: 0px 10px 0px 250px;
