@@ -213,17 +213,18 @@ const CategoryInput = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
-  }
-  [type="radio"] {
-    border: max(2px, 0.1em) solid gray;
-    border-radius: 50%;
-    width: 0.88rem;
-    height: 0.88rem;
-    background-color: white;
-    transition: border-color 0.3s ease;
-  }
-  [type="radio"]:checked {
-    background-color: var(--s/secondary50, #6a7889);
+
+    input[type="radio"] {
+      border: max(2px, 0.1rem) solid gray;
+      border-radius: 50%;
+      width: 0.88rem;
+      height: 0.88rem;
+      background-color: gray;
+      transition: border-color 0.3s ease;
+    }
+    input[type="radio"]:checked {
+      background-color: gray;
+    }
   }
 `;
 

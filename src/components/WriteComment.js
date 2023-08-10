@@ -1,11 +1,33 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import { styled } from "styled-components";
 
 const WriteComment = () => {
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const [newComment, setNewComment] = useState("");
+
+  const uploadComment = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(`${BASE_URL}/main/posts/<int:pk>/comments/`, {
+        content: newComment,
+      })
+      .then((response) => {
+        setNewComment(response.data);
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <Wrapper>
-      <form className="input-container">
-        <Input type="text" placeholder="내용을 입력해주세요!" />
+      <form className="input-container" onSubmit={uploadComment}>
+        <Input
+          type="text"
+          onChange={(e) => setNewComment(e.target.value)}
+          value={newComment}
+          placeholder="내용을 입력해주세요!"
+        />
         <SubmitButton>등록</SubmitButton>
       </form>
     </Wrapper>
