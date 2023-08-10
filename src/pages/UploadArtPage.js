@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -7,12 +7,27 @@ import plus from "../assets/icons/plus.svg";
 
 const UploadArtPage = () => {
   const textareaRef = useRef(null);
+  const inputRef = useRef(null);
+  const [uploadImg, setUploadImg] = useState("");
 
+  //textarea 길이 자동 조절
   const handleTextareaInput = () => {
     if (textareaRef.current) {
       const element = textareaRef.current;
       element.style.height = "auto";
       element.style.height = element.scrollHeight + "px";
+    }
+  };
+
+  //이미지 업로드
+  const handleImageUpload = (event) => {
+    const selectedImage = event.target.files[0];
+    if (selectedImage) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        setUploadImg(e.target.result);
+      };
+      reader.readAsDataURL(selectedImage);
     }
   };
 
@@ -22,9 +37,27 @@ const UploadArtPage = () => {
       <UploadBtn>업로드</UploadBtn>
       <ScrollArea>
         <Container>
-          <UploadImg>
-            <img src={plus} />
-          </UploadImg>
+          <ImgContainer>
+            <UploadImg>
+              <img
+                id="uploadImgBtn"
+                src={plus}
+                alt="Add Art"
+                onClick={() => inputRef.current.click()}
+              />
+              <input
+                type="file"
+                ref={inputRef}
+                style={{ display: "none" }}
+                accept="image/*"
+                onChange={handleImageUpload}
+              />
+              {uploadImg && (
+                <img id="uploadedImg" src={uploadImg} alt="Uploaded Art" />
+              )}
+            </UploadImg>
+          </ImgContainer>
+
           <InfoInput>
             <AltInput>
               <span>대체텍스트</span>
@@ -133,6 +166,16 @@ const Container = styled.div`
   gap: 30px;
 `;
 
+const ImgContainer = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+`;
+
 const UploadImg = styled.div`
   display: flex;
   width: 328px;
@@ -141,7 +184,14 @@ const UploadImg = styled.div`
   align-items: center;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.5);
-  img {
+  #uploadedImg {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+  }
+  #uploadImgBtn {
+    position: absolute;
+    z-index: 10;
     width: 24px;
     height: 24px;
   }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
+import { upload } from "@testing-library/user-event/dist/upload";
 
 const WriteComment = () => {
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -9,11 +10,16 @@ const WriteComment = () => {
   const uploadComment = async (e) => {
     e.preventDefault();
     await axios
-      .post(`${BASE_URL}/main/posts/<int:pk>/comments/`, {
-        content: newComment,
-      })
+      .post(
+        `${BASE_URL}/main/posts/<int:pk>/comments/`,
+        {
+          content: newComment,
+        },
+        { withCredentials: true }
+      )
       .then((response) => {
         setNewComment(response.data);
+        setNewComment("");
         console.log(response);
       })
       .catch((error) => console.log(error));
@@ -21,14 +27,14 @@ const WriteComment = () => {
 
   return (
     <Wrapper>
-      <form className="input-container" onSubmit={uploadComment}>
+      <form className="input-container">
         <Input
           type="text"
           onChange={(e) => setNewComment(e.target.value)}
           value={newComment}
           placeholder="내용을 입력해주세요!"
         />
-        <SubmitButton>등록</SubmitButton>
+        <SubmitButton onSubmit={uploadComment}>등록</SubmitButton>
       </form>
     </Wrapper>
   );
