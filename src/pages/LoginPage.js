@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
@@ -39,8 +39,8 @@ const LoginPage = () => {
       // REST API를 이용하여 백엔드에 로그인 데이터 전달
       const response = await axios.post(`${BASE_URL}/account/login`, null, {
         params: {
-          user_id: inputId,
-          user_pw: inputPw,
+          username: inputId,
+          password: inputPw,
         }, // 쿼리 파라미터 이용하는지 백엔드와 상의 필요
       });
 
