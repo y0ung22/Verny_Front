@@ -88,7 +88,7 @@ const Welcome = styled.div`
     color: var(--n-neutral-100, #fff);
     font-family: Pretendard;
     font-size: 20px;
-    font-style: normal;
+    font-style: 1.25rem;
     font-weight: 600;
     line-height: 140%;
   }
@@ -101,7 +101,7 @@ const Explain = styled.div`
     color: var(--n-neutral-80, #c6c6c9);
     text-align: center;
     font-family: Pretendard;
-    font-size: 12.7px;
+    font-size: 0.794rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -125,9 +125,11 @@ const Buttons = styled.div`
     background: var(--p-primary-20, #003354);
     width: 300px;
     height: 46px;
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-weight: normal;
     color: white;
     border: none;
-    text-decoration: none;
   }
 
   .login-btn {
@@ -141,8 +143,10 @@ const Buttons = styled.div`
     background: var(--p-primary-90, #cfe5ff);
     width: 300px;
     height: 46px;
+    font-family: Pretendard;
+    font-size: 0.875rem;
+    font-weight: normal;
     margin-top: 10px;
     border: none;
-    text-decoration: none;
   }
 `;

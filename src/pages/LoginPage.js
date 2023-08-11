@@ -206,7 +206,7 @@ const Buttons = styled.div`
     border-radius: 12px;
     background: #fee500;
     border: none;
-    gap: 5px;
+    gap: 10px;
     cursor: pointer;
   }
 
@@ -218,11 +218,10 @@ const Buttons = styled.div`
   span {
     color: rgba(0, 0, 0, 0.85);
     font-family: Roboto;
-    font-size: 13.5px;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    letter-spacing: -0.64px;
   }
 
   .id-btn {
@@ -321,7 +320,7 @@ const HandleSignupStyle = styled.div`
   .span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -330,7 +329,7 @@ const HandleSignupStyle = styled.div`
   .handle-signup {
     color: var(--p-primary-80, #98cbff);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
