@@ -1,7 +1,9 @@
 import React, { useState } from "react";
+
 import { Map, MapMarker } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
+import PlaceList from "../components/PlaceList";
 
 import styled from "styled-components";
 
@@ -30,170 +32,6 @@ const PlacePage = () => {
     setFilterOpen(false);
     setSortOpen(false);
   };
-
-  const handleCopy = async (text: String) => {
-    try {
-      await navigator.clipboard.writeText(text);
-
-      alert("복사 성공");
-    } catch (error) {
-      alert("복사 실패");
-    }
-  };
-
-  function ListBlock({ children }) {
-    return (
-      <div
-        style={{
-          display: "flex",
-          padding: "2px 0px",
-          alignItems: "center",
-          gap: "15px",
-          alignSelf: "stretch",
-          border: "none",
-        }}
-      >
-        {children}
-      </div>
-    );
-  }
-
-  function PlaceList() {
-    const places = [
-      {
-        name: "001스테이지",
-        category: "전시/공연",
-        address: "서울특별시 종로구 대학로 116",
-      },
-      {
-        name: "05스튜디오",
-        category: "전시/공연",
-        address: "경기도 파주시 탄현면 헤이리마을길 38-25",
-      },
-      {
-        name: "072골프훈련소",
-        category: "레저/체육",
-        address: "경기도 안양시 동안구 흥안대로434번길 19-33",
-      },
-      {
-        name: "1004섬수석미술관",
-        category: "전시/공연",
-        address: "전라남도 신안군 자은면 자은서부2길 508-68",
-      },
-      {
-        name: "123GC",
-        category: "레저/체육",
-        address: "경기도 고양시 덕양구 통일로 43-168",
-      },
-      {
-        name: "148아트스퀘어",
-        category: "전시/공연",
-        address: "경상북도 영주시 대학로 77",
-      },
-      {
-        name: "153가족캠프",
-        category: "문화관광/명소",
-        address: "경기도 과천시 새술막길 10-17",
-      },
-      {
-        name: "168아트스퀘어",
-        category: "전시/공연",
-        address: "충청북도 충주시 예성로 168",
-      },
-      {
-        name: "1MSPACE",
-        category: "전시/공연",
-        address: "서울특별시 서대문구 연세로4길 27",
-      },
-      {
-        name: "2.28민주운동기념회관",
-        category: "전시/공연",
-        address: "대구광역시 중구 2.28길 9",
-      },
-      {
-        name: "2001아울렛 구로 어린이 소극장",
-        category: "전시/공연",
-        address: "서울특별시 구로구 중앙로1길 36",
-      },
-
-      // ... 더 많은 장소들
-    ];
-
-    return (
-      <div>
-        {places.map((place, index) => (
-          <ListBlock key={index}>
-            <div>
-              <p
-                style={{
-                  width: "86px",
-                  fontSize: "13.5px",
-                  fontWeight: "400",
-                  lineHeight: "140%",
-                  color: "var(--n-neutral-10, #1A1C1E)",
-                  fontFamily: "Pretendard",
-                  fontStyle: "normal",
-                }}
-              >
-                {place.name}
-              </p>
-              <p
-                style={{
-                  width: "70px",
-                  fontSize: "12px",
-                  fontWeight: 400,
-                  lineHeight: "140%",
-                  color: "var(--s-secondary-40, #52606F)",
-                  fontFamily: "Pretendard",
-                  fontStyle: "normal",
-                }}
-              >
-                {place.category}
-              </p>
-            </div>
-            <div>
-              <p
-                style={{
-                  width: "120px",
-                  fontSize: "12px",
-                  fontWeight: 400,
-                  lineHeight: "140%",
-                  color: "var(--n-neutral-40, #5D5E61)",
-                  fontFamily: "Pretendard",
-                  fontStyle: "normal",
-                }}
-              >
-                {place.address}
-              </p>
-            </div>
-            <button
-              onClick={() => handleCopy(place.address)}
-              style={{
-                width: "70px",
-                height: "32px",
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-                gap: "8px",
-                border: "none",
-                borderRadius: "12px",
-                background: "var(--p-primary-90, #CFE5FF)",
-                fontSize: "10.5px",
-                fontWeight: 400,
-                lineHeight: "140%",
-                color: "var(--p-primary-10, #001D33)",
-                fontFamily: "Pretendard",
-                fontStyle: "normal",
-                cursor: "pointer",
-              }}
-            >
-              주소복사
-            </button>
-          </ListBlock>
-        ))}
-      </div>
-    );
-  }
 
   const locations = [
     { title: "001스테이지", latlng: { lat: 37.58153269, lng: 127.002336 } },
@@ -239,7 +77,7 @@ const PlacePage = () => {
           style={{
             color: "var(--s-secondary-40, #52606F)",
             fontFamily: "Pretendard",
-            fontSize: "12px",
+            fontSize: "0.75rem",
             fontStyle: "normal",
             fontWeight: 400,
             lineHeight: "140%",
@@ -266,7 +104,7 @@ const PlacePage = () => {
             style={{
               color: " var(--n-neutral-10, #1A1C1E)",
               fontFamily: "Pretendard",
-              fontSize: "20px",
+              fontSize: "1.25rem",
               fontStyle: "normal",
               fontWeight: 600,
               lineHeight: "140%",
@@ -281,7 +119,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "12px",
+                fontSize: "0.75rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -303,7 +141,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "15px",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -348,7 +186,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "15px",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -367,7 +205,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "15px",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -432,6 +270,7 @@ const PlacePage = () => {
           height: "234px",
           borderRadius: "12px",
           marginTop: "10px",
+          marginBottom: "10px",
         }}
         level={3} // 지도의 확대 레벨
       >
@@ -447,9 +286,7 @@ const PlacePage = () => {
           />
         ))}
       </Map>
-      <MainContent>
-        <PlaceList />
-      </MainContent>
+      <PlaceList />
       <MenuBar />
     </Wrapper>
   );
@@ -503,7 +340,7 @@ const SearchFilter = styled.div`
     flex: 1 0 0;
     color: var(--s-secondary-10, #0e1d2a);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -533,7 +370,7 @@ const Sort = styled.div`
     cursor: pointer;
     color: var(--s-secondary-40, #52606f);
     font-family: Pretendard;
-    font-size: 13.5px;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -543,17 +380,6 @@ const Sort = styled.div`
     height: 12px;
     margin-left: 5px;
   }
-`;
-
-const MainContent = styled.div`
-  height: 370px;
-  display: flex;
-  flex-direction: column;
-  overflow-y: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-  margin-bottom: 70px;
 `;
 
 const Backdrop = styled.div`
@@ -638,7 +464,7 @@ const FilterContent = styled.div`
     margin-right: 2px;
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
