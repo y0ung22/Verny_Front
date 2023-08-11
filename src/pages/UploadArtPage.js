@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -9,6 +10,14 @@ const UploadArtPage = () => {
   const textareaRef = useRef(null);
   const inputRef = useRef(null);
   const [uploadImg, setUploadImg] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newPainter, setNewPainter] = useState("");
+  const [newTechnique, setNewTechnique] = useState("");
+  const [newContent, setNewContent] = useState("");
+  const [newYear, setNewYear] = useState("");
+  const [newType, setNewType] = useState("");
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //textarea 길이 자동 조절
   const handleTextareaInput = () => {
@@ -29,6 +38,23 @@ const UploadArtPage = () => {
       };
       reader.readAsDataURL(selectedImage);
     }
+  };
+
+  //게시글 POST
+  const uploadArt = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(`${BASE_URL}/main/postsadd/`, {
+        image: uploadImg,
+        title: newTitle,
+        painter: newPainter,
+        drawing_technique: newTechnique,
+        content: newContent,
+        work_year: newYear,
+        type: newType,
+      })
+      .then((response) => {})
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -57,7 +83,6 @@ const UploadArtPage = () => {
               )}
             </UploadImg>
           </ImgContainer>
-
           <InfoInput>
             <AltInput>
               <span>대체텍스트</span>
@@ -130,7 +155,7 @@ const Wrapper = styled.div`
 
 const UploadBtn = styled.button`
   position: absolute;
-  top: 44px;
+  top: 32px;
   right: 16px;
   border: none;
   border-radius: 12px;
@@ -167,6 +192,7 @@ const Container = styled.div`
 `;
 
 const ImgContainer = styled.div`
+  margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: column;

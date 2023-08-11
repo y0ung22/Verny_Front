@@ -19,7 +19,7 @@ const MyPage = () => {
       <MyBtn>
         <Menu>
           <Link to="/mypage/profile" style={{ textDecoration: "none" }}>
-            <button>내 프로필 보기</button>
+            <button>내 활동 보기</button>
           </Link>
           <Link to="/mypage/bookmark" style={{ textDecoration: "none" }}>
             <button>즐겨찾기한 미술</button>

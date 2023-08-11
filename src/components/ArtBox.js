@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 import comment from "../assets/icons/comment.svg";
@@ -8,7 +7,7 @@ import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 import testImg from "../assets/etc/text.jpg";
 
-const ArtBox = () => {
+const ArtBox = ({ arts }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
@@ -33,34 +32,26 @@ const ArtBox = () => {
     }
   };
 
-  //미술작품 정보 받아오기
-  //const getAllArts = async () => {
-  //await axios
-  //.get(`${BASE_URL}`)
-  //.then((response) => {})
-  //.catch((error) => console.log(error));
-  //};
-
   return (
     <Wrapper>
       <Image
-        src={testImg}
+        src={arts.image}
         alt="수련이 연못에 떠 있고 버드나무가 드리워진 푸른빛과 초록빛의 그림"
         onClick={moveDetail}
       />
       <Info>
         <TextBox onClick={moveDetail}>
-          <Title>Blue Water Lilies</Title>
-          <Artist>Claude Monet</Artist>
+          <Title>{arts.title}</Title>
+          <Artist>{arts.painter}</Artist>
         </TextBox>
         <BtnBox>
           <Btn onClick={moveComment}>
             <img src={comment} alt="댓글" />
-            <span>100</span>
+            <span>{arts.comment_count}</span>
           </Btn>
           <Btn onClick={savekBookMark}>
             <img src={bookMarkSrc} alt="즐겨찾기" />
-            <span>100</span>
+            <span>{arts.scraps_count}</span>
           </Btn>
         </BtnBox>
       </Info>
