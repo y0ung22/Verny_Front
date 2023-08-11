@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
-import testImg from "../assets/etc/text.jpg";
 
-const ArtBox = ({ arts }) => {
+const ArtBox = ({ art }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
@@ -35,23 +35,23 @@ const ArtBox = ({ arts }) => {
   return (
     <Wrapper>
       <Image
-        src={arts.image}
+        src={art.image}
         alt="수련이 연못에 떠 있고 버드나무가 드리워진 푸른빛과 초록빛의 그림"
         onClick={moveDetail}
       />
       <Info>
         <TextBox onClick={moveDetail}>
-          <Title>{arts.title}</Title>
-          <Artist>{arts.painter}</Artist>
+          <Title>{art.title}</Title>
+          <Artist>{art.painter}</Artist>
         </TextBox>
         <BtnBox>
           <Btn onClick={moveComment}>
             <img src={comment} alt="댓글" />
-            <span>{arts.comment_count}</span>
+            <span>{art.comment_count}</span>
           </Btn>
           <Btn onClick={savekBookMark}>
             <img src={bookMarkSrc} alt="즐겨찾기" />
-            <span>{arts.scraps_count}</span>
+            <span>{art.scraps_count}</span>
           </Btn>
         </BtnBox>
       </Info>
