@@ -16,7 +16,7 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
@@ -39,8 +39,8 @@ const LoginPage = () => {
       // REST API를 이용하여 백엔드에 로그인 데이터 전달
       const response = await axios.post(`${BASE_URL}/account/login`, null, {
         params: {
-          user_id: inputId,
-          user_pw: inputPw,
+          username: inputId,
+          password: inputPw,
         }, // 쿼리 파라미터 이용하는지 백엔드와 상의 필요
       });
 
@@ -206,7 +206,7 @@ const Buttons = styled.div`
     border-radius: 12px;
     background: #fee500;
     border: none;
-    gap: 5px;
+    gap: 10px;
     cursor: pointer;
   }
 
@@ -218,11 +218,10 @@ const Buttons = styled.div`
   span {
     color: rgba(0, 0, 0, 0.85);
     font-family: Roboto;
-    font-size: 13.5px;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
-    letter-spacing: -0.64px;
   }
 
   .id-btn {
@@ -321,7 +320,7 @@ const HandleSignupStyle = styled.div`
   .span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -330,7 +329,7 @@ const HandleSignupStyle = styled.div`
   .handle-signup {
     color: var(--p-primary-80, #98cbff);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;

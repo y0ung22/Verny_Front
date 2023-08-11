@@ -76,7 +76,7 @@ const MakeIdPage = () => {
   const [newId, setNewId] = useState("");
   const [usableId, setUsableId] = useState(false);
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
@@ -102,7 +102,7 @@ const MakeIdPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ user_id: newId }),
+        body: JSON.stringify({ username: newId }),
       });
 
       if (response.status === 200) {
@@ -224,7 +224,7 @@ const CheckPwPage = () => {
   const [newId, setNewId] = useState("");
   const [newPw, setNewPw] = useState("");
 
-  const BASE_URL = "http://localhost:3001";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 회원가입 완료
   const handleCompleteSignup = async () => {
@@ -236,8 +236,8 @@ const CheckPwPage = () => {
     try {
       // REST API를 이용하여 백엔드에 회원가입 데이터 전달
       const response = await axios.post(`${BASE_URL}/account/signup`, {
-        user_id: newId,
-        user_pw: newPw,
+        username: newId,
+        password: newPw,
       });
 
       setSignupCompleted(true);
@@ -326,7 +326,7 @@ const HandleLoginStyle = styled.div`
   span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -335,7 +335,7 @@ const HandleLoginStyle = styled.div`
   button {
     color: var(--p-primary-80, #98cbff);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 16.8px */
@@ -407,7 +407,7 @@ const Buttons = styled.div`
   span {
     color: rgba(0, 0, 0, 0.85);
     font-family: Roboto;
-    font-size: 13.5px;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -441,7 +441,7 @@ const MakeIdPageStyle = styled.div`
     p {
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 27px;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -477,7 +477,7 @@ const MakeIdPageStyle = styled.div`
       flex: 1 0 0;
       color: var(--s-secondary-40, #52606f);
       font-family: Pretendard;
-      font-size: 12px;
+      font-size: 0.75rem;
       font-style: normal;
       font-weight: 400;
       line-height: 140%;
@@ -509,7 +509,7 @@ const InputStyle = styled.div`
     flex: 1 0 0;
     color: var(--s-secondary-20, #243240);
     font-family: Pretendard;
-    font-size: 16px;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%; /* 22.4px */
@@ -527,7 +527,7 @@ const InputStyle = styled.div`
     background-color: transparent;
     color: var(--p-primary-40, #00639c);
     font-family: Pretendard;
-    font-size: 12px;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -551,7 +551,7 @@ const MakePwPageStyle = styled.div`
       flex-shrink: 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 27px;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -578,7 +578,7 @@ const MakePwPageStyle = styled.div`
       flex: 1 0 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 16px;
+      font-size: 1rem;
       font-style: normal;
       font-weight: 400;
       line-height: 140%;
@@ -604,7 +604,7 @@ const CheckPwPageStyle = styled.div`
       flex-shrink: 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 27px;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -625,7 +625,7 @@ const CheckPwPageStyle = styled.div`
         flex: 1 0 0;
         color: var(--s-secondary-40, #52606f);
         font-family: Pretendard;
-        font-size: 12px;
+        font-size: 0.75rem;
         font-style: normal;
         font-weight: 400;
         line-height: 140%;
@@ -653,7 +653,7 @@ const CheckPwPageStyle = styled.div`
       flex: 1 0 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 16px;
+      font-size: 1rem;
       font-style: normal;
       font-weight: 400;
       line-height: 140%; /* 22.4px */
