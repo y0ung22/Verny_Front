@@ -4,7 +4,6 @@ import { Map, MapMarker } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import PlaceList from "../components/PlaceList";
-import PlaceData from "../database/PlaceData.json";
 
 import styled from "styled-components";
 
@@ -16,10 +15,6 @@ import dropdownClosed from "../assets/icons/dropdownClosed.svg";
 import dropdownOpened from "../assets/icons/dropdownOpened.svg";
 import filterInit from "../assets/icons/filterInit.svg";
 import close from "../assets/icons/close.svg";
-import pin from "../assets/icons/pin.svg";
-import pinHover from "../assets/icons/pinHover.svg";
-import delBtn from "../assets/icons/deleteSecondary.svg";
-import pinClicked from "../assets/icons/pinClicked.svg";
 
 const PlacePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -38,61 +33,46 @@ const PlacePage = () => {
     setSortOpen(false);
   };
 
-  const locations = PlaceData.map((place) => ({
-    title: place.name,
-    latlng: { lat: place.latitude, lng: place.longitude },
-  }));
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  const handleMarkerHover = (index, hover) => {
-    // index 번째 마커의 hover 상태를 설정
-    setIsHovered((prevState) => {
-      const newState = [...prevState];
-      newState[index] = hover;
-      return newState;
-    });
-  };
-
-  const [text, setText] = useState("");
-
-  const onChange = (e) => {
-    setText(e.target.value);
-  };
-
-  const deleteText = () => {
-    setText("");
-  };
+  const locations = [
+    { title: "001스테이지", latlng: { lat: 37.58153269, lng: 127.002336 } },
+    { title: "05스튜디오", latlng: { lat: 37.78641343, lng: 126.698359 } },
+    { title: "072골프훈련소", latlng: { lat: 37.39403098, lng: 126.976543 } },
+    { title: "1004섬수석미술관", latlng: { lat: 34.8800925, lng: 125.996874 } },
+    { title: "123GC", latlng: { lat: 37.64140522, lng: 126.903049 } },
+    { title: "148아트스퀘어", latlng: { lat: 36.80700113, lng: 128.616142 } },
+    { title: "153가족캠프", latlng: { lat: 37.42870998, lng: 126.991199 } },
+    { title: "168아트스퀘어", latlng: { lat: 36.97189318, lng: 127.933612 } },
+    { title: "1MSPACE", latlng: { lat: 37.55760078, lng: 126.938198 } },
+    {
+      title: "2.28민주운동기념회관",
+      latlng: { lat: 35.85840431, lng: 128.590354 },
+    },
+    {
+      title: "2001아울렛 구로 어린이 소극장",
+      latlng: { lat: 37.49807255, lng: 126.862677 },
+    },
+  ];
 
   return (
     <Wrapper>
       <TopBar />
       <Banner />
       <SearchFilter>
-        <InputContainer>
-          <Input
-            type="text"
-            placeholder="검색어를 입력해주세요!"
-            onChange={onChange}
-            value={text}
-          />
-          {text && (
-            <DeleteBtn onClick={deleteText}>
-              <img src={delBtn} alt="검색어 삭제 버튼" />
-            </DeleteBtn>
-          )}
-        </InputContainer>
-        <SFBtn>
-          <img className="search-icon" src={search} alt="검색 버튼" />
-          <img
-            className="filter-icon"
-            src={filterOpen ? filterchecked : filter}
-            alt="필터 버튼"
-            onClick={handleFilterClick}
-          />
-        </SFBtn>
+        <input
+          type="text"
+          //   value={confirmedPw}
+          //   onChange={(e) => setConfirmedPw(e.target.value)}
+          placeholder="검색어를 입력해주세요!"
+        />
+        <img className="search-icon" src={search} alt="검색" />
+        <img
+          className="filter-icon"
+          src={filterOpen ? filterchecked : filter}
+          alt="필터"
+          onClick={handleFilterClick}
+        />
       </SearchFilter>
-      <SortBtn>
+      <Sort>
         <span
           style={{
             color: "var(--s-secondary-40, #52606F)",
@@ -111,7 +91,7 @@ const PlacePage = () => {
           src={sortOpen ? dropdownOpened : dropdownClosed}
           alt="드롭다운 기호"
         />
-      </SortBtn>
+      </Sort>
 
       {filterOpen && <Backdrop onClick={handleCloseModal} />}
       <FilterModal
@@ -147,9 +127,12 @@ const PlacePage = () => {
             >
               필터 초기화
             </p>
-            <div className="close-icon-wrapper" onClick={handleCloseModal}>
-              <img className="close-icon" src={close} alt="닫기" />
-            </div>
+            <img
+              className="close-icon"
+              src={close}
+              alt="닫기"
+              onClick={handleCloseModal}
+            />
           </div>
         </FilterTop>
         <FilterContent>
@@ -158,7 +141,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "1rem",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -180,7 +163,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "1rem",
+                fontSize: "15px",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -203,7 +186,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "1rem",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -222,7 +205,7 @@ const PlacePage = () => {
               style={{
                 color: " var(--n-neutral-10, #1A1C1E)",
                 fontFamily: "Pretendard",
-                fontSize: "1rem",
+                fontSize: "0.9rem",
                 fontStyle: "normal",
                 fontWeight: 400,
                 lineHeight: "140%",
@@ -289,19 +272,17 @@ const PlacePage = () => {
           marginTop: "10px",
           marginBottom: "10px",
         }}
-        level={5} // 지도의 확대 레벨
+        level={3} // 지도의 확대 레벨
       >
         {locations.map((loc, idx) => (
           <MapMarker
             key={`${loc.title}-${loc.latlng}`}
             position={loc.latlng}
             image={{
-              src: isHovered[idx] ? pinHover : pin,
-              size: { width: 36, height: 35 },
+              src: "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png",
+              size: { width: 24, height: 35 },
             }}
             title={loc.title}
-            onMouseEnter={() => handleMarkerHover(idx, true)}
-            onMouseLeave={() => handleMarkerHover(idx, false)}
           />
         ))}
       </Map>
@@ -335,22 +316,7 @@ const Banner = styled.div`
 `;
 
 const SearchFilter = styled.div`
-  position: relative;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: 328px;
-  padding: 8px 16px;
-  gap: 8px;
-  background: var(--n-neutral-100, #fff);
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  /* width: 321px;
+  width: 321px;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -378,77 +344,25 @@ const InputContainer = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
-  } */
-`;
+  }
 
-const Input = styled.input`
-  width: 216px;
-  display: flex;
-  padding: 12px 16px;
-  align-items: center;
-  gap: 8px;
-  flex: 1 0 0;
-  align-self: stretch;
-  border-radius: 12px;
-  border: 1.5px solid var(--s-secondary-80, #b9c8da);
-  background: var(--s-secondary-99, #fcfcff);
-  outline: none;
-  color: var(--s-secondary-10, #0e1d2a);
-  font-family: Pretendard;
-  font-size: 0.88rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
-`;
-
-const SFBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-  margin-left: 8px;
   img {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    margin-right: 16px;
+    margin-left: 7px;
     cursor: pointer;
   }
 `;
 
-const DeleteBtn = styled.div`
-  margin-left: -40px;
+const Sort = styled.div`
   display: flex;
-  width: 16px;
-  height: 16px;
-  padding: 2px;
-  justify-content: center;
+  flex-direction: row;
+  justify-content: flex-start;
   align-items: center;
-  flex-shrink: 0;
-  img {
-    width: 16px;
-    height: 16px;
-    flex-shrink: 0;
-  }
-`;
-
-const SortBtn = styled.div`
-  display: flex;
-  width: 312px;
-  height: 48px;
-  height: 44px;
-  padding: 0px 24px;
-  align-items: center;
-  flex-shrink: 0;
-  background: var(--n-neutral-100, #fff);
-  box-shadow: 0px 4px 4px 0px rgba(0, 51, 84, 0.04);
-  color: var(--s-secondary-40, #52606f);
-  font-family: Pretendard;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
+  height: 20px;
+  margin-top: 10px;
+  gap: 18px;
 
   button {
     border: none;
@@ -456,16 +370,15 @@ const SortBtn = styled.div`
     cursor: pointer;
     color: var(--s-secondary-40, #52606f);
     font-family: Pretendard;
-    font-size: 0.875rem;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
-    margin-left: 30px;
   }
   img {
     width: 12px;
     height: 12px;
-    margin-left: 40px;
+    margin-left: 5px;
   }
 `;
 
@@ -484,10 +397,10 @@ const Backdrop = styled.div`
 const FilterModal = styled.div`
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   position: absolute;
-  top: 52px;
+  top: 75px;
   left: auto;
   width: 360px;
-  height: 650px;
+  height: 625px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
@@ -503,8 +416,7 @@ const FilterTop = styled.div`
   align-self: stretch;
   width: 345px;
   height: 48px;
-  margin-top: 10px;
-  margin-left: 3px;
+  margin-left: 2px;
   margin-bottom: -40px;
 
   .filter-top-img {
@@ -512,7 +424,6 @@ const FilterTop = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    cursor: pointer;
   }
 
   .filter-init {
@@ -524,21 +435,14 @@ const FilterTop = styled.div`
     align-items: center;
   }
 
-  .close-icon-wrapper {
-    width: 24px;
-    height: 24px;
+  .close-icon {
     display: flex;
+    width: 18px;
+    height: 18px;
+    padding: 12px;
     justify-content: center;
     align-items: center;
-    margin-left: 20px;
-    margin-right: 10px;
-    cursor: pointer;
-  }
-
-  .close-icon {
-    width: 14px;
-    height: 14px;
-    padding: 12px;
+    margin-left: 15px;
   }
 `;
 
@@ -547,10 +451,8 @@ const FilterContent = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 0px 0px 0px 3px;
   gap: 10px;
-  margin-left: -25px;
-  margin-top: 5px;
-
   button {
     display: flex;
     padding: 8px 16px 8px 16px;
