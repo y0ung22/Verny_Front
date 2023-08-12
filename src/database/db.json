@@ -1,9 +1,22 @@
-{
-  "tableName": [
-    {
-      "id": "1",
-      "name": "첫번째 이름",
-      "title": "첫번째 제목"
-    }
-  ]
-}
+[
+  {
+    "id": 1,
+    "image": "C:/Users/amy64/OneDrive/문서/EWHA/멋쟁이사자처럼 11기/2023 중앙해커톤/Verny_Front/src/assets/etc/img1.jpg",
+    "description": "별이 빛나는 푸른 밤을 그린 인상주의 화풍의 그림",
+    "title": "The Starry Night",
+    "painter": "Van Gogh",
+    "type": "고전미술",
+    "scraps_count": 1,
+    "comment_count": 2
+  },
+  {
+    "id": 2,
+    "image": "C:/Users/amy64/OneDrive/문서/EWHA/멋쟁이사자처럼 11기/2023 중앙해커톤/Verny_Front/src/assets/etc/img2.jpg",
+    "description": "여성의 옆모습 흉상 뒤로 별자리 12개가 동그랗게 나열되어 있는 아르누보풍의 그림",
+    "title": "Zodiaque (La Plume)",
+    "painter": "Alphonse Mucha",
+    "type": "고전미술",
+    "scraps_count": 2,
+    "comment_count": 2
+  }
+]

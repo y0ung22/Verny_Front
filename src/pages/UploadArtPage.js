@@ -11,6 +11,7 @@ const UploadArtPage = () => {
   const inputRef = useRef(null);
   const [uploadImg, setUploadImg] = useState("");
   const [newTitle, setNewTitle] = useState("");
+  const [newDescription, setNewDescription] = useState("");
   const [newPainter, setNewPainter] = useState("");
   const [newTechnique, setNewTechnique] = useState("");
   const [newContent, setNewContent] = useState("");
@@ -46,6 +47,7 @@ const UploadArtPage = () => {
     await axios
       .post(`${BASE_URL}/main/postsadd/`, {
         image: uploadImg,
+        description: newDescription,
         title: newTitle,
         painter: newPainter,
         drawing_technique: newTechnique,
@@ -87,8 +89,10 @@ const UploadArtPage = () => {
             <AltInput>
               <span>대체텍스트</span>
               <input
-                id="altText"
+                id="description"
                 placeholder="작품 이미지 관련 대체텍스트를 입력해주세요!"
+                value={newDescription}
+                onChange={(e) => setNewDescription(e.target.value)}
               />
             </AltInput>
             <CategoryInput>
@@ -98,36 +102,58 @@ const UploadArtPage = () => {
                   type="radio"
                   name="category"
                   value="고전미술"
-                  checked="checked"
+                  checked={newType === "고전미술"}
+                  onChange={(e) => setNewType(e.target.value)}
                 />
                 고전미술
               </label>
               <label>
-                <input type="radio" name="category" value="현대미술" /> 현대미술
+                <input
+                  type="radio"
+                  name="category"
+                  value="현대미술"
+                  checked={newType === "현대미술"}
+                  onChange={(e) => setNewType(e.target.value)}
+                />
+                현대미술
               </label>
             </CategoryInput>
           </InfoInput>
           <ContentInput>
             <Content>
               <span>작품명</span>
-              <input id="title" placeholder="작품명을 입력해주세요!" />
+              <input
+                id="title"
+                placeholder="작품명을 입력해주세요!"
+                value={newTitle}
+                onChange={(e) => setNewTitle(e.target.value)}
+              />
             </Content>
             <Content>
               <span>작가명</span>
-              <input id="artist" placeholder="작가명을 입력해주세요!" />
+              <input
+                id="painter"
+                placeholder="작가명을 입력해주세요!"
+                value={newPainter}
+                onChange={(e) => setNewPainter(e.target.value)}
+              />
             </Content>
             <Content>
               <span>기법</span>
               <input
-                id="method"
+                id="drawing_technique"
                 placeholder="작품에 쓰인 기법을 입력해주세요!"
+                value={newTechnique}
+                onChange={(e) => setNewTechnique(e.target.value)}
               />
             </Content>
             <Content>
               <span>연도</span>
               <input
-                id="year"
+                id="work_year"
                 placeholder="작품을 제작한 연도를 입력해주세요!"
+                value={newYear}
+                onChange={(e) => setNewYear(e.target.value)}
               />
             </Content>
           </ContentInput>
@@ -139,6 +165,8 @@ const UploadArtPage = () => {
               onInput={handleTextareaInput}
               rows={1}
               style={{ height: "auto" }}
+              value={newContent}
+              onChange={(e) => setNewContent(e.target.value)}
             ></textarea>
           </DescriptionInput>
         </Container>
