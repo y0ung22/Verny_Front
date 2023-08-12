@@ -10,13 +10,9 @@ const WriteComment = () => {
   const uploadComment = async (e) => {
     e.preventDefault();
     await axios
-      .post(
-        `${BASE_URL}/main/posts/<int:pk>/comments/`,
-        {
-          content: newComment,
-        },
-        { withCredentials: true }
-      )
+      .post(`${BASE_URL}/main/posts/<int:pk>/comments/`, {
+        content: newComment,
+      })
       .then((response) => {
         setNewComment(response.data);
         setNewComment("");
@@ -85,7 +81,7 @@ const SubmitButton = styled.button`
 
   color: var(--p-primary-100, #fff);
   font-family: Pretendard;
-  font-size: 1rem;
+  font-size: 0.88rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;

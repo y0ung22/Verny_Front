@@ -34,7 +34,9 @@ const ButtonBar = () => {
       </Btn>
       <Btn onClick={savekBookMark}>
         <img src={bookMarkSrc} />
-        <span>100</span>
+        <span id="bookmark" liked={bookMark}>
+          100
+        </span>
       </Btn>
     </Wrapper>
   );
@@ -72,5 +74,9 @@ const Btn = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+  }
+  #bookmark {
+    color: ${({ liked }) =>
+      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
   }
 `;

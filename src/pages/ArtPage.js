@@ -128,7 +128,7 @@ const Category = styled.div`
   font-weight: 400;
   line-height: 140%;
   border-bottom: ${(props) =>
-    props.isSelected ? "1.5px solid var(--t-teritary-40, #745470);" : "none"};
+    props.isSelected ? "2px solid var(--t-teritary-40, #745470);" : "none"};
 `;
 
 const ArtCnt = styled.div`

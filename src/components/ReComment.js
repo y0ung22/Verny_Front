@@ -43,9 +43,9 @@ const Comment = (text) => {
           </span>
         </Writer>
         <BtnBox>
-          <Btn alt="댓글 좋아요 버튼" onClick={handleLike}>
+          <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
             <img src={likeStatus ? likeClicked : like} />
-            <span>100</span>
+            <span liked={likeStatus}>100</span>
           </Btn>
         </BtnBox>
       </Info>
@@ -134,7 +134,8 @@ const Btn = styled.div`
     gap: 8px;
   }
   span {
-    color: var(--n-neutral-10, #1a1c1e);
+    color: ${({ liked }) =>
+      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;

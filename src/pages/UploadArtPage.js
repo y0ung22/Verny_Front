@@ -94,7 +94,13 @@ const UploadArtPage = () => {
             <CategoryInput>
               <span>분류</span>
               <label>
-                <input type="radio" name="category" value="고전미술" /> 고전미술
+                <input
+                  type="radio"
+                  name="category"
+                  value="고전미술"
+                  checked="checked"
+                />
+                고전미술
               </label>
               <label>
                 <input type="radio" name="category" value="현대미술" /> 현대미술
@@ -131,6 +137,8 @@ const UploadArtPage = () => {
               ref={textareaRef}
               placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
               onInput={handleTextareaInput}
+              rows={1}
+              style={{ height: "auto" }}
             ></textarea>
           </DescriptionInput>
         </Container>
@@ -292,15 +300,12 @@ const CategoryInput = styled.div`
     line-height: 140%;
 
     input[type="radio"] {
-      border: max(2px, 0.1rem) solid gray;
       border-radius: 50%;
       width: 0.88rem;
       height: 0.88rem;
-      background-color: gray;
-      transition: border-color 0.3s ease;
     }
-    input[type="radio"]:checked {
-      background-color: gray;
+    input[type="radio"] {
+      accent-color: var(--s-secondary-50, #6a7889);
     }
   }
 `;
@@ -329,10 +334,9 @@ const Content = styled.div`
     line-height: 140%;
   }
   input {
-    width: 247px;
+    width: 240px;
     display: flex;
     padding: 14px 4px;
-    align-self: stretch;
     border: none;
     outline: none;
     border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
@@ -365,12 +369,12 @@ const DescriptionInput = styled.div`
   }
   textarea {
     resize: none;
-    overflow-y: hidden;
     outline: none;
-    width: 280px;
+    overflow-y: hidden;
+    width: 312px;
     display: flex;
     padding: 16px;
-    justify-content: center;
+    box-sizing: border-box;
     border-radius: 12px;
     border: 1.5px solid var(--s-secondary-50, #6a7889);
     background: var(--n-neutral-99, #fcfcff);
@@ -380,5 +384,6 @@ const DescriptionInput = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+    transition: height 0.2s ease;
   }
 `;

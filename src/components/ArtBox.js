@@ -51,7 +51,9 @@ const ArtBox = ({ art }) => {
           </Btn>
           <Btn onClick={savekBookMark}>
             <img src={bookMarkSrc} alt="즐겨찾기" />
-            <span>{art.scraps_count}</span>
+            <span id="bookmark" liked={bookMark}>
+              {art.scraps_count}
+            </span>
           </Btn>
         </BtnBox>
       </Info>
@@ -140,5 +142,9 @@ const Btn = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+  }
+  #bookmark {
+    color: ${({ liked }) =>
+      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
   }
 `;
