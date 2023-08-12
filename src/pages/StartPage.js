@@ -126,8 +126,8 @@ const Buttons = styled.div`
     width: 300px;
     height: 46px;
     font-family: Pretendard;
-    font-size: 0.875rem;
-    font-weight: normal;
+    font-size: 1rem;
+    font-weight: 400;
     color: white;
     border: none;
   }
@@ -144,8 +144,8 @@ const Buttons = styled.div`
     width: 300px;
     height: 46px;
     font-family: Pretendard;
-    font-size: 0.875rem;
-    font-weight: normal;
+    font-size: 1rem;
+    font-weight: 400;
     margin-top: 10px;
     border: none;
   }
