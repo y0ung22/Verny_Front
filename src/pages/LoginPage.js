@@ -121,13 +121,13 @@ const LoginPage = () => {
             <button className="id-btn" onClick={handleIdLogin}>
               <span>아이디로 로그인</span>
             </button>
+            <HandleSignupStyle>
+              <span>아직 회원이 아니신가요?</span>
+              <button className="handle-signup" onClick={handleSignup}>
+                회원가입하기
+              </button>
+            </HandleSignupStyle>
           </Buttons>
-          <HandleSignupStyle>
-            <span>아직 회원이 아니신가요?</span>
-            <button className="handle-signup" onClick={handleSignup}>
-              회원가입하기
-            </button>
-          </HandleSignupStyle>
         </FirstWrapper>
       )}
     </Container>
@@ -142,13 +142,15 @@ const FirstWrapper = styled.div`
   justify-content: center;
   align-items: center;
 
-  span {
+  .span {
     color: var(--n-neutral-0, #000);
+
+    /* Caption/1 */
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%;
+    line-height: 140%; /* 16.8px */
   }
 
   .handle-signup {
@@ -157,7 +159,7 @@ const FirstWrapper = styled.div`
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%;
+    line-height: 140%; /* 16.8px */
     text-decoration-line: underline;
     cursor: pointer;
   }
@@ -215,8 +217,8 @@ const Buttons = styled.div`
 
   span {
     color: rgba(0, 0, 0, 0.85);
-    font-family: Pretendard;
-    font-size: 1rem;
+    font-family: Roboto;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -256,7 +258,7 @@ const Input = styled.div`
   p {
     color: var(--s-secondary-20, #243240);
     font-family: Pretendard;
-    font-size: 2rem;
+    font-size: 1.6rem;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
@@ -315,7 +317,7 @@ const Bottom = styled.div`
 
 const HandleSignupStyle = styled.div`
   margin-top: 10px;
-  span {
+  .span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
     font-size: 0.75rem;

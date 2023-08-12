@@ -37,7 +37,6 @@ const SignupPage = () => {
   return (
     <Container>
       <TopBar />
-
       <SignupPageStyle>
         <Logo>
           <img
@@ -198,7 +197,7 @@ const MakePwPage = () => {
             type="password"
             value={newPw}
             onChange={(e) => setNewPw(e.target.value)}
-            placeholder="비밀번호를 입력해주세요."
+            placeholder="비밀번호를 입력하세요."
           />
         </div>
         <Bottom>
@@ -273,7 +272,7 @@ const CheckPwPage = () => {
             type="password"
             value={confirmedPw}
             onChange={(e) => setConfirmedPw(e.target.value)}
-            placeholder="비밀번호를 다시 입력해주세요."
+            placeholder="비밀번호를 다시 입력하세요."
           />
         </div>
         <Bottom>
@@ -304,7 +303,7 @@ const Bottom = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 120px;
   .btn {
     display: flex;
     padding: 12px 16px;
@@ -317,13 +316,7 @@ const Bottom = styled.div`
     border-radius: 12px;
     background: var(--p-primary-30, #004a77);
     border: none;
-    color: var(--p-primary-100, #fff);
-
-    font-family: Pretendard;
-    font-size: 1rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
+    color: white;
     cursor: pointer;
   }
 `;
@@ -345,7 +338,7 @@ const HandleLoginStyle = styled.div`
     font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
-    line-height: 140%;
+    line-height: 140%; /* 16.8px */
     text-decoration-line: underline;
     border: none;
     background-color: transparent;
@@ -402,7 +395,7 @@ const Buttons = styled.div`
     border-radius: 12px;
     background: #fee500;
     border: none;
-    gap: 10px;
+    gap: 5px;
     cursor: pointer;
   }
 
@@ -413,11 +406,12 @@ const Buttons = styled.div`
 
   span {
     color: rgba(0, 0, 0, 0.85);
-    font-family: Pretendard;
-    font-size: 1rem;
+    font-family: Roboto;
+    font-size: 0.84rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
+    letter-spacing: -0.64px;
   }
 
   .id-btn {
@@ -440,14 +434,14 @@ const MakeIdPageStyle = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-top: 98px;
+  margin-top: 150px;
   .id-text {
     display: flex;
     align-items: flex-start;
     p {
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -459,7 +453,6 @@ const MakeIdPageStyle = styled.div`
     flex-direction: column;
     justify-content: center;
     padding: 0px 0px 0px 20px;
-    margin-top: -25px;
 
     .first-condition {
       display: flex;
@@ -476,8 +469,8 @@ const MakeIdPageStyle = styled.div`
     }
 
     img {
-      width: 8px;
-      height: 8px;
+      width: 4px;
+      height: 4px;
     }
 
     span {
@@ -534,7 +527,7 @@ const InputStyle = styled.div`
     background-color: transparent;
     color: var(--p-primary-40, #00639c);
     font-family: Pretendard;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
@@ -548,7 +541,6 @@ const MakePwPageStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: -79px;
 
   .pw-text {
     display: flex;
@@ -559,7 +551,7 @@ const MakePwPageStyle = styled.div`
       flex-shrink: 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -600,7 +592,6 @@ const CheckPwPageStyle = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: -55px;
 
   .top-text {
     display: flex;
@@ -613,7 +604,7 @@ const CheckPwPageStyle = styled.div`
       flex-shrink: 0;
       color: var(--s-secondary-20, #243240);
       font-family: Pretendard;
-      font-size: 2rem;
+      font-size: 1.6rem;
       font-style: normal;
       font-weight: 600;
       line-height: 140%;
@@ -624,11 +615,10 @@ const CheckPwPageStyle = styled.div`
       justify-content: flex-start;
       align-items: center;
       gap: 5px;
-      margin-top: -25px;
 
       img {
-        width: 8px;
-        height: 8px;
+        width: 4px;
+        height: 4px;
       }
 
       span {
