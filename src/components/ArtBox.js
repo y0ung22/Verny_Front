@@ -8,12 +8,13 @@ import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
 const ArtBox = ({ art }) => {
+  console.log(art);
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
   const moveDetail = () => {
-    navigate("/art/detail");
+    navigate("/art/detail", { state: { id: art.id } });
   };
 
   //댓글 이동 함수
@@ -34,11 +35,7 @@ const ArtBox = ({ art }) => {
 
   return (
     <Wrapper>
-      <Image
-        src={art.image}
-        alt="수련이 연못에 떠 있고 버드나무가 드리워진 푸른빛과 초록빛의 그림"
-        onClick={moveDetail}
-      />
+      <Image src={art.image} alt="이미지 대체 텍스트" onClick={moveDetail} />
       <Info>
         <TextBox onClick={moveDetail}>
           <Title>{art.title}</Title>

@@ -6,7 +6,7 @@ import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
-const ButtonBar = () => {
+const ButtonBar = (artDetail) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
@@ -30,12 +30,12 @@ const ButtonBar = () => {
     <Wrapper>
       <Btn onClick={moveComment}>
         <img src={comment} />
-        <span>100</span>
+        <span>{artDetail.comment_count}</span>
       </Btn>
       <Btn onClick={savekBookMark}>
         <img src={bookMarkSrc} />
         <span id="bookmark" liked={bookMark}>
-          100
+          {artDetail.scraps_count}
         </span>
       </Btn>
     </Wrapper>

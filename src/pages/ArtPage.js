@@ -40,9 +40,10 @@ const ArtPage = () => {
   //미술품 정보 불러오기
   const getAllArts = async () => {
     await axios
-      .get(`${BASE_URL}/main/posts`)
+      .get(`${BASE_URL}/main/posts/`)
       .then((response) => {
-        setArts([...response.data]);
+        setArts([response.data]);
+        console.log(arts);
       })
       .catch((error) => console.log(error));
   };
@@ -52,6 +53,7 @@ const ArtPage = () => {
     selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
+  console.log(filteredArts);
 
   return (
     <Wrapper>

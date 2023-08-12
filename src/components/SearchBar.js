@@ -8,6 +8,8 @@ import delBtn from "../assets/icons/deleteSecondary.svg";
 const SearchBar = () => {
   const [text, setText] = useState("");
 
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+
   const onChange = (e) => {
     setText(e.target.value);
   };
@@ -17,11 +19,18 @@ const SearchBar = () => {
   };
 
   //검색 결과 담을 리스트
-  //const [searchResult, setSearchResult] = useState([]);
+  const [searchResult, setSearchResult] = useState([]);
 
   //검색 진행하고 결과 받아오는 함수
-  const goSearch = (e) => {
+  const goSearch = async (e, text) => {
     e.preventDefault();
+    await axios
+      .get(`${BASE_URL}/main/search/?q=${text}`)
+      .then((response) => {
+        setSearchResult([...response.data]);
+        console.log(searchResult);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
