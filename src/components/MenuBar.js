@@ -53,15 +53,27 @@ const MenuBar = () => {
 
   return (
     <Wrapper>
-      <Btn onClick={goArt} active={activeTab.includes("/art")}>
+      <Btn
+        onClick={goArt}
+        active={activeTab.includes("/art")}
+        alt="미술 탭 버튼"
+      >
         <Image src={imgSrc1} />
         <span>미술</span>
       </Btn>
-      <Btn onClick={goPlace} active={activeTab.includes("/place")}>
+      <Btn
+        onClick={goPlace}
+        active={activeTab.includes("/place")}
+        alt="문예관광지도 탭 버튼"
+      >
         <Image src={imgSrc2} />
         <span>문예관광지도</span>
       </Btn>
-      <Btn onClick={goMypage} active={activeTab.includes("/mypage")}>
+      <Btn
+        onClick={goMypage}
+        active={activeTab.includes("/mypage")}
+        alt="마이페이지 탭 버튼"
+      >
         <Image src={imgSrc3} />
         <span>마이페이지</span>
       </Btn>

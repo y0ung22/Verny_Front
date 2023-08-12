@@ -49,10 +49,13 @@ const ArtPage = () => {
   };
 
   //미술품 필터링
-  const filteredArts =
-    selectedCategory === "전체"
+  const filteringArts = () => {
+    return selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
+  };
+
+  const filteredArts = filteringArts();
   console.log(filteredArts);
 
   return (
