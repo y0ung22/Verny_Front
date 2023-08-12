@@ -40,18 +40,23 @@ const ArtPage = () => {
   //미술품 정보 불러오기
   const getAllArts = async () => {
     await axios
-      .get(`${BASE_URL}/main/posts`)
+      .get(`${BASE_URL}/main/posts/`)
       .then((response) => {
-        setArts([...response.data]);
+        setArts([response.data]);
+        console.log(arts);
       })
       .catch((error) => console.log(error));
   };
 
   //미술품 필터링
-  const filteredArts =
-    selectedCategory === "전체"
+  const filteringArts = () => {
+    return selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
+  };
+
+  const filteredArts = filteringArts();
+  console.log(filteredArts);
 
   return (
     <Wrapper>

@@ -1,5 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
+import { useLocation } from "react-router-dom";
+import axios from "axios";
 
 import TopBar from "../components/TopBar";
 import beforeBtn from "../assets/icons/before.svg";
@@ -13,6 +15,11 @@ import testImg from "../assets/etc/text.jpg";
 const ArtDetailPage = () => {
   const [beforeHover, setBeforeHover] = useState(false);
   const [nextHover, setNextHover] = useState(false);
+  const [artDetail, setArtDetail] = useState([]);
+  const location = useLocation();
+  const id = location.state.id;
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   const beforeHovered = () => {
     setBeforeHover(true);
@@ -29,6 +36,20 @@ const ArtDetailPage = () => {
     setNextHover(false);
   };
 
+  //미술품 해설 받아오기
+  const getArtDetail = async (id) => {
+    await axios
+      .get(`${BASE_URL}/main/posts/${id}`)
+      .then((response) => {
+        setArtDetail([...response.data]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  useEffect(() => {
+    getArtDetail();
+  }, []);
+
   return (
     <Wrapper>
       <TopBar />
@@ -39,28 +60,18 @@ const ArtDetailPage = () => {
         <img alt="다음 미술품" src={nextHover ? nextBtnHover : nextBtn} />
       </NextBtn>
       <ArtInfo>
-        <ArtImg src={testImg} />
+        <ArtImg src={artDetail.image} />
         <ArtDetail>
-          <span id="title">Blue Water Liles</span>
-          <span id="artist">Claude Monet</span>
-          <span id="method">Oil on canvas</span>
-          <span id="year">1916-1919</span>
+          <span id="title">{artDetail.title}</span>
+          <span id="artist">{artDetail.painter}</span>
+          <span id="method">{artDetail.drawing_technique}</span>
+          <span id="year">{artDetail.work_year}</span>
         </ArtDetail>
         <Description>
-          <p>
-            인상파의 대표 화가 클로드 모네가 말년에 그린 '푸른 수련', Blue Water
-            Lilies 입니다. 지베르니 정원의 연못에 핀 수련과 물가의 버드나무를
-            캔버스에 유채로 담아냈습니다.
-          </p>
-          <p>
-            전체적으로 어둑한 새벽녘의 분위기가 느껴지는데요, 하늘과 구름 빛이
-            비친 연못을 남보라색으로 그려냈습니다. 연잎과 버드나무는 노란빛을
-            적게 띠는 탁한 녹색 계열로 칠해졌으며, 그림자 부분은 약간 붉고
-            어두운 주황색으로 표현했습니다.
-          </p>
+          <p>{artDetail.content}</p>
         </Description>
       </ArtInfo>
-      <ButtonBar />
+      <ButtonBar artDetail={artDetail} />
       <MenuBar />
     </Wrapper>
   );

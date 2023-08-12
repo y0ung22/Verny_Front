@@ -30,7 +30,7 @@ const SignupPage = () => {
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // SignupPage 내용

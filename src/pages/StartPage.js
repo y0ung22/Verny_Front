@@ -23,10 +23,10 @@ function StartPage() {
         </p>
       </Explain>
       <Buttons>
-        <Link to="/signup" style={{ textDecoration: "none" }}>
+        <Link to="/account/signup" style={{ textDecoration: "none" }}>
           <button className="signup-btn">회원가입</button>
         </Link>
-        <Link to="/login" style={{ textDecoration: "none" }}>
+        <Link to="/account/login" style={{ textDecoration: "none" }}>
           <button className="login-btn">로그인</button>
         </Link>
       </Buttons>
