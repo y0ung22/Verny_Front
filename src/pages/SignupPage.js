@@ -9,7 +9,6 @@ import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
 import check from "../assets/icons/check.svg";
-import goBack from "../assets/icons/goBack.svg";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -34,18 +33,11 @@ const SignupPage = () => {
     navigate("/login");
   };
 
-  // 뒤로가기
-  const handleGoBack = () => {
-    navigate("/");
-  };
-
   // SignupPage 내용
   return (
     <Container>
       <TopBar />
-      <GoBackImg onClick={handleGoBack}>
-        <img className="go-back" src={goBack} alt="뒤로가기" />
-      </GoBackImg>
+
       <SignupPageStyle>
         <Logo>
           <img
@@ -132,18 +124,10 @@ const MakeIdPage = () => {
     navigate("/login");
   };
 
-  // 뒤로가기
-  const handleGoBack = () => {
-    navigate("/");
-  };
-
   // MakeIdPage 내용
   return (
     <Container>
       <TopBar />
-      <GoBackImg onClick={handleGoBack}>
-        <img className="go-back" src={goBack} alt="뒤로가기" />
-      </GoBackImg>
       <MakeIdPageStyle>
         <div className="id-text">
           <p>아이디</p>
@@ -201,18 +185,10 @@ const MakePwPage = () => {
     navigate("/login");
   };
 
-  // 뒤로가기
-  const handleGoBack = () => {
-    navigate("/");
-  };
-
   // MakePwPage 내용
   return (
     <Container>
       <TopBar />
-      <GoBackImg onClick={handleGoBack}>
-        <img className="go-back" src={goBack} alt="뒤로가기" />
-      </GoBackImg>
       <MakePwPageStyle>
         <div className="pw-text">
           <p>비밀번호</p>
@@ -280,18 +256,10 @@ const CheckPwPage = () => {
     navigate("/login");
   };
 
-  // 뒤로가기
-  const handleGoBack = () => {
-    navigate("/");
-  };
-
   // CheckPwPage 내용
   return (
     <Container>
       <TopBar />
-      <GoBackImg onClick={handleGoBack}>
-        <img className="go-back" src={goBack} alt="뒤로가기" />
-      </GoBackImg>
       <CheckPwPageStyle>
         <div className="top-text">
           <p>비밀번호 확인</p>
@@ -382,16 +350,6 @@ const HandleLoginStyle = styled.div`
     border: none;
     background-color: transparent;
     cursor: pointer;
-  }
-`;
-
-const GoBackImg = styled.div`
-  img {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    margin-top: -45px;
-    margin-left: 27px;
   }
 `;
 

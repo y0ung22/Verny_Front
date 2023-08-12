@@ -9,7 +9,6 @@ import { Container } from "../styles";
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
-import goBack from "../assets/icons/goBack.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -22,15 +21,6 @@ const LoginPage = () => {
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
     // 카카오 계정으로 로그인 기능 구현 카카오 api?
-  };
-
-  // 뒤로가기
-  const handleGoBack = () => {
-    if (idLoginPage) {
-      setIdLoginPage(false); // 두 번째 페이지에서는 첫 번째 페이지로 돌아가도록
-    } else {
-      navigate("/"); // 첫 번째 페이지에서는 StartPage로 이동하도록
-    }
   };
 
   // 하단 회원가입 페이지로 이동 버튼
@@ -75,9 +65,6 @@ const LoginPage = () => {
   return (
     <Container>
       <TopBar />
-      <GoBackImg onClick={handleGoBack}>
-        <img className="go-back" src={goBack} alt="뒤로가기" />
-      </GoBackImg>
       {idLoginPage ? (
         <SecondWrapper>
           <Input>
@@ -173,16 +160,6 @@ const FirstWrapper = styled.div`
     line-height: 140%;
     text-decoration-line: underline;
     cursor: pointer;
-  }
-`;
-
-const GoBackImg = styled.div`
-  img {
-    position: absolute;
-    width: 18px;
-    height: 18px;
-    margin-top: -45px;
-    margin-left: 27px;
   }
 `;
 
