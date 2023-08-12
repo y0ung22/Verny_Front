@@ -21,8 +21,8 @@ function App() {
       <Routes>
         {/*로그인 및 회원가입*/}
         <Route exact path="/" element={<StartPage />} />
-        <Route path="/signup" element={<SignupPage />} />
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/account/signup" element={<SignupPage />} />
+        <Route path="/account/login" element={<LoginPage />} />
         {/*메인 화면*/}
         <Route path="/art" element={<ArtPage />} />
         <Route path="/place" element={<PlacePage />} />

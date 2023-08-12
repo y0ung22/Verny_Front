@@ -25,7 +25,7 @@ const LoginPage = () => {
 
   // 하단 회원가입 페이지로 이동 버튼
   const handleSignup = () => {
-    navigate("/signup");
+    navigate("/account/signup");
   };
 
   // 아이디로 로그인할 때 페이지 이동
