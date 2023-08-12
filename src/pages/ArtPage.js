@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 import TopBar from "../components/TopBar";
 import SearchBar from "../components/SearchBar";
@@ -12,7 +13,10 @@ import WriteHover from "../assets/icons/writeHover.svg";
 const ArtPage = () => {
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
-  const [selectedCategory, setSelectedCategory] = useState(categories[0]); // Initially, the first category is selected.
+  const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const [arts, setArts] = useState([]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -27,6 +31,27 @@ const ArtPage = () => {
   const MouseLeave = () => {
     setIsHovered(false);
   };
+
+  //리렌더링
+  useEffect(() => {
+    getAllArts();
+  }, []);
+
+  //미술품 정보 불러오기
+  const getAllArts = async () => {
+    await axios
+      .get(`${BASE_URL}/main/posts`)
+      .then((response) => {
+        setArts([...response.data]);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  //미술품 필터링
+  const filteredArts =
+    selectedCategory === "전체"
+      ? arts
+      : arts.filter((art) => art.type === selectedCategory);
 
   return (
     <Wrapper>
@@ -44,12 +69,11 @@ const ArtPage = () => {
           </Category>
         ))}
       </CategoryBar>
-      <ArtCnt>작품 4개를 감상해보세요!</ArtCnt>
+      <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
       <ArtList>
-        <ArtBox />
-        <ArtBox />
-        <ArtBox />
-        <ArtBox />
+        {filteredArts.map((art) => (
+          <ArtBox key={art.id} art={art} />
+        ))}
       </ArtList>
       <Link to="/art/upload" style={{ textDecoration: "none" }}>
         <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
@@ -104,7 +128,7 @@ const Category = styled.div`
   font-weight: 400;
   line-height: 140%;
   border-bottom: ${(props) =>
-    props.isSelected ? "1.5px solid var(--t-teritary-40, #745470);" : "none"};
+    props.isSelected ? "2px solid var(--t-teritary-40, #745470);" : "none"};
 `;
 
 const ArtCnt = styled.div`

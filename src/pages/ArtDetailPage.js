@@ -136,6 +136,7 @@ const ArtDetail = styled.div`
   flex-direction: column;
   align-items: center;
   #title {
+    margin-bottom: 4px;
     color: var(--n-neutral-10, #1a1c1e);
     font-family: Pretendard;
     font-size: 1.25rem;

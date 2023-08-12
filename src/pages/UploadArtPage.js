@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import axios from "axios";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -9,6 +10,14 @@ const UploadArtPage = () => {
   const textareaRef = useRef(null);
   const inputRef = useRef(null);
   const [uploadImg, setUploadImg] = useState("");
+  const [newTitle, setNewTitle] = useState("");
+  const [newPainter, setNewPainter] = useState("");
+  const [newTechnique, setNewTechnique] = useState("");
+  const [newContent, setNewContent] = useState("");
+  const [newYear, setNewYear] = useState("");
+  const [newType, setNewType] = useState("");
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //textarea 길이 자동 조절
   const handleTextareaInput = () => {
@@ -29,6 +38,23 @@ const UploadArtPage = () => {
       };
       reader.readAsDataURL(selectedImage);
     }
+  };
+
+  //게시글 POST
+  const uploadArt = async (e) => {
+    e.preventDefault();
+    await axios
+      .post(`${BASE_URL}/main/postsadd/`, {
+        image: uploadImg,
+        title: newTitle,
+        painter: newPainter,
+        drawing_technique: newTechnique,
+        content: newContent,
+        work_year: newYear,
+        type: newType,
+      })
+      .then((response) => {})
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -57,7 +83,6 @@ const UploadArtPage = () => {
               )}
             </UploadImg>
           </ImgContainer>
-
           <InfoInput>
             <AltInput>
               <span>대체텍스트</span>
@@ -69,7 +94,13 @@ const UploadArtPage = () => {
             <CategoryInput>
               <span>분류</span>
               <label>
-                <input type="radio" name="category" value="고전미술" /> 고전미술
+                <input
+                  type="radio"
+                  name="category"
+                  value="고전미술"
+                  checked="checked"
+                />
+                고전미술
               </label>
               <label>
                 <input type="radio" name="category" value="현대미술" /> 현대미술
@@ -106,6 +137,8 @@ const UploadArtPage = () => {
               ref={textareaRef}
               placeholder="작품 관련 기술, 해석을 문단별로 적어주세요!"
               onInput={handleTextareaInput}
+              rows={1}
+              style={{ height: "auto" }}
             ></textarea>
           </DescriptionInput>
         </Container>
@@ -130,7 +163,7 @@ const Wrapper = styled.div`
 
 const UploadBtn = styled.button`
   position: absolute;
-  top: 44px;
+  top: 32px;
   right: 16px;
   border: none;
   border-radius: 12px;
@@ -167,6 +200,7 @@ const Container = styled.div`
 `;
 
 const ImgContainer = styled.div`
+  margin-top: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -187,6 +221,7 @@ const UploadImg = styled.div`
   #uploadedImg {
     width: 100%;
     height: 100%;
+    object-fit: cover;
     border-radius: 12px;
   }
   #uploadImgBtn {
@@ -265,15 +300,12 @@ const CategoryInput = styled.div`
     line-height: 140%;
 
     input[type="radio"] {
-      border: max(2px, 0.1rem) solid gray;
       border-radius: 50%;
       width: 0.88rem;
       height: 0.88rem;
-      background-color: gray;
-      transition: border-color 0.3s ease;
     }
-    input[type="radio"]:checked {
-      background-color: gray;
+    input[type="radio"] {
+      accent-color: var(--s-secondary-50, #6a7889);
     }
   }
 `;
@@ -302,10 +334,9 @@ const Content = styled.div`
     line-height: 140%;
   }
   input {
-    width: 247px;
+    width: 240px;
     display: flex;
     padding: 14px 4px;
-    align-self: stretch;
     border: none;
     outline: none;
     border-bottom: 1.5px solid var(--s-secondary-50, #6a7889);
@@ -338,12 +369,12 @@ const DescriptionInput = styled.div`
   }
   textarea {
     resize: none;
-    overflow-y: hidden;
     outline: none;
-    width: 280px;
+    overflow-y: hidden;
+    width: 312px;
     display: flex;
     padding: 16px;
-    justify-content: center;
+    box-sizing: border-box;
     border-radius: 12px;
     border: 1.5px solid var(--s-secondary-50, #6a7889);
     background: var(--n-neutral-99, #fcfcff);
@@ -353,5 +384,6 @@ const DescriptionInput = styled.div`
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+    transition: height 0.2s ease;
   }
 `;
