@@ -43,14 +43,15 @@ const PlacePage = () => {
     latlng: { lat: place.latitude, lng: place.longitude },
   }));
 
-  const [isHovered, setIsHovered] = useState(false);
+  const [isHovered, setIsHovered] = useState(
+    new Array(locations.length).fill(false)
+  );
 
-  const handleMarkerHover = (index, hover) => {
-    // index 번째 마커의 hover 상태를 설정
-    setIsHovered((prevState) => {
-      const newState = [...prevState];
-      newState[index] = hover;
-      return newState;
+  const handleMarkerHover = (idx, hover) => {
+    setIsHovered((prevHover) => {
+      const newHover = [...prevHover];
+      newHover[idx] = hover;
+      return newHover;
     });
   };
 
@@ -464,10 +465,10 @@ const Backdrop = styled.div`
 const FilterModal = styled.div`
   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
   position: absolute;
-  top: 52px;
+  top: 41px;
   left: auto;
   width: 360px;
-  height: 650px;
+  height: 661px;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
