@@ -94,6 +94,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
+    console.log("handleMakePw called");
     setNewId(newIdLocal);
     setMakePwPage(true);
   };
@@ -108,7 +109,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   }
 
   // 아이디 중복 확인 함수
-  const handleIdCheck = async (e) => {
+  /*const handleIdCheck = async (e) => {
     e.preventDefault();
 
     try {
@@ -131,7 +132,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
     } catch (error) {
       console.error("아이디 중복확인 에러:", error);
     }
-  };
+  };*/
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -163,7 +164,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
             onChange={(e) => setNewId(e.target.value)}
             placeholder="아이디를 입력해주세요."
           />
-          <button onClick={handleIdCheck}>중복확인</button>
+          <button /*onClick={handleIdCheck}*/>중복확인</button>
         </InputStyle>
         <Bottom>
           <div>
