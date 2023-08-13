@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
@@ -11,19 +11,30 @@ import MenuBar from "../components/MenuBar";
 const CommentPage = () => {
   const location = useLocation();
   const artId = location.state.id;
+  const [lists, setLists] = useState([]);
+
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
-  const getComments = async () => {
+  useEffect(() => {
+    getComments(artId);
+  }, [artId]);
+
+  const getComments = async (id) => {
     await axios
-      .get(`${BASE_URL}/main/posts/<int:pk>/comments/`)
-      .then((response) => {})
+      .get(`${BASE_URL}/main/posts/${id}/comments/`)
+      .then((response) => {
+        setLists(response.data);
+      })
       .catch((error) => console.log(error));
   };
+
+  console.log(lists);
+
   return (
     <Wrapper>
       <TopBar />
       <CommentList>
-        <Comment />
+        {lists && lists.map((list) => <Comment key={list.id} list={list} />)}
       </CommentList>
       <WriteComment />
       <MenuBar />

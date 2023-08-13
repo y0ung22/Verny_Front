@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { styled } from "styled-components";
 
@@ -17,6 +18,8 @@ const UploadArtPage = () => {
   const [newContent, setNewContent] = useState("");
   const [newYear, setNewYear] = useState("");
   const [newType, setNewType] = useState("");
+
+  const navigate = useNavigate();
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -55,14 +58,16 @@ const UploadArtPage = () => {
         work_year: newYear,
         type: newType,
       })
-      .then((response) => {})
+      .then((response) => {
+        navigate("/art");
+      })
       .catch((error) => console.log(error));
   };
 
   return (
     <Wrapper>
       <TopBar />
-      <UploadBtn>업로드</UploadBtn>
+      <UploadBtn onClick={uploadArt}>업로드</UploadBtn>
       <ScrollArea>
         <Container>
           <ImgContainer>

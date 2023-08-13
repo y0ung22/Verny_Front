@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 
 import profile from "../assets/icons/profileBasic.svg";
@@ -10,7 +9,7 @@ import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 import commentWrite from "../assets/icons/commentWrite.svg";
 
-const Comment = (text) => {
+const Comment = ({ list }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const { pathname } = useLocation();
@@ -36,22 +35,22 @@ const Comment = (text) => {
         <Writer>
           <Profile src={profile} />
           <span id="name" alt="">
-            닉네임
+            {list.author}
           </span>
           <span>·</span>
           <span id="time" alt="">
-            30분 전
+            {list.created_at}
           </span>
         </Writer>
         <BtnBox>
           <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
             <img src={likeStatus ? likeClicked : like} />
-            <span liked={likeStatus}>100</span>
+            <span liked={likeStatus}>{list.likes_count}</span>
           </Btn>
         </BtnBox>
       </Info>
-      <Content showMore={showMore}>댓글 내용이 1줄이면 이렇게요!!</Content>
-      {!showMore && text.length > 100 && (
+      <Content showMore={showMore}>{list.content}</Content>
+      {!showMore && list.content.length > 100 && (
         <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
           더보기
         </ShowMoreButton>
@@ -60,7 +59,7 @@ const Comment = (text) => {
         <ReComment>
           <ReCommentBtn onClick={moveReComment}>
             <img src={commentWrite} />
-            <span>100</span>
+            <span>{list.recomments_count}</span>
             <span>답글 쓰기</span>
           </ReCommentBtn>
         </ReComment>

@@ -23,7 +23,7 @@ const ButtonBar = ({ artDetail }) => {
   };
 
   const moveComment = () => {
-    navigate("/art/detail/comment");
+    navigate("/art/detail/comment", { state: { id: artDetail.id } });
   };
 
   return (
