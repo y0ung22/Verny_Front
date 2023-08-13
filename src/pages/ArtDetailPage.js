@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { styled } from "styled-components";
 import { useLocation } from "react-router-dom";
+import { styled } from "styled-components";
 import axios from "axios";
 
 import TopBar from "../components/TopBar";
@@ -16,7 +16,7 @@ const ArtDetailPage = () => {
   const [nextHover, setNextHover] = useState(false);
   const [artDetail, setArtDetail] = useState([]);
   const location = useLocation();
-  const id = location.state.id;
+  const artId = location.state.id;
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -40,7 +40,7 @@ const ArtDetailPage = () => {
     await axios
       .get(`${BASE_URL}/main/posts/${id}`)
       .then((response) => {
-        setArtDetail([...response.data]);
+        setArtDetail(response.data);
       })
       .catch((error) => console.log(error));
   };
@@ -48,7 +48,7 @@ const ArtDetailPage = () => {
   console.log(artDetail);
 
   useEffect(() => {
-    getArtDetail();
+    getArtDetail(artId);
   }, []);
 
   return (
@@ -61,7 +61,7 @@ const ArtDetailPage = () => {
         <img alt="다음 미술품" src={nextHover ? nextBtnHover : nextBtn} />
       </NextBtn>
       <ArtInfo>
-        <ArtImg src={artDetail.image} />
+        <ArtImg src={`${BASE_URL}${artDetail.image}`} />
         <ArtDetail>
           <span id="title">{artDetail.title}</span>
           <span id="artist">{artDetail.painter}</span>
@@ -69,7 +69,10 @@ const ArtDetailPage = () => {
           <span id="year">{artDetail.work_year}</span>
         </ArtDetail>
         <Description>
-          <p>{artDetail.content}</p>
+          {artDetail.content &&
+            artDetail.content
+              .split("<br/>")
+              .map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </Description>
       </ArtInfo>
       <ButtonBar artDetail={artDetail} />
@@ -123,10 +126,10 @@ const NextBtn = styled.div`
 
 const ArtInfo = styled.div`
   margin-top: 10px;
-  padding-bottom: 180px;
+  margin-bottom: 50px;
   display: flex;
   width: 250px;
-  height: 700px;
+  height: 610px;
   flex-direction: column;
   align-items: center;
   gap: 40px;
@@ -186,6 +189,7 @@ const ArtDetail = styled.div`
 `;
 
 const Description = styled.div`
+  margin-bottom: 50px;
   color: var(--p-primary-0, #000);
   font-family: Pretendard;
   font-size: 0.88rem;

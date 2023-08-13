@@ -47,12 +47,12 @@ const ArtPage = () => {
       .catch((error) => console.log(error));
   };
 
-  console.log(arts);
-
   const filteredArts =
     selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
+
+  console.log(arts);
 
   return (
     <Wrapper>
