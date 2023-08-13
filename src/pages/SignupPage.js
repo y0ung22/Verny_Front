@@ -13,11 +13,8 @@ import check from "../assets/icons/check.svg";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [makeIdPage, setMakeIdPage] = useState(false);
-
-  // 카카오 계정으로 회원가입 버튼 클릭하여 이동
-  const handleKakaoSignup = () => {
-    // 카카오 계정으로 회원가입 기능 구현
-  };
+  const [newId, setNewId] = useState(""); // 아이디 상태 생성
+  const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
 
   // 아이디로 회원가입 버튼 클릭하면 닉네임(아이디) 입력 페이지로 이동
   const handleMakeId = () => {
@@ -25,8 +22,23 @@ const SignupPage = () => {
   };
 
   if (makeIdPage) {
-    return <MakeIdPage setMakeIdPage={setMakeIdPage} />;
+    return (
+      <MakeIdPage
+        setMakeIdPage={setMakeIdPage}
+        setNewId={setNewId}
+        setNewPw={setNewPw} // setNewPw를 전달
+      />
+    );
   }
+
+  // 카카오 계정으로 회원가입 버튼 클릭하여 이동
+  const handleKakaoSignup = () => {
+    // 카카오 계정으로 회원가입 기능 구현
+  };
+
+  /* if (makeIdPage) {
+    return <MakeIdPage setMakeIdPage={setMakeIdPage} />;
+  } */
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -70,10 +82,12 @@ const SignupPage = () => {
   );
 };
 
-const MakeIdPage = () => {
+const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
-  const [newId, setNewId] = useState("");
+  const [checkPwPage, setCheckPwPage] = useState(false);
+  // const [newId, setNewId] = useState("");
+  // const [newIdLocal, setNewIdLocal] = useState("");
   const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -81,19 +95,20 @@ const MakeIdPage = () => {
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
     setMakePwPage(true);
+    setNewId(newId);
   };
 
   if (makePwPage) {
-    return <MakePwPage setMakePwPage={setMakePwPage} />;
+    return (
+      <MakePwPage
+        setMakePwPage={setMakePwPage}
+        newId={newId} // newPw를 전달
+      />
+    );
   }
 
-  // 아이디 입력 조건 충족 미충족 함수
-  const isValidId = (id) => {
-    // 아이디 입력 조건 함수
-  };
-
   // 아이디 중복 확인 함수
-  const handleIdCheck = async (e) => {
+  /*const handleIdCheck = async (e) => {
     e.preventDefault();
 
     try {
@@ -116,7 +131,7 @@ const MakeIdPage = () => {
     } catch (error) {
       console.error("아이디 중복확인 에러:", error);
     }
-  };
+  };*/
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -148,7 +163,7 @@ const MakeIdPage = () => {
             onChange={(e) => setNewId(e.target.value)}
             placeholder="아이디를 입력해주세요."
           />
-          <button onClick={handleIdCheck}>중복확인</button>
+          <button /*onClick={handleIdCheck}*/>중복확인</button>
         </InputStyle>
         <Bottom>
           <div>
@@ -173,11 +188,17 @@ const MakePwPage = () => {
 
   // 비번 확인 페이지로 이동
   const handleCheckPwPage = () => {
+    setNewPw(newPw);
     setCheckPwPage(true);
   };
 
   if (checkPwPage) {
-    return <CheckPwPage setCheckPwPage={setCheckPwPage} />;
+    return (
+      <CheckPwPage
+        setCheckPwPage={setCheckPwPage}
+        newPw={newPw} // newPw를 전달
+      />
+    );
   }
 
   const handleLogin = () => {
@@ -216,13 +237,13 @@ const MakePwPage = () => {
   );
 };
 
-const CheckPwPage = () => {
+const CheckPwPage = ({ newId, newPw }) => {
   const navigate = useNavigate();
   const [signupCompleted, setSignupCompleted] = useState(false);
   const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
   const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
-  const [newId, setNewId] = useState("");
-  const [newPw, setNewPw] = useState("");
+  // const [newId, setNewId] = useState("");
+  // const [newPw, setNewPw] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
