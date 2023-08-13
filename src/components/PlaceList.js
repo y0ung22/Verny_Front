@@ -31,10 +31,8 @@ const PlaceList = () => {
   const handleCopy = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-
-      alert("복사 성공");
     } catch (error) {
-      alert("복사 실패");
+      console.error("복사 실패", error);
     }
   };
 
@@ -57,7 +55,7 @@ const PlaceList = () => {
           <p
             style={{
               /*width: "86px",*/
-              fontSize: "0.84rem",
+              fontSize: "1rem",
               fontWeight: "400",
               lineHeight: "140%",
               color: "var(--n-neutral-10, #1A1C1E)",
@@ -108,7 +106,7 @@ const PlaceList = () => {
             border: "none",
             borderRadius: "12px",
             background: "var(--p-primary-90, #CFE5FF)",
-            fontSize: "0.65rem",
+            fontSize: "0.75rem",
             fontWeight: 400,
             lineHeight: "140%",
             color: "var(--p-primary-10, #001D33)",
@@ -132,7 +130,7 @@ const PlaceList = () => {
         itemSize={getItemSize} // 각 아이템의 높이를 반환하는 함수 사용
         onScroll={handleScroll}
         scrollToItem={scrollOffset}
-        overscanCount={100}
+        overscanCount={50}
       >
         {Row}
       </VariableSizeList>
