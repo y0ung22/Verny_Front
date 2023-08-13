@@ -10,7 +10,6 @@ import nextBtn from "../assets/icons/next.svg";
 import nextBtnHover from "../assets/icons/nextHover.svg";
 import ButtonBar from "../components/ButtonBar";
 import MenuBar from "../components/MenuBar";
-import testImg from "../assets/etc/text.jpg";
 
 const ArtDetailPage = () => {
   const [beforeHover, setBeforeHover] = useState(false);
@@ -45,6 +44,8 @@ const ArtDetailPage = () => {
       })
       .catch((error) => console.log(error));
   };
+
+  console.log(artDetail);
 
   useEffect(() => {
     getArtDetail();

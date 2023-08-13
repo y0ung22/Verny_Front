@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
@@ -12,6 +11,7 @@ const ArtBox = ({ art }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   const moveDetail = () => {
     navigate("/art/detail", { state: { id: art.id } });
@@ -35,7 +35,11 @@ const ArtBox = ({ art }) => {
 
   return (
     <Wrapper>
-      <Image src={art.image} alt="이미지 대체 텍스트" onClick={moveDetail} />
+      <Image
+        src={`${BASE_URL}${art.image}`}
+        alt="이미지 대체 텍스트"
+        onClick={moveDetail}
+      />
       <Info>
         <TextBox onClick={moveDetail}>
           <Title>{art.title}</Title>
@@ -64,7 +68,7 @@ const Wrapper = styled.div`
   margin-bottom: 10px;
   display: flex;
   width: 156px;
-  height: 321px;
+  height: 340px;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
