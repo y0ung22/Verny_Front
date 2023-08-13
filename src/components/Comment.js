@@ -15,6 +15,8 @@ const Comment = ({ list }) => {
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
+  console.log(list);
+
   //더보기 버튼
   const handleShowMore = () => {
     setShowMore(true);
@@ -26,36 +28,32 @@ const Comment = ({ list }) => {
   };
 
   const moveReComment = () => {
-    navigate("/art/detail/comment/re");
+    navigate("/art/detail/comment/re", { state: { id: list.id } });
   };
 
   return (
-    <Wrapper pathname={pathname}>
-      <Info>
-        <Writer>
-          <Profile src={profile} />
-          <span id="name" alt="">
-            {list.author}
-          </span>
-          <span>·</span>
-          <span id="time" alt="">
-            {list.created_at}
-          </span>
-        </Writer>
-        <BtnBox>
-          <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
-            <img src={likeStatus ? likeClicked : like} />
-            <span liked={likeStatus}>{list.likes_count}</span>
-          </Btn>
-        </BtnBox>
-      </Info>
-      <Content showMore={showMore}>{list.content}</Content>
-      {!showMore && list.content.length > 100 && (
-        <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
-          더보기
-        </ShowMoreButton>
-      )}
-      {pathname !== "/art/detail/comment/re" && (
+    list && (
+      <Wrapper pathname={pathname}>
+        <Info>
+          <Writer>
+            <Profile src={profile} />
+            <span id="name">{list.author_username}</span>
+            <span>·</span>
+            <span id="time">{list.created_at}</span>
+          </Writer>
+          <BtnBox>
+            <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
+              <img src={likeStatus ? likeClicked : like} />
+              <span liked={likeStatus}>{list.likes_count}</span>
+            </Btn>
+          </BtnBox>
+        </Info>
+        <Content showMore={showMore}>{list.content}</Content>
+        {!showMore && list.content.length > 100 && (
+          <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
+            더보기
+          </ShowMoreButton>
+        )}
         <ReComment>
           <ReCommentBtn onClick={moveReComment}>
             <img src={commentWrite} />
@@ -63,8 +61,8 @@ const Comment = ({ list }) => {
             <span>답글 쓰기</span>
           </ReCommentBtn>
         </ReComment>
-      )}
-    </Wrapper>
+      </Wrapper>
+    )
   );
 };
 

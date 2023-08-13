@@ -14,6 +14,7 @@ const ArtPage = () => {
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [searchResult, setSearchResult] = useState([]);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
   const [arts, setArts] = useState([]);
@@ -57,7 +58,7 @@ const ArtPage = () => {
   return (
     <Wrapper>
       <TopBar />
-      <SearchBar />
+      <SearchBar setSearchResult={setSearchResult} />
       <CategoryBar>
         {categories.map((category, index) => (
           <Category
@@ -72,7 +73,9 @@ const ArtPage = () => {
       </CategoryBar>
       <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
       <ArtList>
-        {arts && filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
+        {searchResult.length > 0
+          ? searchResult.map((art) => <ArtBox key={art.id} art={art} />)
+          : filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
       </ArtList>
       <Link to="/art/upload" style={{ textDecoration: "none" }}>
         <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>

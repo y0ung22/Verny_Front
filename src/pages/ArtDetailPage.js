@@ -45,8 +45,6 @@ const ArtDetailPage = () => {
       .catch((error) => console.log(error));
   };
 
-  console.log(artDetail);
-
   useEffect(() => {
     getArtDetail(artId);
   }, []);

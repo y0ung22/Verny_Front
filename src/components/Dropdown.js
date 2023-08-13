@@ -21,7 +21,6 @@ const Dropdown = () => {
 
   return (
     <Wrapper>
-      <p id="txt">작품 4개를 감상해보세요!</p>
       <Dropdown>
         <DropBtn onClick={dropClick}>
           <span>정렬</span>
@@ -73,16 +72,6 @@ const Wrapper = styled.div`
   flex-shrink: 0;
   background: var(--n-neutral-100, #fff);
   box-shadow: 0px 4px 4px 0px rgba(0, 51, 84, 0.04);
-  p {
-    max-width: 194px;
-    flex: 1 0 0;
-    color: var(--s-secondary-40, #52606f);
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-  }
 `;
 
 const DropBtn = styled.div`

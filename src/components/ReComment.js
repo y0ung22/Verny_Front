@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
@@ -9,11 +7,9 @@ import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 
-const Comment = (text) => {
+const Comment = ({ comment }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
-  const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   //더보기 버튼
   const handleShowMore = () => {
@@ -25,32 +21,28 @@ const Comment = (text) => {
     setLikeStatus(!likeStatus);
   };
 
-  const moveReComment = () => {
-    navigate("/art/detail/comment/re");
-  };
-
   return (
     <Wrapper>
       <Info>
         <Writer>
           <Profile src={profile} />
           <span id="name" alt="">
-            닉네임
+            {comment.author_username}
           </span>
           <span>·</span>
           <span id="time" alt="">
-            30분 전
+            {comment.created_at}
           </span>
         </Writer>
         <BtnBox>
           <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
             <img src={likeStatus ? likeClicked : like} />
-            <span liked={likeStatus}>100</span>
+            <span liked={likeStatus}>{comment.relikes_count}</span>
           </Btn>
         </BtnBox>
       </Info>
-      <Content showMore={showMore}>댓글 내용이 1줄이면 이렇게요!!</Content>
-      {!showMore && text.length > 100 && (
+      <Content showMore={showMore}>{comment.content}</Content>
+      {!showMore && comment.content.length > 100 && (
         <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
           더보기
         </ShowMoreButton>
