@@ -4,36 +4,15 @@ import { styled } from "styled-components";
 import axios from "axios";
 
 import TopBar from "../components/TopBar";
-import beforeBtn from "../assets/icons/before.svg";
-import beforeBtnHover from "../assets/icons/beforeHover.svg";
-import nextBtn from "../assets/icons/next.svg";
-import nextBtnHover from "../assets/icons/nextHover.svg";
 import ButtonBar from "../components/ButtonBar";
 import MenuBar from "../components/MenuBar";
 
 const ArtDetailPage = () => {
-  const [beforeHover, setBeforeHover] = useState(false);
-  const [nextHover, setNextHover] = useState(false);
   const [artDetail, setArtDetail] = useState([]);
   const location = useLocation();
   const artId = location.state.id;
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
-  const beforeHovered = () => {
-    setBeforeHover(true);
-  };
-
-  const beforeLeave = () => {
-    setBeforeHover(false);
-  };
-
-  const nextHovered = () => {
-    setNextHover(true);
-  };
-  const nextLeave = () => {
-    setNextHover(false);
-  };
 
   //미술품 해설 받아오기
   const getArtDetail = async (id) => {
@@ -52,12 +31,6 @@ const ArtDetailPage = () => {
   return (
     <Wrapper>
       <TopBar />
-      <BeforeBtn onMouseEnter={beforeHovered} onMouseLeave={beforeLeave}>
-        <img alt="이전 미술품" src={beforeHover ? beforeBtnHover : beforeBtn} />
-      </BeforeBtn>
-      <NextBtn onMouseEnter={nextHovered} onMouseLeave={nextLeave}>
-        <img alt="다음 미술품" src={nextHover ? nextBtnHover : nextBtn} />
-      </NextBtn>
       <ArtInfo>
         <ArtImg src={`${BASE_URL}${artDetail.image}`} />
         <ArtDetail>
@@ -90,36 +63,6 @@ const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-`;
-
-const BeforeBtn = styled.div`
-  height: 575px;
-  width: 57px;
-  position: absolute;
-  left: 0px;
-  top: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 12px;
-    height: 48px;
-  }
-`;
-
-const NextBtn = styled.div`
-  height: 575px;
-  width: 57px;
-  position: absolute;
-  right: 0px;
-  top: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  img {
-    width: 12px;
-    height: 48px;
-  }
 `;
 
 const ArtInfo = styled.div`

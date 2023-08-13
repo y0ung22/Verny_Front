@@ -28,7 +28,7 @@ const SearchBar = () => {
       .get(`${BASE_URL}/main/search/?q=${text}`)
       .then((response) => {
         setSearchResult(response.data);
-        console.log(response);
+        console.log(searchResult);
       })
       .catch((error) => console.log(error));
   };

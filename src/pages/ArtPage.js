@@ -4,7 +4,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 import TopBar from "../components/TopBar";
-import SearchBar from "../components/SearchBar";
+import search from "../assets/icons/search.svg";
+import delBtn from "../assets/icons/deleteSecondary.svg";
 import ArtBox from "../components/ArtBox";
 import MenuBar from "../components/MenuBar";
 import Write from "../assets/icons/write.svg";
@@ -14,6 +15,7 @@ const ArtPage = () => {
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
+  const [text, setText] = useState("");
   const [searchResult, setSearchResult] = useState([]);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -32,6 +34,28 @@ const ArtPage = () => {
   const MouseLeave = () => {
     setIsHovered(false);
   };
+
+  //검색 함수
+  const goSearch = async (e, text) => {
+    e.preventDefault();
+    await axios
+      .get(`${BASE_URL}/main/search/?q=${text}`)
+      .then((response) => {
+        setSearchResult(response.data);
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
+  const onChange = (e) => {
+    setText(e.target.value);
+  };
+
+  const deleteText = () => {
+    setText("");
+  };
+
+  console.log(text);
 
   //리렌더링
   useEffect(() => {
@@ -53,12 +77,29 @@ const ArtPage = () => {
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
 
-  console.log(arts);
-
   return (
     <Wrapper>
       <TopBar />
-      <SearchBar setSearchResult={setSearchResult} />
+      <SearchBar>
+        <form className="input-container" onSubmit={goSearch}>
+          <InputContainer>
+            <Input
+              type="text"
+              placeholder="제목이나 작가를 검색해보세요!"
+              onChange={onChange}
+              value={text}
+            />
+            {text && (
+              <DeleteBtn onClick={deleteText}>
+                <img src={delBtn} alt="검색어 삭제 버튼" />
+              </DeleteBtn>
+            )}
+          </InputContainer>
+          <SubmitButton>
+            <img src={search} alt="검색 버튼" />
+          </SubmitButton>
+        </form>
+      </SearchBar>
       <CategoryBar>
         {categories.map((category, index) => (
           <Category
@@ -97,6 +138,75 @@ const Wrapper = styled.div`
   background: var(--n-neutral-100, #fff);
   display: flex;
   flex-direction: column;
+`;
+
+const SearchBar = styled.div`
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 328px;
+  padding: 8px 16px;
+  gap: 8px;
+  background: var(--n-neutral-100, #fff);
+`;
+
+const InputContainer = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 8px;
+`;
+
+const Input = styled.input`
+  width: 242px;
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  align-self: stretch;
+  border-radius: 12px;
+  border: 1.5px solid var(--s-secondary-80, #b9c8da);
+  background: var(--s-secondary-99, #fcfcff);
+  outline: none;
+  color: var(--s-secondary-10, #0e1d2a);
+  font-family: Pretendard;
+  font-size: 0.88rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
+
+const DeleteBtn = styled.div`
+  margin-left: -40px;
+  display: flex;
+  width: 16px;
+  height: 16px;
+  padding: 2px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  img {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+  }
+`;
+
+const SubmitButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 20px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  img {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
 `;
 
 const CategoryBar = styled.div`
