@@ -16,6 +16,11 @@ const SignupPage = () => {
   const [newId, setNewId] = useState(""); // 아이디 상태 생성
   const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
 
+  // 아이디로 회원가입 버튼 클릭하면 닉네임(아이디) 입력 페이지로 이동
+  const handleMakeId = () => {
+    setMakeIdPage(true);
+  };
+
   if (makeIdPage) {
     return (
       <MakeIdPage
@@ -31,14 +36,9 @@ const SignupPage = () => {
     // 카카오 계정으로 회원가입 기능 구현
   };
 
-  // 아이디로 회원가입 버튼 클릭하면 닉네임(아이디) 입력 페이지로 이동
-  const handleMakeId = () => {
-    setMakeIdPage(true);
-  };
-
-  if (makeIdPage) {
+  /* if (makeIdPage) {
     return <MakeIdPage setMakeIdPage={setMakeIdPage} />;
-  }
+  } */
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -98,7 +98,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
     setNewId(newId);
   };
 
-  if (checkPwPage) {
+  if (makePwPage) {
     return (
       <MakePwPage
         setMakePwPage={setMakePwPage}
