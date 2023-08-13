@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
@@ -9,22 +10,29 @@ import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 import commentWrite from "../assets/icons/commentWrite.svg";
 
-const Comment = ({ list }) => {
+const Comment = ({ list, artId }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
-  console.log(list);
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //더보기 버튼
   const handleShowMore = () => {
     setShowMore(true);
   };
 
-  //댓글 좋아요 기능
-  const handleLike = () => {
-    setLikeStatus(!likeStatus);
+  //댓글 좋아요 상태 관리
+  const handleLike = async () => {
+    await axios
+      .post(`${BASE_URL}/main/posts/${artId}/comments/${list.id}/likes/`, {
+        liked: likeStatus,
+      })
+      .then((response) => {
+        setLikeStatus(!likeStatus);
+      })
+      .catch((error) => console.log(error));
   };
 
   const moveReComment = () => {
@@ -42,9 +50,13 @@ const Comment = ({ list }) => {
             <span id="time">{list.created_at}</span>
           </Writer>
           <BtnBox>
-            <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
+            <Btn
+              alt="댓글 좋아요 버튼"
+              onClick={handleLike}
+              isLiked={likeStatus}
+            >
               <img src={likeStatus ? likeClicked : like} />
-              <span liked={likeStatus}>{list.likes_count}</span>
+              <span isLiked={likeStatus}>{list.likes_count}</span>
             </Btn>
           </BtnBox>
         </Info>
@@ -145,8 +157,10 @@ const Btn = styled.div`
     gap: 8px;
   }
   span {
-    color: ${({ liked }) =>
-      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
+    color: ${({ isLiked }) =>
+      isLiked
+        ? "var(--p-primary-40, #00639c)"
+        : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;

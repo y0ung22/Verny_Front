@@ -34,7 +34,10 @@ const CommentPage = () => {
     <Wrapper>
       <TopBar />
       <CommentList>
-        {lists && lists.map((list) => <Comment key={list.id} list={list} />)}
+        {lists &&
+          lists.map((list) => (
+            <Comment key={list.id} list={list} artId={artId} />
+          ))}
       </CommentList>
       <WriteComment />
       <MenuBar />
