@@ -13,6 +13,18 @@ import check from "../assets/icons/check.svg";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [makeIdPage, setMakeIdPage] = useState(false);
+  const [newId, setNewId] = useState(""); // 아이디 상태 생성
+  const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
+
+  if (makeIdPage) {
+    return (
+      <MakeIdPage
+        setMakeIdPage={setMakeIdPage}
+        setNewId={setNewId}
+        setNewPw={setNewPw} // setNewPw를 전달
+      />
+    );
+  }
 
   // 카카오 계정으로 회원가입 버튼 클릭하여 이동
   const handleKakaoSignup = () => {
@@ -70,27 +82,30 @@ const SignupPage = () => {
   );
 };
 
-const MakeIdPage = () => {
+const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
-  const [newId, setNewId] = useState("");
+  const [checkPwPage, setCheckPwPage] = useState(false);
+  // const [newId, setNewId] = useState("");
+  const [newIdLocal, setNewIdLocal] = useState("");
   const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
+    setNewId(newIdLocal);
     setMakePwPage(true);
   };
 
-  if (makePwPage) {
-    return <MakePwPage setMakePwPage={setMakePwPage} />;
+  if (checkPwPage) {
+    return (
+      <MakePwPage
+        setMakePwPage={setMakePwPage}
+        newId={newId} // newPw를 전달
+      />
+    );
   }
-
-  // 아이디 입력 조건 충족 미충족 함수
-  const isValidId = (id) => {
-    // 아이디 입력 조건 함수
-  };
 
   // 아이디 중복 확인 함수
   const handleIdCheck = async (e) => {
@@ -173,11 +188,17 @@ const MakePwPage = () => {
 
   // 비번 확인 페이지로 이동
   const handleCheckPwPage = () => {
+    setNewPw(newPw);
     setCheckPwPage(true);
   };
 
   if (checkPwPage) {
-    return <CheckPwPage setCheckPwPage={setCheckPwPage} />;
+    return (
+      <CheckPwPage
+        setCheckPwPage={setCheckPwPage}
+        newPw={newPw} // newPw를 전달
+      />
+    );
   }
 
   const handleLogin = () => {
@@ -216,13 +237,13 @@ const MakePwPage = () => {
   );
 };
 
-const CheckPwPage = () => {
+const CheckPwPage = ({ newId, newPw }) => {
   const navigate = useNavigate();
   const [signupCompleted, setSignupCompleted] = useState(false);
   const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
   const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
-  const [newId, setNewId] = useState("");
-  const [newPw, setNewPw] = useState("");
+  // const [newId, setNewId] = useState("");
+  // const [newPw, setNewPw] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
