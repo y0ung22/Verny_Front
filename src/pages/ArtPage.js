@@ -40,23 +40,19 @@ const ArtPage = () => {
   //미술품 정보 불러오기
   const getAllArts = async () => {
     await axios
-      .get(`${BASE_URL}/main/posts/`)
+      .get(`${BASE_URL}/main/posts`)
       .then((response) => {
-        setArts([response.data]);
-        console.log(arts);
+        setArts(response.data.posts);
       })
       .catch((error) => console.log(error));
   };
 
-  //미술품 필터링
-  const filteringArts = () => {
-    return selectedCategory === "전체"
+  console.log(arts);
+
+  const filteredArts =
+    selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
-  };
-
-  const filteredArts = filteringArts();
-  console.log(filteredArts);
 
   return (
     <Wrapper>
@@ -76,9 +72,7 @@ const ArtPage = () => {
       </CategoryBar>
       <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
       <ArtList>
-        {filteredArts.map((art) => (
-          <ArtBox key={art.id} art={art} />
-        ))}
+        {arts && filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
       </ArtList>
       <Link to="/art/upload" style={{ textDecoration: "none" }}>
         <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
