@@ -87,16 +87,15 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   const [makePwPage, setMakePwPage] = useState(false);
   const [checkPwPage, setCheckPwPage] = useState(false);
   // const [newId, setNewId] = useState("");
-  const [newIdLocal, setNewIdLocal] = useState("");
+  // const [newIdLocal, setNewIdLocal] = useState("");
   const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
-    console.log("handleMakePw called");
-    setNewId(newIdLocal);
     setMakePwPage(true);
+    setNewId(newId);
   };
 
   if (checkPwPage) {
