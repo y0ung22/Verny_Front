@@ -34,7 +34,8 @@ const LoginPage = () => {
   };
 
   // 아이디로 로그인
-  const onClickLogin = async () => {
+  const onClickLogin = async (e) => {
+    e.preventDefault();
     try {
       // REST API를 이용하여 백엔드에 로그인 데이터 전달
       const response = await axios.post(`${BASE_URL}/account/login`, null, {
@@ -123,9 +124,7 @@ const LoginPage = () => {
             </button>
             <HandleSignupStyle>
               <span>아직 회원이 아니신가요?</span>
-              <button className="handle-signup" onClick={handleSignup}>
-                회원가입하기
-              </button>
+              <button onClick={handleSignup}>회원가입하기</button>
             </HandleSignupStyle>
           </Buttons>
         </FirstWrapper>
@@ -141,28 +140,6 @@ const FirstWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  .span {
-    color: var(--n-neutral-0, #000);
-
-    /* Caption/1 */
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 16.8px */
-  }
-
-  .handle-signup {
-    color: var(--p-primary-80, #98cbff);
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%; /* 16.8px */
-    text-decoration-line: underline;
-    cursor: pointer;
-  }
 `;
 
 const Logo = styled.div`
@@ -217,8 +194,8 @@ const Buttons = styled.div`
 
   span {
     color: rgba(0, 0, 0, 0.85);
-    font-family: Roboto;
-    font-size: 0.84rem;
+    font-family: Pretendard;
+    font-size: 1rem;
     font-style: normal;
     font-weight: 500;
     line-height: normal;
@@ -258,7 +235,7 @@ const Input = styled.div`
   p {
     color: var(--s-secondary-20, #243240);
     font-family: Pretendard;
-    font-size: 1.6rem;
+    font-size: 2rem;
     font-style: normal;
     font-weight: 600;
     line-height: 140%;
@@ -316,8 +293,7 @@ const Bottom = styled.div`
 `;
 
 const HandleSignupStyle = styled.div`
-  margin-top: 10px;
-  .span {
+  span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
     font-size: 0.75rem;
@@ -326,7 +302,7 @@ const HandleSignupStyle = styled.div`
     line-height: 140%;
   }
 
-  .handle-signup {
+  button {
     color: var(--p-primary-80, #98cbff);
     font-family: Pretendard;
     font-size: 0.75rem;
