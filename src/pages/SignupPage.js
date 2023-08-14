@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import instance from "../axios";
 import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
@@ -257,7 +257,7 @@ const CheckPwPage = ({ newId, newPw }) => {
     }
 
     try {
-      await axios.post(
+      const response = await instance.post(
         `${BASE_URL}/account/signup/`,
         {
           username: newId,
