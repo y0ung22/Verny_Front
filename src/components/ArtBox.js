@@ -11,6 +11,7 @@ const ArtBox = ({ art }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
+
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   const moveDetail = () => {

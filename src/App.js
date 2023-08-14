@@ -14,6 +14,7 @@ import EditProfilePage from "./pages/EditProfilePage";
 import BookmarkPage from "./pages/BookmarkPage";
 import ReCommentPage from "./pages/ReCommentPage";
 import UploadArtPage from "./pages/UploadArtPage";
+import SearchPage from "./pages/SearchPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/account/login" element={<LoginPage />} />
         {/*메인 화면*/}
         <Route path="/art" element={<ArtPage />} />
+        <Route path="/search" element={<SearchPage />} />
         <Route path="/place" element={<PlacePage />} />
         <Route path="/mypage" element={<MyPage />} />
         {/*세부 화면*/}

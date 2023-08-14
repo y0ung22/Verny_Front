@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { styled } from "styled-components";
-import { upload } from "@testing-library/user-event/dist/upload";
 
 const WriteComment = () => {
   const BASE_URL = "https://yewon1209.pythonanywhere.com";

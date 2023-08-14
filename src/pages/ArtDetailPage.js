@@ -28,6 +28,8 @@ const ArtDetailPage = () => {
     getArtDetail(artId);
   }, []);
 
+  console.log(artDetail);
+
   return (
     <Wrapper>
       <TopBar />

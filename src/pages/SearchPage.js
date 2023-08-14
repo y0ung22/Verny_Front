@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import TopBar from "../components/TopBar";
@@ -8,38 +8,38 @@ import search from "../assets/icons/search.svg";
 import delBtn from "../assets/icons/deleteSecondary.svg";
 import ArtBox from "../components/ArtBox";
 import MenuBar from "../components/MenuBar";
-import Write from "../assets/icons/write.svg";
-import WriteHover from "../assets/icons/writeHover.svg";
 
-const ArtPage = () => {
+const SearchPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+  const keyword = location.state?.keyword || "";
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
-  const [text, setText] = useState("");
-
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
-  const [arts, setArts] = useState([]);
+  const [text, setText] = useState(keyword);
+  const [searchResult, setSearchResult] = useState([]);
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
-  //검색 클릭 시 검색 결과 페이지 이동 및 검색어 전달
-  const goSearch = () => {
-    navigate("/search", { state: { keyword: text } });
-    setText("");
-  };
+  const filteredArts =
+    selectedCategory === "전체"
+      ? searchResult
+      : searchResult.filter((art) => art.type === selectedCategory);
 
-  //미술품 작성 버튼 호버 시 이미지 경로 변경
-  const [isHovered, setIsHovered] = useState(false);
-
-  const MouseHover = () => {
-    setIsHovered(true);
-  };
-  const MouseLeave = () => {
-    setIsHovered(false);
+  //검색 함수
+  const goSearch = async (text) => {
+    await axios
+      .get(`${BASE_URL}/main/search/?q=${text}`)
+      .then((response) => {
+        setSearchResult(response.data.data);
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
   };
 
   const onChange = (e) => {
@@ -48,33 +48,21 @@ const ArtPage = () => {
 
   const deleteText = () => {
     setText("");
+    navigate("/art");
   };
+
+  console.log(text);
 
   //리렌더링
   useEffect(() => {
-    getAllArts();
+    goSearch(keyword);
   }, []);
-
-  //미술품 정보 불러오기
-  const getAllArts = async () => {
-    await axios
-      .get(`${BASE_URL}/main/posts`)
-      .then((response) => {
-        setArts(response.data.posts);
-      })
-      .catch((error) => console.log(error));
-  };
-
-  const filteredArts =
-    selectedCategory === "전체"
-      ? arts
-      : arts.filter((art) => art.type === selectedCategory);
 
   return (
     <Wrapper>
       <TopBar />
       <SearchBar>
-        <form className="input-container">
+        <form className="input-container" onSubmit={goSearch}>
           <InputContainer>
             <Input
               type="text"
@@ -89,7 +77,7 @@ const ArtPage = () => {
             )}
           </InputContainer>
           <SubmitButton>
-            <img onClick={goSearch} src={search} alt="검색 버튼" />
+            <img src={search} alt="검색 버튼" />
           </SubmitButton>
         </form>
       </SearchBar>
@@ -107,20 +95,21 @@ const ArtPage = () => {
       </CategoryBar>
       <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
       <ArtList>
-        {filteredArts &&
-          filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
+        {filteredArts.length ? (
+          filteredArts.map((art) => <ArtBox key={art.id} art={art} />)
+        ) : (
+          <p>
+            검색 결과가 없어요. <br /> 다시 시도해주시겠어요?
+          </p>
+        )}
       </ArtList>
-      <Link to="/art/upload" style={{ textDecoration: "none" }}>
-        <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
-          <img src={isHovered ? WriteHover : Write} />
-        </WriteArtBtn>
-      </Link>
+      <Link to="/art/upload" style={{ textDecoration: "none" }}></Link>
       <MenuBar />
     </Wrapper>
   );
 };
 
-export default ArtPage;
+export default SearchPage;
 
 const Wrapper = styled.div`
   position: relative;
@@ -265,15 +254,16 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-`;
-
-const WriteArtBtn = styled.button`
-  position: absolute;
-  right: 45px;
-  bottom: 120px;
-  width: 48px;
-  height: 48px;
-  flex-shrink: 0;
-  background-color: transparent;
-  border: none;
+  p {
+    position: absolute;
+    top: 430px;
+    left: 110px;
+    color: var(--s-secondary-50, #6a7889);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 0.88rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
 `;
