@@ -248,24 +248,34 @@ const CheckPwPage = ({ newId, newPw }) => {
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 회원가입 완료
-  const handleCompleteSignup = async () => {
+  const handleCompleteSignup = async (e) => {
+    e.preventDefault();
+
     if (newPw !== confirmedPw) {
       alert("비밀번호가 일치하지 않아요.");
       return;
     }
 
     try {
+      await axios.post(`${BASE_URL}/account/login`, {
+        username: newId,
+        password: newPw,
+      });
+
+      // 로그인 성공 시, 페이지 이동
+      navigate(`/art`);
+    } catch (error) {
+      console.log("로그인 에러:", error);
+    }
+  };
+
+  /*
+    try {
       // REST API를 이용하여 백엔드에 회원가입 데이터 전달
-      const response = await axios.post(
-        `${BASE_URL}/account/signup`,
-        {
-          username: newId,
-          password: newPw,
-        },
-        {
-          mode: "cors",
-        }
-      );
+      const response = await axios.post(`${BASE_URL}/account/signup`, {
+        username: newId,
+        password: newPw,
+      });
 
       setSignupCompleted(true);
     } catch (error) {
@@ -277,6 +287,7 @@ const CheckPwPage = ({ newId, newPw }) => {
     // 회원가입 완료되면 메인페이지로 이동
     return navigate("/art");
   }
+  */
 
   const handleLogin = () => {
     navigate("/login");
