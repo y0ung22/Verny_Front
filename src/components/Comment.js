@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
@@ -10,62 +10,71 @@ import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 import commentWrite from "../assets/icons/commentWrite.svg";
 
-const Comment = (text) => {
+const Comment = ({ list, artId }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //더보기 버튼
   const handleShowMore = () => {
     setShowMore(true);
   };
 
-  //댓글 좋아요 기능
-  const handleLike = () => {
-    setLikeStatus(!likeStatus);
+  //댓글 좋아요 상태 관리
+  const handleLike = async () => {
+    await axios
+      .post(`${BASE_URL}/main/posts/${artId}/comments/${list.id}/likes/`, {
+        liked: likeStatus,
+      })
+      .then((response) => {
+        setLikeStatus(!likeStatus);
+      })
+      .catch((error) => console.log(error));
   };
 
   const moveReComment = () => {
-    navigate("/art/detail/comment/re");
+    navigate("/art/detail/comment/re", { state: { id: list.id } });
   };
 
   return (
-    <Wrapper pathname={pathname}>
-      <Info>
-        <Writer>
-          <Profile src={profile} />
-          <span id="name" alt="">
-            닉네임
-          </span>
-          <span>·</span>
-          <span id="time" alt="">
-            30분 전
-          </span>
-        </Writer>
-        <BtnBox>
-          <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
-            <img src={likeStatus ? likeClicked : like} />
-            <span liked={likeStatus}>100</span>
-          </Btn>
-        </BtnBox>
-      </Info>
-      <Content showMore={showMore}>댓글 내용이 1줄이면 이렇게요!!</Content>
-      {!showMore && text.length > 100 && (
-        <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
-          더보기
-        </ShowMoreButton>
-      )}
-      {pathname !== "/art/detail/comment/re" && (
+    list && (
+      <Wrapper pathname={pathname}>
+        <Info>
+          <Writer>
+            <Profile src={profile} />
+            <span id="name">{list.author_username}</span>
+            <span>·</span>
+            <span id="time">{list.created_at}</span>
+          </Writer>
+          <BtnBox>
+            <Btn
+              alt="댓글 좋아요 버튼"
+              onClick={handleLike}
+              isLiked={likeStatus}
+            >
+              <img src={likeStatus ? likeClicked : like} />
+              <span isLiked={likeStatus}>{list.likes_count}</span>
+            </Btn>
+          </BtnBox>
+        </Info>
+        <Content showMore={showMore}>{list.content}</Content>
+        {!showMore && list.content.length > 100 && (
+          <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
+            더보기
+          </ShowMoreButton>
+        )}
         <ReComment>
           <ReCommentBtn onClick={moveReComment}>
             <img src={commentWrite} />
-            <span>100</span>
+            <span>{list.recomments_count}</span>
             <span>답글 쓰기</span>
           </ReCommentBtn>
         </ReComment>
-      )}
-    </Wrapper>
+      </Wrapper>
+    )
   );
 };
 
@@ -148,8 +157,10 @@ const Btn = styled.div`
     gap: 8px;
   }
   span {
-    color: ${({ liked }) =>
-      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
+    color: ${({ isLiked }) =>
+      isLiked
+        ? "var(--p-primary-40, #00639c)"
+        : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;

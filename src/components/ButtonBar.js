@@ -6,7 +6,7 @@ import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
-const ButtonBar = (artDetail) => {
+const ButtonBar = ({ artDetail }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
@@ -23,7 +23,7 @@ const ButtonBar = (artDetail) => {
   };
 
   const moveComment = () => {
-    navigate("/art/detail/comment");
+    navigate("/art/detail/comment", { state: { id: artDetail.id } });
   };
 
   return (

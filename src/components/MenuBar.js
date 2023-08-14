@@ -35,7 +35,8 @@ const MenuBar = () => {
         pathname === "/art/detail" ||
         pathname === "/art/detail/comment" ||
         pathname === "/art/detail/comment/re" ||
-        pathname === "/art/upload"
+        pathname === "/art/upload" ||
+        pathname === "/search"
         ? artClicked
         : art
     );

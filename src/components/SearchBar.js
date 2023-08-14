@@ -27,11 +27,13 @@ const SearchBar = () => {
     await axios
       .get(`${BASE_URL}/main/search/?q=${text}`)
       .then((response) => {
-        setSearchResult([...response.data]);
+        setSearchResult(response.data);
         console.log(searchResult);
       })
       .catch((error) => console.log(error));
   };
+
+  console.log(text);
 
   return (
     <Wrapper>
