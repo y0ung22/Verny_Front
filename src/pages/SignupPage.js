@@ -257,7 +257,7 @@ const CheckPwPage = ({ newId, newPw }) => {
     }
 
     try {
-      await axios.post(`${BASE_URL}/account/signup`, {
+      await axios.post(`${BASE_URL}/account/signup/`, {
         username: newId,
         password: newPw,
       });
