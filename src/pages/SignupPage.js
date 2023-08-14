@@ -256,10 +256,16 @@ const CheckPwPage = ({ newId, newPw }) => {
 
     try {
       // REST API를 이용하여 백엔드에 회원가입 데이터 전달
-      const response = await axios.post(`${BASE_URL}/account/signup`, {
-        username: newId,
-        password: newPw,
-      });
+      const response = await axios.post(
+        `${BASE_URL}/account/signup`,
+        {
+          username: newId,
+          password: newPw,
+        },
+        {
+          mode: "cors",
+        }
+      );
 
       setSignupCompleted(true);
     } catch (error) {
