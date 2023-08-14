@@ -36,29 +36,15 @@ const LoginPage = () => {
   // 아이디로 로그인
   const onClickLogin = async (e) => {
     e.preventDefault();
-    try {
-      // REST API를 이용하여 백엔드에 로그인 데이터 전달
-      const response = await axios.post(`${BASE_URL}/account/login`, {
+    await axios
+      .post(`${BASE_URL}/account/login/`, {
         username: inputId,
         password: inputPw,
-      });
-
-      // 로그인 성공 여부에 따라 처리
-      if (response.data.userId === undefined) {
-        // id 일치하지 않는 경우
-        alert("아이디가 일치하지 않아요.");
-      } else if (response.data.userId === null) {
-        // id는 있지만 pw가 다른 경우
-        alert("비밀번호가 일치하지 않아요.");
-      } else if (response.data.userId === inputId) {
-        // id랑 pw 모두 일치하는 경우
-        localStorage.setItem("user_id", inputId); // sessionStorage 대신 localStorage 사용하는 거 맞나
-      }
-      navigate("/art"); // 로그인 완료 이후 어디로 이동할지
-    } catch (error) {
-      console.error("로그인 에러:", error);
-      // alert("로그인 중 오류가 발생했습니다.");
-    }
+      })
+      .then((response) => {
+        navigate(`/art`);
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
