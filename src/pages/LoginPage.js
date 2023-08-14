@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import instance from "../axios";
 import TopBar from "../components/TopBar";
 
 import styled from "styled-components";
@@ -37,7 +37,7 @@ const LoginPage = () => {
   const onClickLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
+      const response = await instance.post(
         `${BASE_URL}/account/login/`,
         {
           username: inputId,
