@@ -257,7 +257,7 @@ const CheckPwPage = ({ newId, newPw }) => {
     }
 
     try {
-      await axios.post(`${BASE_URL}/account/login`, {
+      await axios.post(`${BASE_URL}/account/signup`, {
         username: newId,
         password: newPw,
       });
@@ -268,26 +268,6 @@ const CheckPwPage = ({ newId, newPw }) => {
       console.log("로그인 에러:", error);
     }
   };
-
-  /*
-    try {
-      // REST API를 이용하여 백엔드에 회원가입 데이터 전달
-      const response = await axios.post(`${BASE_URL}/account/signup`, {
-        username: newId,
-        password: newPw,
-      });
-
-      setSignupCompleted(true);
-    } catch (error) {
-      console.error("회원가입 에러:", error);
-    }
-  };
-
-  if (signupCompleted) {
-    // 회원가입 완료되면 메인페이지로 이동
-    return navigate("/art");
-  }
-  */
 
   const handleLogin = () => {
     navigate("/login");
