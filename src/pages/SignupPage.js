@@ -266,6 +266,7 @@ const CheckPwPage = ({ newId, newPw }) => {
         {
           headers: {
             "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
@@ -273,7 +274,17 @@ const CheckPwPage = ({ newId, newPw }) => {
       localStorage.setItem("token", response.data.token);
       navigate(`/art`);
     } catch (error) {
-      console.log("회원가입 에러:", error);
+      if (error.response) {
+        // 요청을 보내고 서버가 상태 코드로 응답한 경우
+        console.error("서버 응답 상태:", error.response.status);
+        console.error("응답 데이터:", error.response.data);
+      } else if (error.request) {
+        // 요청은 보냈지만 응답을 받지 못한 경우
+        console.error("응답 없음:", error.request);
+      } else {
+        // 요청 설정 중 오류가 발생한 경우
+        console.error("요청 설정 오류:", error.message);
+      }
     }
   };
 
