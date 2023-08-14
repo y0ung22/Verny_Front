@@ -1,5 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 import StartPage from "./pages/StartPage";
 import SignupPage from "./pages/SignupPage";
 import LoginPage from "./pages/LoginPage";
@@ -17,6 +22,31 @@ import UploadArtPage from "./pages/UploadArtPage";
 import SearchPage from "./pages/SearchPage";
 
 function App() {
+  const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
+
+  // 토큰 변경 시 로컬 스토리지에 업데이트
+  useEffect(() => {
+    if (authToken) {
+      localStorage.setItem("authToken", authToken);
+    } else {
+      localStorage.removeItem("authToken");
+    }
+  }, [authToken]);
+
+  // 로그아웃
+  const handleLogout = () => {
+    setAuthToken(null);
+  };
+
+  // 인증 여부에 따라 페이지 이동 결정
+  const PrivateRoute = ({ path, element }) => {
+    if (authToken) {
+      return element;
+    } else {
+      return <Navigate to="/account/login" />;
+    }
+  };
+
   return (
     <Router>
       <Routes>
