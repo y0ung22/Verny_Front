@@ -257,15 +257,23 @@ const CheckPwPage = ({ newId, newPw }) => {
     }
 
     try {
-      await axios.post(`${BASE_URL}/account/signup/`, {
-        username: newId,
-        password: newPw,
-      });
+      await axios.post(
+        `${BASE_URL}/account/signup/`,
+        {
+          username: newId,
+          password: newPw,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
-      // 로그인 성공 시, 페이지 이동
+      localStorage.setItem("token", response.data.token);
       navigate(`/art`);
     } catch (error) {
-      console.log("로그인 에러:", error);
+      console.log("회원가입 에러:", error);
     }
   };
 

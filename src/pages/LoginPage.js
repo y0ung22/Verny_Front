@@ -36,15 +36,30 @@ const LoginPage = () => {
   // 아이디로 로그인
   const onClickLogin = async (e) => {
     e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/account/login/`, {
-        username: inputId,
-        password: inputPw,
-      })
-      .then((response) => {
-        navigate(`/art`);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/account/login/`,
+        {
+          username: inputId,
+          password: inputPw,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      localStorage.setItem("token", response.data.token);
+      navigate(`/art`);
+    } catch (error) {
+      // 로그인 실패 시 에러 처리
+      if (error.response && error.response.status === 401) {
+        alert("아이디 또는 비밀번호가 틀립니다.");
+      } else {
+        console.log("로그인 에러:", error);
+      }
+    }
   };
 
   return (
