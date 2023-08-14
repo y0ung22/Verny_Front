@@ -38,11 +38,9 @@ const LoginPage = () => {
     e.preventDefault();
     try {
       // REST API를 이용하여 백엔드에 로그인 데이터 전달
-      const response = await axios.post(`${BASE_URL}/account/login`, null, {
-        params: {
-          username: inputId,
-          password: inputPw,
-        }, // 쿼리 파라미터 이용하는지 백엔드와 상의 필요
+      const response = await axios.post(`${BASE_URL}/account/login`, {
+        username: inputId,
+        password: inputPw,
       });
 
       // 로그인 성공 여부에 따라 처리
