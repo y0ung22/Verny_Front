@@ -51,6 +51,7 @@ const LoginPage = () => {
           alert("아이디 또는 비밀번호가 맞지 않습니다.");
         } else if (response.data.message === "로그인 성공") {
           navigate(`/art`);
+          window.location.reload();
           console.log("아이디:", inputId);
         }
       })
