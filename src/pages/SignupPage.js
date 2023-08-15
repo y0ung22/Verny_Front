@@ -265,19 +265,14 @@ const CheckPwPage = ({ newId, newPw }) => {
       console.log(response.data);
       localStorage.setItem("id", response.data.id);
       localStorage.setItem("access_token", response.data.access_token);
-      navigate(`/art`);
-    } catch (error) {
-      if (error.response) {
-        // 요청을 보내고 서버가 상태 코드로 응답한 경우
-        console.error("서버 응답 상태:", error.response.status);
-        console.error("응답 데이터:", error.response.data);
-      } else if (error.request) {
-        // 요청은 보냈지만 응답을 받지 못한 경우
-        console.error("응답 없음:", error.request);
-      } else {
-        // 요청 설정 중 오류가 발생한 경우
-        console.error("요청 설정 오류:", error.message);
+
+      if (response.data.message === "회원가입 실패") {
+        alert("회원가입에 실패하였습니다.");
+      } else if (response.data.message === "회원가입 성공") {
+        navigate(`/art`);
       }
+    } catch (error) {
+      console.error("요청 오류:", error);
     }
   };
 

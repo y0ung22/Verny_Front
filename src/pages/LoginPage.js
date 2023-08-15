@@ -45,10 +45,15 @@ const LoginPage = () => {
         console.log(response.data);
         localStorage.setItem("id", response.data.id);
         localStorage.setItem("access_token", response.data.access_token);
-        navigate(`/art`);
+
+        if (response.data.message === "로그인 실패") {
+          alert("아이디 또는 비밀번호가 맞지 않습니다.");
+        } else if (response.data.message === "로그인 성공") {
+          navigate(`/art`);
+        }
       })
       .catch((error) => {
-        console.log(error);
+        console.error("요청 오류:", error);
       });
   };
 
