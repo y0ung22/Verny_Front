@@ -7,8 +7,12 @@ export const http = axios.create({
 http.defaults.withCredentials = true;
 
 const token = localStorage.getItem("access_token");
-const parsedToken = token ? JSON.parse(token) : false;
 
-http.defaults.headers.common["Authorization"] = parsedToken
-  ? `Bearer ${parsedToken}`
-  : null;
+if (token) {
+  try {
+    const parsedToken = JSON.parse(token);
+    http.defaults.headers.common["Authorization"] = `Bearer ${parsedToken}`;
+  } catch (error) {
+    console.error("Error parsing access_token:", error);
+  }
+}
