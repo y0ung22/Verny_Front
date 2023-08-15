@@ -135,7 +135,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // MakeIdPage 내용
@@ -262,6 +262,8 @@ const CheckPwPage = ({ newId, newPw }) => {
         password: newPw,
       });
 
+      console.log(response.data);
+      localStorage.setItem("id", response.data.id);
       localStorage.setItem("access_token", response.data.access_token);
       navigate(`/art`);
     } catch (error) {
@@ -280,7 +282,7 @@ const CheckPwPage = ({ newId, newPw }) => {
   };
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // CheckPwPage 내용
