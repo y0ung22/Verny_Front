@@ -1,14 +1,15 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
+import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
 import check from "../assets/icons/check.svg";
-import axios from "axios";
 
 const SignupPage = () => {
   const navigate = useNavigate();

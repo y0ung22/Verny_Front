@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TopBar from "../components/TopBar";
 
+import axios from "axios";
 import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
 import { Container } from "../styles";
@@ -16,7 +17,7 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const { BASE_URL } = useAuth();
+  const { login, BASE_URL } = useAuth();
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
@@ -49,7 +50,7 @@ const LoginPage = () => {
 
         console.log(response.data);
       })
-      .catch((error) => console.log("로그인 에러:", error, username, password));
+      .catch((error) => console.log("로그인 에러:", error, inputId, inputPw));
   };
 
   return (
