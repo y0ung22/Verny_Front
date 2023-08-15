@@ -20,7 +20,6 @@ const ArtPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [text, setText] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
   const [arts, setArts] = useState([]);
 
   const handleCategoryClick = (category) => {

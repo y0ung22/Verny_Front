@@ -1,12 +1,19 @@
 import React from "react";
 import { styled } from "styled-components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import ProfileBasic from "../assets/icons/profileBasic.svg";
 
 const MyPage = () => {
+  const navigate = useNavigate();
+
+  const logout = () => {
+    localStorage.removeItem("access_token");
+    navigate("/");
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -29,7 +36,7 @@ const MyPage = () => {
           <Link to="/mypage/profile/edit" style={{ textDecoration: "none" }}>
             <button>프로필 수정</button>
           </Link>
-          <button>로그아웃</button>
+          <button onClick={logout}>로그아웃</button>
         </Edit>
         <QuitBtn>
           <button>회원탈퇴</button>
