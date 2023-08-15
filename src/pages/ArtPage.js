@@ -57,12 +57,17 @@ const ArtPage = () => {
 
   //미술품 정보 불러오기
   const getAllArts = async () => {
-    await axios
-      .get(`${BASE_URL}/main/posts`)
-      .then((response) => {
-        setArts(response.data.posts);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await axios.get(`${BASE_URL}/main/posts`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+        },
+      });
+
+      setArts(response.data.posts);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const filteredArts =
