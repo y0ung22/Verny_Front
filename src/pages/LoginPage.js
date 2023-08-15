@@ -45,6 +45,11 @@ const LoginPage = () => {
         console.log(response.data);
         localStorage.setItem("id", response.data.data.id);
         localStorage.setItem("access_token", response.data.data.access_token);
+        console.log("저장된 id:", localStorage.getItem("id"));
+        console.log(
+          "저장된 access_token:",
+          localStorage.getItem("access_token")
+        );
 
         if (response.data.message === "로그인 실패") {
           alert("아이디 또는 비밀번호가 맞지 않습니다.");
