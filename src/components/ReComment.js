@@ -7,7 +7,7 @@ import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 
-const Comment = ({ comment }) => {
+const ReComment = ({ comment }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
 
@@ -51,7 +51,7 @@ const Comment = ({ comment }) => {
   );
 };
 
-export default Comment;
+export default ReComment;
 
 const Wrapper = styled.div`
   width: 284px;

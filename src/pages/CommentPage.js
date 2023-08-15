@@ -5,13 +5,13 @@ import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import Comment from "../components/Comment";
-import WriteComment from "../components/WriteComment";
 import MenuBar from "../components/MenuBar";
 
 const CommentPage = () => {
   const location = useLocation();
   const artId = location.state.id;
   const [lists, setLists] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -19,6 +19,7 @@ const CommentPage = () => {
     getComments(artId);
   }, [artId]);
 
+  //댓글 목록 받아오기
   const getComments = async (id) => {
     await axios
       .get(`${BASE_URL}/main/posts/${id}/comments/`)
@@ -30,6 +31,22 @@ const CommentPage = () => {
 
   console.log(lists);
 
+  //댓글 작성하기
+  const uploadComment = async (e, id) => {
+    e.preventDefault();
+    await axios
+      .post(`${BASE_URL}/main/posts/${id}/comments/`, {
+        content: newComment,
+      })
+      .then((response) => {
+        setNewComment(response.data);
+        setNewComment("");
+        getComments();
+        console.log(response);
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -39,7 +56,17 @@ const CommentPage = () => {
             <Comment key={list.id} list={list} artId={artId} />
           ))}
       </CommentList>
-      <WriteComment />
+      <WriteComment>
+        <form className="input-container">
+          <Input
+            type="text"
+            onChange={(e) => setNewComment(e.target.value)}
+            value={newComment}
+            placeholder="내용을 입력해주세요!"
+          />
+          <SubmitButton onSubmit={uploadComment(artId)}>등록</SubmitButton>
+        </form>
+      </WriteComment>
       <MenuBar />
     </Wrapper>
   );
@@ -63,4 +90,53 @@ const CommentList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const WriteComment = styled.div`
+  position: absolute;
+  top: 632.6px;
+  width: 328px;
+  padding: 8px 16px;
+  background: var(--nv-neutral-variant-95, #edf1f9);
+  form {
+    display: flex;
+    gap: 8px;
+  }
+`;
+
+const Input = styled.input`
+  width: 228px;
+  display: flex;
+  padding: 12px 16px;
+  align-items: center;
+  gap: 8px;
+  flex: 1 0 0;
+  border-radius: 12px;
+  border: 1.5px solid var(--s-secondary-80, #b9c8da);
+  background: var(--s-secondary-99, #fcfcff);
+  outline: none;
+  color: var(--s-secondary-10, #0e1d2a);
+  font-family: Pretendard;
+  font-size: 0.88rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+`;
+
+const SubmitButton = styled.button`
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  border-radius: 12px;
+  background: var(--p-primary-40, #00639c);
+  border: none;
+
+  color: var(--p-primary-100, #fff);
+  font-family: Pretendard;
+  font-size: 0.88rem;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
 `;
