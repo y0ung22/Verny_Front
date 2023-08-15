@@ -263,8 +263,10 @@ const CheckPwPage = ({ newId, newPw }) => {
       });
 
       console.log(response.data);
-      localStorage.setItem("id", response.data.id);
-      localStorage.setItem("access_token", response.data.access_token);
+      localStorage.setItem("id", response.data.data.id);
+      localStorage.setItem("access_token", response.data.data.access_token);
+      console.log("저장된 id:", response.data.data.id);
+      console.log("저장된 access_token:", response.data.data.access_token);
 
       if (response.data.message === "회원가입 실패") {
         alert("회원가입에 실패하였습니다.");
