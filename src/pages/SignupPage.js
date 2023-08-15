@@ -36,10 +36,6 @@ const SignupPage = () => {
     // 카카오 계정으로 회원가입 기능 구현
   };
 
-  /* if (makeIdPage) {
-    return <MakeIdPage setMakeIdPage={setMakeIdPage} />;
-  } */
-
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
     navigate("/account/login");
@@ -86,9 +82,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
   const [checkPwPage, setCheckPwPage] = useState(false);
-  // const [newId, setNewId] = useState("");
-  // const [newIdLocal, setNewIdLocal] = useState("");
-  const [usableId, setUsableId] = useState(false);
+  // const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -238,12 +232,12 @@ const MakePwPage = () => {
 };
 
 const CheckPwPage = ({ newId, newPw }) => {
+  console.log("newId:", newId);
+  console.log("newPw:", newPw);
+
   const navigate = useNavigate();
-  // const [signupCompleted, setSignupCompleted] = useState(false);
   const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
   const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
-  // const [newId, setNewId] = useState("");
-  // const [newPw, setNewPw] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -262,16 +256,15 @@ const CheckPwPage = ({ newId, newPw }) => {
         password: newPw,
       });
 
-      console.log(response.data);
-      localStorage.setItem("id", response.data.data.id);
-      localStorage.setItem("access_token", response.data.data.access_token);
-      console.log("저장된 id:", response.data.data.id);
-      console.log("저장된 access_token:", response.data.data.access_token);
-
       if (response.data.message === "회원가입 실패") {
         alert("회원가입에 실패하였습니다.");
       } else if (response.data.message === "회원가입 성공") {
+        localStorage.setItem("id", response.data.data.id);
+        localStorage.setItem("access_token", response.data.data.access_token);
+        console.log("저장된 id:", response.data.data.id);
+        console.log("저장된 access_token:", response.data.data.access_token);
         navigate(`/art`);
+        window.location.reload();
       }
     } catch (error) {
       console.error("요청 오류:", error);
