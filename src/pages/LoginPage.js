@@ -36,21 +36,20 @@ const LoginPage = () => {
   // 아이디로 로그인할 때 페이지 이동
   const onClickLogin = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(`${BASE_URL}/account/login/`, {
+    axios
+      .post(`${BASE_URL}/account/login/`, {
         username: inputId,
         password: inputPw,
+      })
+      .then((response) => {
+        console.log(response.data);
+        localStorage.setItem("id", response.data.id);
+        localStorage.setItem("access_token", response.data.access_token);
+        navigate(`/art`);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-
-      // 토큰 저장
-      localStorage.setItem("id", response.data.id);
-      localStorage.setItem("token", response.data.access_token);
-
-      navigate(`/art`);
-      console.log(response.data);
-    } catch (error) {
-      console.log("로그인 에러:", error);
-    }
   };
 
   return (
