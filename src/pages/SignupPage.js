@@ -1,14 +1,14 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import instance from "../axios";
 import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
+import { useAuth } from "../contexts/AuthContext";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
 import kakao from "../assets/icons/kakao.svg";
 import check from "../assets/icons/check.svg";
+import axios from "axios";
 
 const SignupPage = () => {
   const navigate = useNavigate();
@@ -239,13 +239,13 @@ const MakePwPage = () => {
 
 const CheckPwPage = ({ newId, newPw }) => {
   const navigate = useNavigate();
-  const [signupCompleted, setSignupCompleted] = useState(false);
+  // const [signupCompleted, setSignupCompleted] = useState(false);
   const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
   const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
   // const [newId, setNewId] = useState("");
   // const [newPw, setNewPw] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const { BASE_URL } = useAuth();
 
   // 회원가입 완료
   const handleCompleteSignup = async (e) => {
@@ -257,22 +257,12 @@ const CheckPwPage = ({ newId, newPw }) => {
     }
 
     try {
-      const response = await instance.post(
-        `${BASE_URL}/account/signup/`,
-        {
-          username: newId,
-          password: newPw,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-
-      localStorage.setItem("token", response.data.token);
+      const response = await axios.post(`${BASE_URL}/account/signup/`, {
+        username: newId,
+        password: newPw,
+      });
       navigate(`/art`);
+      console.log(response);
     } catch (error) {
       if (error.response) {
         // 요청을 보내고 서버가 상태 코드로 응답한 경우
