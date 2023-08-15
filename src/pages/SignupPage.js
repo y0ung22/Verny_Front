@@ -78,7 +78,7 @@ const SignupPage = () => {
   );
 };
 
-const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
+const MakeIdPage = ({ setNewId, setNewPw, newId, newPw }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
   const [checkPwPage, setCheckPwPage] = useState(false);
@@ -88,16 +88,13 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
-    setMakePwPage(true);
     setNewId(newId);
+    setMakePwPage(true);
   };
 
   if (makePwPage) {
     return (
-      <MakePwPage
-        setMakePwPage={setMakePwPage}
-        newId={newId} // newPw를 전달
-      />
+      <MakePwPage setMakePwPage={setMakePwPage} newId={newId} newPw={newPw} />
     );
   }
 
@@ -175,9 +172,9 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
   );
 };
 
-const MakePwPage = () => {
+const MakePwPage = ({ setNewId, setNewPw, newId, newPw }) => {
   const navigate = useNavigate();
-  const [newPw, setNewPw] = useState("");
+  // const [newPw, setNewPw] = useState("");
   const [checkPwPage, setCheckPwPage] = useState(false);
 
   // 비번 확인 페이지로 이동
@@ -190,6 +187,7 @@ const MakePwPage = () => {
     return (
       <CheckPwPage
         setCheckPwPage={setCheckPwPage}
+        newId={newId}
         newPw={newPw} // newPw를 전달
       />
     );
@@ -231,13 +229,13 @@ const MakePwPage = () => {
   );
 };
 
+// 회원가입 완료
 const CheckPwPage = ({ newId, newPw }) => {
   console.log("newId:", newId);
   console.log("newPw:", newPw);
 
   const navigate = useNavigate();
-  const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
-  const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
+  const [enteredPw, setenteredPw] = useState(""); // 비밀번호 확인
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -245,16 +243,24 @@ const CheckPwPage = ({ newId, newPw }) => {
   const handleCompleteSignup = async (e) => {
     e.preventDefault();
 
-    if (newPw !== confirmedPw) {
+    if (newPw !== enteredPw) {
       alert("비밀번호가 일치하지 않아요.");
       return;
     }
 
     try {
-      const response = await axios.post(`${BASE_URL}/account/signup/`, {
-        username: newId,
-        password: newPw,
-      });
+      const response = await axios.post(
+        `${BASE_URL}/account/signup/`,
+        {
+          username: newId,
+          password: newPw,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
 
       if (response.data.message === "회원가입 실패") {
         alert("회원가입에 실패하였습니다.");
@@ -290,8 +296,8 @@ const CheckPwPage = ({ newId, newPw }) => {
         <div className="input-style">
           <input
             type="password"
-            value={confirmedPw}
-            onChange={(e) => setConfirmedPw(e.target.value)}
+            value={enteredPw}
+            onChange={(e) => setenteredPw(e.target.value)}
             placeholder="비밀번호를 다시 입력해주세요."
           />
         </div>
@@ -300,10 +306,6 @@ const CheckPwPage = ({ newId, newPw }) => {
             <button className="btn" onClick={handleCompleteSignup}>
               회원가입하기
             </button>
-
-            {!pwMatch && (
-              <p style={{ color: "red" }}>비밀번호가 일치하지 않습니다.</p>
-            )}
           </div>
           <HandleLoginStyle>
             <span>이미 회원이신가요?</span>
