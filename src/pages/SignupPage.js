@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
 import axios from "axios";
-import { useAuth } from "../contexts/AuthContext";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
@@ -203,7 +202,7 @@ const MakePwPage = () => {
   }
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // MakePwPage 내용
@@ -246,7 +245,7 @@ const CheckPwPage = ({ newId, newPw }) => {
   // const [newId, setNewId] = useState("");
   // const [newPw, setNewPw] = useState("");
 
-  const { BASE_URL } = useAuth();
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 회원가입 완료
   const handleCompleteSignup = async (e) => {
@@ -262,8 +261,9 @@ const CheckPwPage = ({ newId, newPw }) => {
         username: newId,
         password: newPw,
       });
+
+      localStorage.setItem("access_token", response.data.access_token);
       navigate(`/art`);
-      console.log(response);
     } catch (error) {
       if (error.response) {
         // 요청을 보내고 서버가 상태 코드로 응답한 경우
