@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import TopBar from "../components/TopBar";
 
+import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
 import { Container } from "../styles";
 
@@ -16,7 +17,7 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const { BASE_URL } = useAuth();
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
@@ -36,31 +37,19 @@ const LoginPage = () => {
   // 아이디로 로그인
   const onClickLogin = async (e) => {
     e.preventDefault();
-    try {
-      // REST API를 이용하여 백엔드에 로그인 데이터 전달
-      const response = await axios.post(`${BASE_URL}/account/login`, null, {
-        params: {
-          username: inputId,
-          password: inputPw,
-        }, // 쿼리 파라미터 이용하는지 백엔드와 상의 필요
-      });
+    await axios
+      .post(`${BASE_URL}/account/login/`, {
+        username: inputId,
+        password: inputPw,
+      })
+      .then((response) => {
+        navigate(`/art`);
 
-      // 로그인 성공 여부에 따라 처리
-      if (response.data.userId === undefined) {
-        // id 일치하지 않는 경우
-        alert("아이디가 일치하지 않아요.");
-      } else if (response.data.userId === null) {
-        // id는 있지만 pw가 다른 경우
-        alert("비밀번호가 일치하지 않아요.");
-      } else if (response.data.userId === inputId) {
-        // id랑 pw 모두 일치하는 경우
-        localStorage.setItem("user_id", inputId); // sessionStorage 대신 localStorage 사용하는 거 맞나
-      }
-      navigate("/art"); // 로그인 완료 이후 어디로 이동할지
-    } catch (error) {
-      console.error("로그인 에러:", error);
-      // alert("로그인 중 오류가 발생했습니다.");
-    }
+        // 토큰
+        localStorage(response.data.id, response.data.access_token);
+        console.log(response.data);
+      })
+      .catch((error) => console.log("로그인 에러:", error, inputId, inputPw));
   };
 
   return (

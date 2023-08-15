@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
+import axios from "axios";
+import { useAuth } from "../contexts/AuthContext";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
@@ -239,44 +240,44 @@ const MakePwPage = () => {
 
 const CheckPwPage = ({ newId, newPw }) => {
   const navigate = useNavigate();
-  const [signupCompleted, setSignupCompleted] = useState(false);
+  // const [signupCompleted, setSignupCompleted] = useState(false);
   const [confirmedPw, setConfirmedPw] = useState(""); // 비밀번호 확인
   const [pwMatch, setPwMatch] = useState(true); // 비밀번호 일치 여부
   // const [newId, setNewId] = useState("");
   // const [newPw, setNewPw] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const { BASE_URL } = useAuth();
 
   // 회원가입 완료
-  const handleCompleteSignup = async () => {
+  const handleCompleteSignup = async (e) => {
+    e.preventDefault();
+
     if (newPw !== confirmedPw) {
       alert("비밀번호가 일치하지 않아요.");
       return;
     }
 
     try {
-      // REST API를 이용하여 백엔드에 회원가입 데이터 전달
-      const response = await axios.post(
-        `${BASE_URL}/account/signup`,
-        {
-          username: newId,
-          password: newPw,
-        },
-        {
-          mode: "cors",
-        }
-      );
-
-      setSignupCompleted(true);
+      const response = await axios.post(`${BASE_URL}/account/signup/`, {
+        username: newId,
+        password: newPw,
+      });
+      navigate(`/art`);
+      console.log(response);
     } catch (error) {
-      console.error("회원가입 에러:", error);
+      if (error.response) {
+        // 요청을 보내고 서버가 상태 코드로 응답한 경우
+        console.error("서버 응답 상태:", error.response.status);
+        console.error("응답 데이터:", error.response.data);
+      } else if (error.request) {
+        // 요청은 보냈지만 응답을 받지 못한 경우
+        console.error("응답 없음:", error.request);
+      } else {
+        // 요청 설정 중 오류가 발생한 경우
+        console.error("요청 설정 오류:", error.message);
+      }
     }
   };
-
-  if (signupCompleted) {
-    // 회원가입 완료되면 메인페이지로 이동
-    return navigate("/art");
-  }
 
   const handleLogin = () => {
     navigate("/login");
