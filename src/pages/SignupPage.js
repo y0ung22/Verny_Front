@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { Container } from "../styles";
 import TopBar from "../components/TopBar";
 import axios from "axios";
-import { useAuth } from "../contexts/AuthContext";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
@@ -136,7 +135,7 @@ const MakeIdPage = ({ setMakeIdPage, setNewId, setNewPw, newId }) => {
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // MakeIdPage 내용
@@ -203,7 +202,7 @@ const MakePwPage = () => {
   }
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // MakePwPage 내용
@@ -246,7 +245,7 @@ const CheckPwPage = ({ newId, newPw }) => {
   // const [newId, setNewId] = useState("");
   // const [newPw, setNewPw] = useState("");
 
-  const { BASE_URL } = useAuth();
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 회원가입 완료
   const handleCompleteSignup = async (e) => {
@@ -262,25 +261,25 @@ const CheckPwPage = ({ newId, newPw }) => {
         username: newId,
         password: newPw,
       });
-      navigate(`/art`);
-      console.log(response);
-    } catch (error) {
-      if (error.response) {
-        // 요청을 보내고 서버가 상태 코드로 응답한 경우
-        console.error("서버 응답 상태:", error.response.status);
-        console.error("응답 데이터:", error.response.data);
-      } else if (error.request) {
-        // 요청은 보냈지만 응답을 받지 못한 경우
-        console.error("응답 없음:", error.request);
-      } else {
-        // 요청 설정 중 오류가 발생한 경우
-        console.error("요청 설정 오류:", error.message);
+
+      console.log(response.data);
+      localStorage.setItem("id", response.data.data.id);
+      localStorage.setItem("access_token", response.data.data.access_token);
+      console.log("저장된 id:", response.data.data.id);
+      console.log("저장된 access_token:", response.data.data.access_token);
+
+      if (response.data.message === "회원가입 실패") {
+        alert("회원가입에 실패하였습니다.");
+      } else if (response.data.message === "회원가입 성공") {
+        navigate(`/art`);
       }
+    } catch (error) {
+      console.error("요청 오류:", error);
     }
   };
 
   const handleLogin = () => {
-    navigate("/login");
+    navigate("/account/login");
   };
 
   // CheckPwPage 내용

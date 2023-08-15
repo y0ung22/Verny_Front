@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import TopBar from "../components/TopBar";
 
 import axios from "axios";
-import { useAuth } from "../contexts/AuthContext";
 import styled from "styled-components";
 import { Container } from "../styles";
 
@@ -17,11 +16,16 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const { BASE_URL } = useAuth();
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
     // 카카오 계정으로 로그인 기능 구현 카카오 api?
+  };
+
+  // 아이디로 로그인할 때 페이지 이동
+  const handleIdLogin = () => {
+    setIdLoginPage(true);
   };
 
   // 하단 회원가입 페이지로 이동 버튼
@@ -30,26 +34,30 @@ const LoginPage = () => {
   };
 
   // 아이디로 로그인할 때 페이지 이동
-  const handleIdLogin = () => {
-    setIdLoginPage(true);
-  };
-
-  // 아이디로 로그인
   const onClickLogin = async (e) => {
     e.preventDefault();
-    await axios
+    axios
       .post(`${BASE_URL}/account/login/`, {
         username: inputId,
         password: inputPw,
       })
       .then((response) => {
-        navigate(`/art`);
+        localStorage.setItem("id", response.data.data.id);
+        localStorage.setItem("access_token", response.data.data.access_token);
+        console.log("저장된 id:", response.data.data.id);
+        console.log("저장된 access_token:", response.data.data.access_token);
 
-        // 토큰
-        localStorage(response.data.id, response.data.access_token);
-        console.log(response.data);
+        if (response.data.message === "로그인 실패") {
+          alert("아이디 또는 비밀번호가 맞지 않습니다.");
+        } else if (response.data.message === "로그인 성공") {
+          navigate(`/art`);
+          window.location.reload();
+          console.log("아이디:", inputId);
+        }
       })
-      .catch((error) => console.log("로그인 에러:", error, inputId, inputPw));
+      .catch((error) => {
+        console.error("요청 오류:", error);
+      });
   };
 
   return (

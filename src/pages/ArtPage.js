@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { http } from "../api/Http";
 
 import TopBar from "../components/TopBar";
 import search from "../assets/icons/search.svg";
@@ -57,12 +58,13 @@ const ArtPage = () => {
 
   //미술품 정보 불러오기
   const getAllArts = async () => {
-    await axios
-      .get(`${BASE_URL}/main/posts`)
-      .then((response) => {
-        setArts(response.data.posts);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get("/main/posts");
+
+      setArts(response.data.posts);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   const filteredArts =
