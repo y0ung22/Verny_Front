@@ -17,7 +17,7 @@ const LoginPage = () => {
   const [inputId, setInputId] = useState("");
   const [inputPw, setInputPw] = useState("");
 
-  const { login, BASE_URL } = useAuth();
+  const { BASE_URL } = useAuth();
 
   // 카카오 계정으로 로그인
   const handleKakaoLogin = () => {
@@ -46,8 +46,7 @@ const LoginPage = () => {
         navigate(`/art`);
 
         // 토큰
-        login(response.data.id, response.data.access_token);
-
+        localStorage(response.data.id, response.data.access_token);
         console.log(response.data);
       })
       .catch((error) => console.log("로그인 에러:", error, inputId, inputPw));

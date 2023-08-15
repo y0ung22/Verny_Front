@@ -3,7 +3,6 @@ import React, { createContext, useContext, useState } from "react";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
-  // API 연결 모두 완료하면 위 코드 삭제하고 아래 코드 활성화
   const [userId, setUserId] = useState(localStorage.getItem("userId"));
   const [authToken, setAuthToken] = useState(localStorage.getItem("authToken"));
 
