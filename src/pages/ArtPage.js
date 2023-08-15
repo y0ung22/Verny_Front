@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
+import { http } from "../api/Http";
 
 import TopBar from "../components/TopBar";
 import search from "../assets/icons/search.svg";
@@ -58,14 +59,9 @@ const ArtPage = () => {
   //미술품 정보 불러오기
   const getAllArts = async () => {
     try {
-      const response = await axios.get(`${BASE_URL}/main/posts`, {
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem("access_token")}`,
-        },
-      });
+      const response = await http.get("/main/posts");
 
       setArts(response.data.posts);
-      console.log("응답:", response);
     } catch (error) {
       console.error(error);
     }
