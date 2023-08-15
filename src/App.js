@@ -16,30 +16,34 @@ import ReCommentPage from "./pages/ReCommentPage";
 import UploadArtPage from "./pages/UploadArtPage";
 import SearchPage from "./pages/SearchPage";
 
+import { AuthProvider } from "./contexts/AuthContext";
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        {/*로그인 및 회원가입*/}
-        <Route exact path="/" element={<StartPage />} />
-        <Route path="/account/signup" element={<SignupPage />} />
-        <Route path="/account/login" element={<LoginPage />} />
-        {/*메인 화면*/}
-        <Route path="/art" element={<ArtPage />} />
-        <Route path="/search" element={<SearchPage />} />
-        <Route path="/place" element={<PlacePage />} />
-        <Route path="/mypage" element={<MyPage />} />
-        {/*세부 화면*/}
-        <Route path="/art/upload" element={<UploadArtPage />} />
-        <Route path="/art/detail" element={<ArtDetailPage />} />
-        <Route path="/art/detail/comment" element={<CommentPage />} />
-        <Route path="/art/detail/comment/re" element={<ReCommentPage />} />
-        <Route path="/place/detail" element={<PlaceDetailPage />} />
-        <Route path="/mypage/profile" element={<ProfilePage />} />
-        <Route path="/mypage/bookmark" element={<BookmarkPage />} />
-        <Route path="/mypage/profile/edit" element={<EditProfilePage />} />
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          {/*로그인 및 회원가입*/}
+          <Route exact path="/" element={<StartPage />} />
+          <Route path="/account/signup" element={<SignupPage />} />
+          <Route path="/account/login" element={<LoginPage />} />
+          {/*메인 화면*/}
+          <Route path="/art" element={<ArtPage />} />
+          <Route path="/search" element={<SearchPage />} />
+          <Route path="/place" element={<PlacePage />} />
+          <Route path="/mypage" element={<MyPage />} />
+          {/*세부 화면*/}
+          <Route path="/art/upload" element={<UploadArtPage />} />
+          <Route path="/art/detail" element={<ArtDetailPage />} />
+          <Route path="/art/detail/comment" element={<CommentPage />} />
+          <Route path="/art/detail/comment/re" element={<ReCommentPage />} />
+          <Route path="/place/detail" element={<PlaceDetailPage />} />
+          <Route path="/mypage/profile" element={<ProfilePage />} />
+          <Route path="/mypage/bookmark" element={<BookmarkPage />} />
+          <Route path="/mypage/profile/edit" element={<EditProfilePage />} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 
