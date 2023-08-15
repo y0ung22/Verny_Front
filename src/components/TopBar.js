@@ -75,7 +75,7 @@ const BackBtn = styled.div`
     height: 20px;
     flex-shrink: 0;
   }
-  visibility: ${(props) => (props.show ? "visible" : "hidden")};
+  visibility: ${({ show }) => (show ? "visible" : "hidden")};
 `;
 
 const Title = styled.div`
