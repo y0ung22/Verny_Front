@@ -65,6 +65,7 @@ const ArtPage = () => {
       });
 
       setArts(response.data.posts);
+      console.log("응답:", response);
     } catch (error) {
       console.error(error);
     }
