@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import profile from "../assets/icons/profileBasic.svg";
@@ -7,18 +8,32 @@ import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 
-const ReComment = ({ comment }) => {
+const ReComment = ({ commentId, comment, username }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
+  const [likeImgSrc, setLikeImgSrc] = useState(like);
 
-  //더보기 버튼
+  //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
   };
 
-  //댓글 좋아요 기능
-  const handleLike = () => {
-    setLikeStatus(!likeStatus);
+  //댓글 좋아요 상태 관리
+  const handleLike = async () => {
+    try {
+      const newLikeStatus = !likeStatus;
+      setLikeStatus(newLikeStatus);
+      setLikeImgSrc(newLikeStatus ? likeClicked : like);
+      await http.post(
+        `/main/comments/${commentId}/recomments/${comment.id}/relikes`,
+        {
+          liked: newLikeStatus,
+        }
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -36,7 +51,7 @@ const ReComment = ({ comment }) => {
         </Writer>
         <BtnBox>
           <Btn alt="댓글 좋아요 버튼" onClick={handleLike} liked={likeStatus}>
-            <img src={likeStatus ? likeClicked : like} />
+            <img src={likeImgSrc} />
             <span liked={likeStatus}>{comment.relikes_count}</span>
           </Btn>
         </BtnBox>

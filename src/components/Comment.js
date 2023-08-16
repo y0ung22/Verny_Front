@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,30 +13,54 @@ import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = ({ list, artId }) => {
   const [showMore, setShowMore] = useState(false);
+  const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
+  const [likeImgSrc, setLikeImgSrc] = useState(like);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
+
+  useEffect(() => {
+    getUsername();
+    setLikeStatus(list && list.user_liked);
+    setLikeImgSrc(list && list.user_liked ? likeClicked : like);
+  }, [list]);
 
   //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
   };
 
-  //댓글 좋아요 상태 관리
-  const handleLike = async () => {
+  const getUsername = async () => {
     try {
-      await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
-        liked: likeStatus,
-      });
-      setLikeStatus(!likeStatus);
+      const response = await http.get("/account/mypage");
+      setUsername(response.data.data.username);
+      console.log(username);
     } catch (error) {
       console.log(error);
     }
+  };
+
+  //댓글 좋아요 상태 관리
+  const handleLike = async () => {
+    try {
+      const newLikeStatus = !likeStatus;
+      setLikeStatus(newLikeStatus);
+      setLikeImgSrc(newLikeStatus ? likeClicked : like);
+      await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
+        liked: newLikeStatus,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const moveReComment = () => {
-    navigate("/art/detail/comment/re", { state: { id: list.id } });
+    navigate("/art/detail/comment/re", {
+      state: { id: list.id, username: username },
+    });
   };
 
   return (
@@ -55,7 +79,7 @@ const Comment = ({ list, artId }) => {
               onClick={handleLike}
               isLiked={likeStatus}
             >
-              <img src={likeStatus ? likeClicked : like} />
+              <img src={likeImgSrc} />
               <span isLiked={likeStatus}>{list.likes_count}</span>
             </Btn>
           </BtnBox>
