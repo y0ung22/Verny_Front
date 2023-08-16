@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 
@@ -29,6 +29,7 @@ const PlacePage = () => {
   const [sortOpen, setSortOpen] = useState(false);
   const [searchText, setSearchText] = useState(""); // 검색어 상태 변수
 
+  // 필터 & 정렬
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
   };
@@ -42,6 +43,7 @@ const PlacePage = () => {
     setSortOpen(false);
   };
 
+  // 카카오맵
   const locations = PlaceData.map((place) => ({
     title: place.name,
     latlng: { lat: place.latitude, lng: place.longitude },
@@ -59,6 +61,7 @@ const PlacePage = () => {
     });
   };
 
+  // 장소 검색
   const [text, setText] = useState("");
 
   const onChange = (e) => {
@@ -97,16 +100,18 @@ const PlacePage = () => {
             </DeleteBtn>
           )}
         </InputContainer>
-        <SFBtn>
-          <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
+        <SFBtnContainer>
+          <SFBtn>
+            <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
 
-          <img
-            className="filter-icon"
-            src={filterOpen ? filterchecked : filter}
-            alt="필터 버튼"
-            onClick={handleFilterClick}
-          />
-        </SFBtn>
+            <img
+              className="filter-icon"
+              src={filterOpen ? filterchecked : filter}
+              alt="필터 버튼"
+              onClick={handleFilterClick}
+            />
+          </SFBtn>
+        </SFBtnContainer>
       </SearchFilter>
       <Sort>
         <span
@@ -191,8 +196,8 @@ const PlacePage = () => {
       <Map
         center={{
           // 지도의 중심좌표
-          lat: 37.58153269,
-          lng: 127.002336,
+          lat: 37.57590409,
+          lng: 126.976842,
         }}
         style={{
           // 지도의 크기
@@ -202,21 +207,28 @@ const PlacePage = () => {
           marginTop: "10px",
           marginBottom: "10px",
         }}
-        level={5} // 지도의 확대 레벨
+        level={1} // 지도의 확대 레벨
       >
-        {locations.map((loc, idx) => (
-          <MapMarker
-            key={`${loc.title}-${loc.latlng}`}
-            position={loc.latlng}
-            image={{
-              src: isHovered[idx] ? pinHover : pin,
-              size: { width: 36, height: 35 },
-            }}
-            title={loc.title}
-            onMouseEnter={() => handleMarkerHover(idx, true)}
-            onMouseLeave={() => handleMarkerHover(idx, false)}
-          />
-        ))}
+        <MarkerClusterer
+          averageCenter={true}
+          gridSize={50}
+          minLevel={2}
+          minClusterSize={5}
+        >
+          {locations.map((loc, idx) => (
+            <MapMarker
+              key={`${loc.title}-${loc.latlng}`}
+              position={loc.latlng}
+              image={{
+                src: isHovered[idx] ? pinHover : pin,
+                size: { width: 36, height: 35 },
+              }}
+              title={loc.title}
+              onMouseEnter={() => handleMarkerHover(idx, true)}
+              onMouseLeave={() => handleMarkerHover(idx, false)}
+            />
+          ))}
+        </MarkerClusterer>
       </Map>
       {searchText ? (
         <SearchedPlaceList searchText={searchText} />
@@ -289,19 +301,25 @@ const Input = styled.input`
   line-height: 140%;
 `;
 
+const SFBtnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+`;
+
 const SFBtn = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 8px;
+  gap: 25px;
 
   img {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    margin-left: 7px;
-    margin-right: 16px;
     cursor: pointer;
   }
 `;
