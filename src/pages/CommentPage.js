@@ -38,8 +38,8 @@ const CommentPage = () => {
       await http.post(`/main/posts/${id}/commentsadd/`, {
         content: newComment,
       });
-      setRender(render + 1);
       setNewComment("");
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
