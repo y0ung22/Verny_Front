@@ -9,8 +9,6 @@ import ArtBox from "../components/ArtBox";
 import MenuBar from "../components/MenuBar";
 
 const MyArtPage = () => {
-  const navigate = useNavigate();
-
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
@@ -18,16 +16,6 @@ const MyArtPage = () => {
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
-  };
-
-  //미술품 작성 버튼 호버 시 이미지 경로 변경
-  const [isHovered, setIsHovered] = useState(false);
-
-  const MouseHover = () => {
-    setIsHovered(true);
-  };
-  const MouseLeave = () => {
-    setIsHovered(false);
   };
 
   //리렌더링
@@ -42,7 +30,7 @@ const MyArtPage = () => {
       setArts(response.data.data);
       console.log(response.data.data);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -157,10 +145,12 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   p {
-    position: absolute;
-    top: 350px;
-    left: 120px;
     color: var(--n-neutral-10, #1a1c1e);
     font-family: Pretendard;
     font-size: 0.88rem;

@@ -32,8 +32,8 @@ const ProfilePage = () => {
   const getMyComments = async () => {
     try {
       const response = await http.get("/account/mypage/my_comments/");
-      setMyComments(response.data);
-      console.log(response.data);
+      setMyComments(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }
@@ -43,8 +43,8 @@ const ProfilePage = () => {
   const getMyReComments = async () => {
     try {
       const response = await http.get("/account/mypage/my_recomments/");
-      setMyReComments(response.data);
-      console.log(response.data);
+      setMyReComments(response.data.data);
+      console.log(response.data.data);
     } catch (error) {
       console.log(error);
     }

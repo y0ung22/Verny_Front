@@ -51,7 +51,6 @@ const BookmarkPage = () => {
           <p>즐겨찾기한 작품이 없습니다.</p>
         )}
       </ArtList>
-
       <MenuBar />
     </Wrapper>
   );
@@ -109,10 +108,12 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   p {
-    position: absolute;
-    top: 350px;
-    left: 222px;
     color: var(--n-neutral-10, #1a1c1e);
     font-family: Pretendard;
     font-size: 0.88rem;

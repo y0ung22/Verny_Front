@@ -11,6 +11,7 @@ import QuitModal from "../components/QuitModal";
 const MyPage = () => {
   const [userId, setUserId] = useState("");
   const [quitModal, setQuitModal] = useState(false);
+  const [manager, setManager] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,6 +22,7 @@ const MyPage = () => {
     try {
       const response = await http.get("/account/mypage");
       setUserId(response.data.data.username);
+      setManager(response.data.data.is_manager);
     } catch (error) {
       console.log(error);
     }
@@ -58,9 +60,11 @@ const MyPage = () => {
         <UserId>{userId}</UserId>
       </UserInfo>
       <MyBtn>
-        <Link to="/mypage/myarts" style={{ textDecoration: "none" }}>
-          <button>내가 쓴 글 보기</button>
-        </Link>
+        {manager && (
+          <Link to="/mypage/myarts" style={{ textDecoration: "none" }}>
+            <button>내가 쓴 글 보기</button>
+          </Link>
+        )}
         <Menu>
           <Link to="/mypage/profile" style={{ textDecoration: "none" }}>
             <button>내 활동 보기</button>
