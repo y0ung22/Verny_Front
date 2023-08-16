@@ -26,7 +26,7 @@ const SignupPage = () => {
       <MakeIdPage
         setMakeIdPage={setMakeIdPage}
         setNewId={setNewId}
-        setNewPw={setNewPw} // setNewPw를 전달
+        setNewPw={setNewPw}
       />
     );
   }
@@ -78,7 +78,7 @@ const SignupPage = () => {
   );
 };
 
-const MakeIdPage = ({ setNewId, setNewPw, newId, newPw }) => {
+const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
   const [checkPwPage, setCheckPwPage] = useState(false);
@@ -94,7 +94,11 @@ const MakeIdPage = ({ setNewId, setNewPw, newId, newPw }) => {
 
   if (makePwPage) {
     return (
-      <MakePwPage setMakePwPage={setMakePwPage} newId={newId} newPw={newPw} />
+      <MakePwPage
+        setMakePwPage={setMakePwPage}
+        newId={newId}
+        setNewPw={setNewPw}
+      />
     );
   }
 
@@ -172,7 +176,7 @@ const MakeIdPage = ({ setNewId, setNewPw, newId, newPw }) => {
   );
 };
 
-const MakePwPage = ({ setNewId, setNewPw, newId, newPw }) => {
+const MakePwPage = ({ newId, newPw, setNewPw }) => {
   const navigate = useNavigate();
   // const [newPw, setNewPw] = useState("");
   const [checkPwPage, setCheckPwPage] = useState(false);
