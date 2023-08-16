@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -7,6 +8,33 @@ import profileBasic from "../assets/icons/profileBasic.svg";
 import ArtBox from "../components/ArtBox";
 
 const BookmarkPage = () => {
+  const [userId, setUserId] = useState("");
+  const [scraps, setScraps] = useState([]);
+
+  useEffect(() => {
+    getId();
+    myScraps();
+  }, []);
+
+  const getId = async () => {
+    try {
+      const response = await http.get("/account/mypage");
+      setUserId(response.data.data.username);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const myScraps = async () => {
+    try {
+      const response = await http.get("/account/mypage/my_scraped");
+      setScraps(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -14,13 +42,14 @@ const BookmarkPage = () => {
         <UserImg>
           <img src={profileBasic} />
         </UserImg>
-        <UserId>아이디 님</UserId>
+        <UserId>{userId}</UserId>
       </UserInfo>
       <ArtList>
-        <ArtBox />
-        <ArtBox />
-        <ArtBox />
-        <ArtBox />
+        {scraps.length > 0 ? (
+          scraps.map((scrap) => <ArtBox key={scrap.id} art={scrap} />)
+        ) : (
+          <p>즐겨찾기한 작품이 없습니다.</p>
+        )}
       </ArtList>
 
       <MenuBar />
@@ -40,6 +69,7 @@ const Wrapper = styled.div`
 `;
 
 const UserInfo = styled.div`
+  margin-top: 20px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -78,5 +108,16 @@ const ArtList = styled.div`
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
+  }
+  p {
+    position: absolute;
+    top: 350px;
+    left: 222px;
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 0.88rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
   }
 `;

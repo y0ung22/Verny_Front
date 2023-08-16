@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -8,6 +9,47 @@ import Comment from "../components/Comment";
 import ReComment from "../components/ReComment";
 
 const ProfilePage = () => {
+  const [userId, setUserId] = useState("");
+  const [myComments, setMyComments] = useState([]);
+  const [myReComments, setMyReComments] = useState([]);
+
+  useEffect(() => {
+    getId();
+    getMyComments();
+    getMyReComments();
+  }, []);
+
+  const getId = async () => {
+    try {
+      const response = await http.get("/account/mypage");
+      setUserId(response.data.data.username);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //댓글 조회
+  const getMyComments = async () => {
+    try {
+      const response = await http.get("/account/mypage/my_comments/");
+      setMyComments(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //답글 조회
+  const getMyReComments = async () => {
+    try {
+      const response = await http.get("/account/mypage/my_recomments/");
+      setMyReComments(response.data);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -15,16 +57,33 @@ const ProfilePage = () => {
         <UserImg>
           <img src={ProfileBasic} />
         </UserImg>
-        <UserId>아이디 님</UserId>
+        <UserId>{userId}</UserId>
       </UserInfo>
       <MyComment>
         <CommentList>
           <CommentBar>아이디 님이 쓴 댓글</CommentBar>
+          {myComments.length > 0 ? (
+            myComments.map((comment) => (
+              <Comment key={comment.id} list={comment} />
+            ))
+          ) : (
+            <p>내가 작성한 댓글이 없습니다.</p>
+          )}
           <Comment />
         </CommentList>
         <CommentList>
           <CommentBar id="recomment">아이디 님이 쓴 답글</CommentBar>
-          <ReComment />
+          {myReComments.length > 0 ? (
+            myReComments.map((comment) => (
+              <ReComment
+                key={comment.id}
+                comment={comment}
+                artId={comment.post}
+              />
+            ))
+          ) : (
+            <p>내가 작성한 댓글이 없습니다.</p>
+          )}
         </CommentList>
       </MyComment>
       <MenuBar />
@@ -44,6 +103,7 @@ const Wrapper = styled.div`
 `;
 
 const UserInfo = styled.div`
+  margin-top: 20px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
@@ -83,6 +143,18 @@ const MyComment = styled.div`
 
 const CommentList = styled.div`
   margin-bottom: 50px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  p {
+    padding-top: 10px;
+    color: var(--n-neutral-10, #1a1c1e);
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
 `;
 
 const CommentBar = styled.div`

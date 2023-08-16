@@ -15,6 +15,7 @@ import BookmarkPage from "./pages/BookmarkPage";
 import ReCommentPage from "./pages/ReCommentPage";
 import UploadArtPage from "./pages/UploadArtPage";
 import SearchPage from "./pages/SearchPage";
+import MyArtPage from "./pages/MyArtPage";
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
         <Route path="/mypage/profile" element={<ProfilePage />} />
         <Route path="/mypage/bookmark" element={<BookmarkPage />} />
         <Route path="/mypage/profile/edit" element={<EditProfilePage />} />
+        <Route path="/mypage/myarts" element={<MyArtPage />} />
       </Routes>
     </Router>
   );

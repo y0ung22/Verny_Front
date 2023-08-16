@@ -10,18 +10,22 @@ import ReComment from "../components/ReComment";
 import MenuBar from "../components/MenuBar";
 
 const ReCommentPage = () => {
-  const [comments, setComments] = useState([]);
-  const [newComment, setNewComment] = useState("");
   const location = useLocation();
   const commentId = location.state.id;
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
+
+  useEffect(() => {
+    getReComments(commentId);
+  }, []);
 
   //답글 목록 받아오기
   const getReComments = async (id) => {
     try {
       const response = await http.get(`/main/comments/${id}/recomments`);
-      setComments(response.data);
+      setComments([response.data.data]);
     } catch (error) {
       console.log(error);
     }
@@ -29,21 +33,13 @@ const ReCommentPage = () => {
 
   console.log(comments);
 
-  useEffect(() => {
-    getReComments(commentId);
-  }, [commentId]);
-
   //답글 작성하기
   const uploadReComment = async (id) => {
     try {
-      setNewComment(response.data);
-      const response = await http.post(
-        `${BASE_URL}/main/comments/${id}/recommentsadd/`,
-        { content: newComment }
-      );
-      setNewComment("");
-      getReComments();
-      console.log(response.data);
+      const response = await http.post(`/main/comments/${id}/recommentsadd/`, {
+        content: newComment,
+      });
+      getReComments(id);
     } catch (error) {
       console.log(error);
     }
@@ -67,7 +63,7 @@ const ReCommentPage = () => {
             value={newComment}
             placeholder="내용을 입력해주세요!"
           />
-          <SubmitButton onSubmit={uploadReComment(commentId)}>
+          <SubmitButton onSubmit={() => uploadReComment(commentId)}>
             등록
           </SubmitButton>
         </form>

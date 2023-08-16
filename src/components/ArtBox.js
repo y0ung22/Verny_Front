@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
+import { http } from "../api/Http";
 
 import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
@@ -25,14 +26,14 @@ const ArtBox = ({ art }) => {
 
   //북마크 관리 함수
   const handleBookmark = async (e) => {
-    e.preventDefault();
     try {
       const postData = bookMark ? { scrapped: false } : { scrapped: true };
 
-      await axios.post(`${BASE_URL}/main/posts/${art.id}/scrap/`, postData);
+      await http.post(`/main/posts/${art.id}/scrap/`, postData);
 
       setBookMark((prevBookMark) => !prevBookMark);
-      setBookMarkSrc((bookMark) => (bookMark ? bookmark : bookmarkClicked));
+      setBookMarkSrc((bookMark) => (bookMark ? bookmarkClicked : bookmark));
+      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +47,7 @@ const ArtBox = ({ art }) => {
         onClick={moveDetail}
       />
       <Info>
-        <TextBox onClick={moveDetail}>
+        <TextBox onClick={() => moveDetail}>
           <Title>{art.title}</Title>
           <Artist>{art.painter}</Artist>
         </TextBox>

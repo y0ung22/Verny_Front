@@ -15,6 +15,10 @@ const ArtDetailPage = () => {
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
+  useEffect(() => {
+    getArtDetail(artId);
+  }, []);
+
   //미술품 해설 받아오기
   const getArtDetail = async (id) => {
     try {
@@ -24,12 +28,6 @@ const ArtDetailPage = () => {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    getArtDetail(artId);
-  }, []);
-
-  console.log(artDetail);
 
   return (
     <Wrapper>

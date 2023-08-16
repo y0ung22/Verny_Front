@@ -45,7 +45,8 @@ const MenuBar = () => {
       pathname === "/mypage" ||
         pathname === "/mypage/profile" ||
         pathname === "/mypage/profile/edit" ||
-        pathname === "/mypage/bookmark"
+        pathname === "/mypage/bookmark" ||
+        pathname === "/mypage/myarts"
         ? mypageClicked
         : mypage
     );

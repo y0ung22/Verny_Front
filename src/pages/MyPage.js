@@ -1,17 +1,51 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 import { Link, useNavigate } from "react-router-dom";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 import ProfileBasic from "../assets/icons/profileBasic.svg";
+import QuitModal from "../components/QuitModal";
 
 const MyPage = () => {
+  const [userId, setUserId] = useState("");
+  const [quitModal, setQuitModal] = useState(false);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getId();
+  }, []);
+
+  const getId = async () => {
+    try {
+      const response = await http.get("/account/mypage");
+      setUserId(response.data.data.username);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const logout = () => {
     localStorage.removeItem("access_token");
     navigate("/");
+  };
+
+  const showQuitModal = () => {
+    setQuitModal(true);
+  };
+
+  const hideQuitModal = () => {
+    setQuitModal(false);
+  };
+
+  const deleteProfile = async () => {
+    try {
+      await http.delete("/account/delete");
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -21,9 +55,12 @@ const MyPage = () => {
         <UserImg>
           <img src={ProfileBasic} alt="프로필 사진" />
         </UserImg>
-        <UserId>아이디 님</UserId>
+        <UserId>{userId}</UserId>
       </UserInfo>
       <MyBtn>
+        <Link to="/mypage/myarts" style={{ textDecoration: "none" }}>
+          <button>내가 쓴 글 보기</button>
+        </Link>
         <Menu>
           <Link to="/mypage/profile" style={{ textDecoration: "none" }}>
             <button>내 활동 보기</button>
@@ -39,10 +76,13 @@ const MyPage = () => {
           <button onClick={logout}>로그아웃</button>
         </Edit>
         <QuitBtn>
-          <button>회원탈퇴</button>
+          <button onClick={showQuitModal}>회원탈퇴</button>
         </QuitBtn>
       </MyBtn>
       <MenuBar />
+      {quitModal && (
+        <QuitModal onClose={hideQuitModal} onDelete={deleteProfile} />
+      )}
     </Wrapper>
   );
 };
@@ -59,6 +99,7 @@ const Wrapper = styled.div`
 `;
 
 const UserInfo = styled.div`
+  margin-top: 20px;
   display: inline-flex;
   flex-direction: column;
   align-items: center;
