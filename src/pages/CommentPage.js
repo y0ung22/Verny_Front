@@ -33,19 +33,18 @@ const CommentPage = () => {
   console.log(lists);
 
   //댓글 작성하기
-  const uploadComment = async (e, id) => {
-    e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/main/posts/${id}/comments/`, {
+  const uploadComment = async (id) => {
+    try {
+      setNewComment(response.data);
+      const response = await http.post(`/main/posts/${id}/comments/`, {
         content: newComment,
-      })
-      .then((response) => {
-        setNewComment(response.data);
-        setNewComment("");
-        getComments();
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+      });
+      console.log(response.data);
+      setNewComment("");
+      getComments();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

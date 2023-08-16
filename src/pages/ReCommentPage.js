@@ -34,19 +34,19 @@ const ReCommentPage = () => {
   }, [commentId]);
 
   //답글 작성하기
-  const uploadReComment = async (e, id) => {
-    e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/main/comments/${id}/recommentsadd/`, {
-        content: newComment,
-      })
-      .then((response) => {
-        setNewComment(response.data);
-        setNewComment("");
-        getReComments();
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+  const uploadReComment = async (id) => {
+    try {
+      setNewComment(response.data);
+      const response = await http.post(
+        `${BASE_URL}/main/comments/${id}/recommentsadd/`,
+        { content: newComment }
+      );
+      setNewComment("");
+      getReComments();
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //원댓글 출력 제외한 상태!
