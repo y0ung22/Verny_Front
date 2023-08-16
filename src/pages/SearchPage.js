@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
+import { http } from "../api/Http";
 
 import TopBar from "../components/TopBar";
 import search from "../assets/icons/search.svg";
@@ -13,8 +13,6 @@ const SearchPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const keyword = location.state?.keyword || "";
-
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   //미술품 카테고리
   const categories = ["전체", "고전미술", "현대미술"];
@@ -33,13 +31,12 @@ const SearchPage = () => {
 
   //검색 함수
   const goSearch = async (text) => {
-    await axios
-      .get(`${BASE_URL}/main/search/?q=${text}`)
-      .then((response) => {
-        setSearchResult(response.data.data);
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get(`/main/search/?q=${text}`);
+      setSearchResult(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onChange = (e) => {

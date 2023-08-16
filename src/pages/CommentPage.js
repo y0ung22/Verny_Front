@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { http } from "../api/Http";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -21,12 +22,12 @@ const CommentPage = () => {
 
   //댓글 목록 받아오기
   const getComments = async (id) => {
-    await axios
-      .get(`${BASE_URL}/main/posts/${id}/comments/`)
-      .then((response) => {
-        setLists(response.data);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get(`/main/posts/${id}/comments/`);
+      setLists(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log(lists);
