@@ -13,7 +13,7 @@ const ArtBox = ({ art }) => {
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
-  //const BASE_URL = "https://yewon1209.pythonanywhere.com";
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   const moveDetail = () => {
     navigate("/art/detail", { state: { id: art.id } });
@@ -42,7 +42,7 @@ const ArtBox = ({ art }) => {
   return (
     <Wrapper>
       <Image
-        src={`${art.image}`}
+        src={`${BASE_URL}${art.image}`}
         alt="이미지 대체 텍스트"
         onClick={moveDetail}
       />
