@@ -28,6 +28,7 @@ const PlacePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [searchText, setSearchText] = useState(""); // 검색어 상태 변수
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
   // 필터 & 정렬
   const handleFilterClick = () => {
@@ -80,6 +81,24 @@ const PlacePage = () => {
   const handleSearchClick = () => {
     // 검색 버튼을 누른 경우 검색어 상태를 업데이트하고 필터링된 결과를 보여줌
     setSearchText(text);
+  };
+
+  const handleMarkerClick = (index) => {
+    if (selectedPlace) {
+      // 이미 장소 정보가 선택된 상태일 경우 다시 원래대로
+      setSelectedPlace(null);
+    } else {
+      const place = PlaceData[index];
+      setSelectedPlace(place);
+    }
+  };
+
+  const handleCopy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      console.error("복사 실패", error);
+    }
   };
 
   return (
@@ -224,13 +243,95 @@ const PlacePage = () => {
                 size: { width: 36, height: 35 },
               }}
               title={loc.title}
+              onClick={() => handleMarkerClick(idx)}
               onMouseEnter={() => handleMarkerHover(idx, true)}
               onMouseLeave={() => handleMarkerHover(idx, false)}
             />
           ))}
         </MarkerClusterer>
       </Map>
-      {searchText ? (
+      {selectedPlace ? (
+        <SelectedPlaceInfo>
+          <li
+            style={{
+              marginBottom: "2px",
+              marginLeft: "28px",
+              width: "300px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <div className="name-category">
+              <p
+                style={{
+                  /*width: "86px",*/
+                  fontSize: "1rem",
+                  fontWeight: "400",
+                  lineHeight: "140%",
+                  color: "var(--n-neutral-10, #1A1C1E)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                  overflow: "hidden",
+                }}
+              >
+                {selectedPlace.name}
+              </p>
+              <p
+                style={{
+                  /*width: "70px",*/
+                  fontSize: "0.75rem",
+                  fontWeight: 400,
+                  lineHeight: "140%",
+                  color: "var(--s-secondary-40, #52606F)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                }}
+              >
+                {selectedPlace.category}
+              </p>
+            </div>
+            <p
+              style={{
+                width: "130px",
+                fontSize: "0.75rem",
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "var(--n-neutral-40, #5D5E61)",
+                fontFamily: "Pretendard",
+                fontStyle: "normal",
+              }}
+            >
+              {selectedPlace.address}
+            </p>
+            <button
+              onClick={() => handleCopy(selectedPlace.address)}
+              style={{
+                width: "70px",
+                height: "32px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px",
+                border: "none",
+                borderRadius: "12px",
+                background: "var(--p-primary-90, #CFE5FF)",
+                fontSize: "0.75rem",
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "var(--p-primary-10, #001D33)",
+                fontFamily: "Pretendard",
+                fontStyle: "normal",
+                cursor: "pointer",
+              }}
+            >
+              주소 복사
+            </button>
+          </li>
+        </SelectedPlaceInfo>
+      ) : searchText ? (
         <SearchedPlaceList searchText={searchText} />
       ) : (
         <MainPlaceList />
@@ -379,6 +480,27 @@ const SortBtn = styled.div`
     width: 12px;
     height: 12px;
     margin-left: 40px;
+  }
+`;
+
+const SelectedPlaceInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: -30px;
+  width: 320px;
+  li {
+    width: 320px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .name-category {
+    width: 120px;
   }
 `;
 

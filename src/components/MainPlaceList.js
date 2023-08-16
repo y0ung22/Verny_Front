@@ -61,7 +61,7 @@ const MainPlaceList = () => {
               color: "var(--n-neutral-10, #1A1C1E)",
               fontFamily: "Pretendard",
               fontStyle: "normal",
-              textOverflow: "ellipsis", // 초과된 부분을 ...으로 표시
+
               overflow: "hidden",
             }}
           >
