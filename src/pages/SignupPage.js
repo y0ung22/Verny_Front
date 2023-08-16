@@ -88,7 +88,6 @@ const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
 
   // 비번 입력 페이지로 이동
   const handleMakePw = () => {
-    setNewId(newId);
     setMakePwPage(true);
   };
 
@@ -184,7 +183,6 @@ const MakePwPage = ({ newId, newPw, setNewPw }) => {
   // 비번 확인 페이지로 이동
   const handleCheckPwPage = () => {
     setNewPw(newPw);
-    setCheckPwPage(true);
   };
 
   if (checkPwPage) {
