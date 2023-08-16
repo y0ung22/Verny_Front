@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { styled } from "styled-components";
-import { Link, useNavigate } from "react-router-dom";
 // import axios from "axios";
 import { http } from "../api/Http";
 
@@ -27,8 +26,8 @@ const MyArtPage = () => {
   const getAllArts = async () => {
     try {
       const response = await http.get("/account/mypage/my_posted");
-      setArts(response.data.data);
-      console.log(response.data.data);
+      setArts([...response.data.data]);
+      console.log([...response.data.data]);
     } catch (error) {
       console.log(error);
     }
@@ -56,14 +55,22 @@ const MyArtPage = () => {
           </Category>
         ))}
       </CategoryBar>
-      <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
-      <ArtList>
-        {filteredArts.length > 0 ? (
-          filteredArts.map((art) => <ArtBox key={art.id} art={art} />)
-        ) : (
+      <ArtCnt>
+        {filteredArts.length > 0
+          ? `내가 쓴 글 ${filteredArts.length}개가 있어요!`
+          : "내가 쓴 글 0개가 있어요!"}
+      </ArtCnt>
+      {filteredArts.length > 0 ? (
+        <ArtList>
+          {filteredArts.map((art) => (
+            <ArtBox key={art.id} art={art} />
+          ))}
+        </ArtList>
+      ) : (
+        <NoArt>
           <p>작성한 글이 없습니다.</p>
-        )}
-      </ArtList>
+        </NoArt>
+      )}
       <MenuBar />
     </Wrapper>
   );
@@ -145,7 +152,10 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
-  text-align: center;
+`;
+
+const NoArt = styled.div`
+  margin-top: 220px;
   display: flex;
   flex-direction: column;
   justify-content: center;
