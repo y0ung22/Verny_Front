@@ -258,12 +258,7 @@ const CheckPwPage = ({ newId, newPw }) => {
       if (response.data.message === "회원가입 실패") {
         alert("회원가입에 실패하였습니다.");
       } else if (response.data.message === "회원가입 성공") {
-        localStorage.setItem("id", response.data.data.id);
-        localStorage.setItem("access_token", response.data.data.access_token);
-        console.log("저장된 id:", response.data.data.id);
-        console.log("저장된 access_token:", response.data.data.access_token);
-        navigate(`/art`);
-        window.location.reload();
+        navigate(`/account/login`);
       }
     } catch (error) {
       console.error("요청 오류:", error);
