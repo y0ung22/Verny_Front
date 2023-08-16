@@ -13,8 +13,6 @@ import check from "../assets/icons/check.svg";
 const SignupPage = () => {
   const navigate = useNavigate();
   const [makeIdPage, setMakeIdPage] = useState(false);
-  const [newId, setNewId] = useState(""); // 아이디 상태 생성
-  const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
 
   // 아이디로 회원가입 버튼 클릭하면 닉네임(아이디) 입력 페이지로 이동
   const handleMakeId = () => {
@@ -22,13 +20,7 @@ const SignupPage = () => {
   };
 
   if (makeIdPage) {
-    return (
-      <MakeIdPage
-        setMakeIdPage={setMakeIdPage}
-        setNewId={setNewId}
-        setNewPw={setNewPw}
-      />
-    );
+    return <MakeIdPage />;
   }
 
   // 카카오 계정으로 회원가입 버튼 클릭하여 이동
@@ -78,8 +70,9 @@ const SignupPage = () => {
   );
 };
 
-const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
+const MakeIdPage = () => {
   const navigate = useNavigate();
+  const [newId, setNewId] = useState(""); // 아이디 상태 생성
   const [makePwPage, setMakePwPage] = useState(false);
   // const [usableId, setUsableId] = useState(false);
 
@@ -91,13 +84,7 @@ const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
   };
 
   if (makePwPage) {
-    return (
-      <MakePwPage
-        setMakePwPage={setMakePwPage}
-        newId={newId}
-        setNewPw={setNewPw}
-      />
-    );
+    return <MakePwPage setMakePwPage={setMakePwPage} newId={newId} />;
   }
 
   // 아이디 중복 확인 함수
@@ -174,9 +161,9 @@ const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
   );
 };
 
-const MakePwPage = ({ newId, newPw, setNewPw }) => {
+const MakePwPage = ({ newId }) => {
   const navigate = useNavigate();
-  // const [newPw, setNewPw] = useState("");
+  const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
   const [checkPwPage, setCheckPwPage] = useState(false);
 
   // 비번 확인 페이지로 이동
