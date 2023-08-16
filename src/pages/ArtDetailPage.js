@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
-import axios from "axios";
+//import axios from "axios";
+import { http } from "../api/Http";
 
 import TopBar from "../components/TopBar";
 import ButtonBar from "../components/ButtonBar";
@@ -16,12 +17,12 @@ const ArtDetailPage = () => {
 
   //미술품 해설 받아오기
   const getArtDetail = async (id) => {
-    await axios
-      .get(`${BASE_URL}/main/posts/${id}`)
-      .then((response) => {
-        setArtDetail(response.data);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get(`/main/posts/${id}`);
+      setArtDetail(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {

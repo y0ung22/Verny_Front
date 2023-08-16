@@ -59,7 +59,6 @@ const ArtPage = () => {
   const getAllArts = async () => {
     try {
       const response = await http.get("/main/posts");
-
       setArts(response.data.posts);
     } catch (error) {
       console.error(error);
@@ -70,6 +69,8 @@ const ArtPage = () => {
     selectedCategory === "전체"
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
+
+  console.log(arts);
 
   return (
     <Wrapper>

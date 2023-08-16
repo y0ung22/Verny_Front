@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
-import Comment from "../components/Comment";
+//import Comment from "../components/Comment";
 import ReComment from "../components/ReComment";
 import MenuBar from "../components/MenuBar";
 
@@ -18,12 +19,12 @@ const ReCommentPage = () => {
 
   //답글 목록 받아오기
   const getReComments = async (id) => {
-    await axios
-      .get(`${BASE_URL}/main/comments/${id}/recomments`)
-      .then((response) => {
-        setComments(response.data);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get(`/main/comments/${id}/recomments`);
+      setComments(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log(comments);
@@ -33,19 +34,19 @@ const ReCommentPage = () => {
   }, [commentId]);
 
   //답글 작성하기
-  const uploadReComment = async (e, id) => {
-    e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/main/comments/${id}/recommentsadd/`, {
-        content: newComment,
-      })
-      .then((response) => {
-        setNewComment(response.data);
-        setNewComment("");
-        getReComments();
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+  const uploadReComment = async (id) => {
+    try {
+      setNewComment(response.data);
+      const response = await http.post(
+        `${BASE_URL}/main/comments/${id}/recommentsadd/`,
+        { content: newComment }
+      );
+      setNewComment("");
+      getReComments();
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   //원댓글 출력 제외한 상태!

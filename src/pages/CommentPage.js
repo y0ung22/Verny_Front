@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { http } from "../api/Http";
 import { useLocation } from "react-router-dom";
 import { styled } from "styled-components";
 
@@ -21,30 +22,29 @@ const CommentPage = () => {
 
   //댓글 목록 받아오기
   const getComments = async (id) => {
-    await axios
-      .get(`${BASE_URL}/main/posts/${id}/comments/`)
-      .then((response) => {
-        setLists(response.data);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const response = await http.get(`/main/posts/${id}/comments/`);
+      setLists(response.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   console.log(lists);
 
   //댓글 작성하기
-  const uploadComment = async (e, id) => {
-    e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/main/posts/${id}/comments/`, {
+  const uploadComment = async (id) => {
+    try {
+      setNewComment(response.data);
+      const response = await http.post(`/main/posts/${id}/comments/`, {
         content: newComment,
-      })
-      .then((response) => {
-        setNewComment(response.data);
-        setNewComment("");
-        getComments();
-        console.log(response);
-      })
-      .catch((error) => console.log(error));
+      });
+      console.log(response.data);
+      setNewComment("");
+      getComments();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
