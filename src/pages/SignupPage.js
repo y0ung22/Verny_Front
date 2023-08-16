@@ -176,7 +176,7 @@ const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
   );
 };
 
-const MakePwPage = ({ newId, newPw }) => {
+const MakePwPage = ({ newId, newPw, setNewPw }) => {
   const navigate = useNavigate();
   // const [newPw, setNewPw] = useState("");
   const [checkPwPage, setCheckPwPage] = useState(false);
