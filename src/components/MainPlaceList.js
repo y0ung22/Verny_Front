@@ -3,7 +3,7 @@ import { VariableSizeList } from "react-window";
 import PlaceData from "../database/PlaceData.json";
 import styled from "styled-components";
 
-const PlaceList = () => {
+const MainPlaceList = () => {
   const [visibleData, setVisibleData] = useState(PlaceData.slice(0, 20)); // 초기에 보여줄 데이터
 
   // 스크롤 위치를 기억하는 상태 변수
@@ -166,4 +166,4 @@ const PlaceListWrapper = styled.div`
   }
 `;
 
-export default PlaceList;
+export default MainPlaceList;
