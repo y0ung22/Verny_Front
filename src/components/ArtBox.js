@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 //import axios from "axios";
@@ -8,31 +8,35 @@ import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
-const ArtBox = ({ art }) => {
+const ArtBox = ({ art, scraps, userId }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
+  //미술품 해설 이동
   const moveDetail = () => {
-    navigate("/art/detail", { state: { id: art.id } });
+    navigate("/art/detail", { state: { id: art.id, scraps: scraps } });
   };
 
-  //댓글 이동 함수
+  //댓글 이동
   const moveComment = () => {
     navigate("/art/detail/comment", { state: { id: art.id } });
   };
 
   //북마크 관리 함수
-  const handleBookmark = async (e) => {
+  const handleBookmark = async () => {
     try {
       const postData = bookMark ? { scrapped: false } : { scrapped: true };
-
       await http.post(`/main/posts/${art.id}/scrap/`, postData);
 
       setBookMark((prevBookMark) => !prevBookMark);
-      setBookMarkSrc((bookMark) => (bookMark ? bookmarkClicked : bookmark));
+      if (scraps.includes(userId)) {
+        setBookMarkSrc(bookmarkClicked);
+      } else {
+        setBookMarkSrc(bookmark);
+      }
       window.location.reload();
     } catch (error) {
       console.log(error);

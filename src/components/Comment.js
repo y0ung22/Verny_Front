@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { styled } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { http } from "../api/Http";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
@@ -18,22 +19,21 @@ const Comment = ({ list, artId }) => {
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
-  //더보기 버튼
+  //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
   };
 
   //댓글 좋아요 상태 관리
   const handleLike = async () => {
-    await axios
-      .post(`${BASE_URL}/main/posts/${artId}/comments/${list.id}/likes/`, {
+    try {
+      await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
         liked: likeStatus,
-      })
-      .then((response) => {
-        setLikeStatus(!likeStatus);
-      })
-      .catch((error) => console.log(error));
-  };
+      });
+      setLikeStatus(!likeStatus);
+    } catch (error) {
+      console.log(error);
+    }
 
   const moveReComment = () => {
     navigate("/art/detail/comment/re", { state: { id: list.id } });

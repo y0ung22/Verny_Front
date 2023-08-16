@@ -12,11 +12,14 @@ const ArtDetailPage = () => {
   const [artDetail, setArtDetail] = useState([]);
   const location = useLocation();
   const artId = location.state.id;
+  const scraps = location.state.scraps;
+  const [userId, setUserId] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
   useEffect(() => {
     getArtDetail(artId);
+    getUserId();
   }, []);
 
   //미술품 해설 받아오기
@@ -24,6 +27,15 @@ const ArtDetailPage = () => {
     try {
       const response = await http.get(`/main/posts/${id}`);
       setArtDetail(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const getUserId = async () => {
+    try {
+      const response = await http.get("/account/mypage/");
+      setUserId(response.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +59,7 @@ const ArtDetailPage = () => {
               .map((paragraph, index) => <p key={index}>{paragraph}</p>)}
         </Description>
       </ArtInfo>
-      <ButtonBar artDetail={artDetail} />
+      <ButtonBar artDetail={artDetail} userId={userId} scraps={scraps} />
       <MenuBar />
     </Wrapper>
   );
