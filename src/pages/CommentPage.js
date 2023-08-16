@@ -11,6 +11,7 @@ import MenuBar from "../components/MenuBar";
 const CommentPage = () => {
   const location = useLocation();
   const artId = location.state.id;
+  const [render, setRender] = useState(0);
   const [lists, setLists] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -18,7 +19,7 @@ const CommentPage = () => {
 
   useEffect(() => {
     getComments(artId);
-  }, [artId]);
+  }, [render]);
 
   //댓글 목록 받아오기
   const getComments = async (id) => {
@@ -35,17 +36,17 @@ const CommentPage = () => {
   //댓글 작성하기
   const uploadComment = async (id) => {
     try {
-      setNewComment(response.data);
-      const response = await http.post(`/main/posts/${id}/comments/`, {
+      await http.post(`/main/posts/${id}/commentsadd/`, {
         content: newComment,
       });
-      console.log(response.data);
+      setRender(render + 1);
       setNewComment("");
-      getComments();
     } catch (error) {
       console.log(error);
     }
   };
+
+  console.log(newComment);
 
   return (
     <Wrapper>
@@ -64,7 +65,7 @@ const CommentPage = () => {
             value={newComment}
             placeholder="내용을 입력해주세요!"
           />
-          <SubmitButton onSubmit={uploadComment(artId)}>등록</SubmitButton>
+          <SubmitButton onClick={() => uploadComment(artId)}>등록</SubmitButton>
         </form>
       </WriteComment>
       <MenuBar />

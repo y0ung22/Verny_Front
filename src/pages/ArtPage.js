@@ -19,7 +19,6 @@ const ArtPage = () => {
   const categories = ["전체", "고전미술", "현대미술"];
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [text, setText] = useState("");
-
   const [arts, setArts] = useState([]);
 
   const handleCategoryClick = (category) => {
