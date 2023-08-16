@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { Container } from "../styles";
@@ -115,7 +115,7 @@ const MakeIdPage = () => {
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
-    navigate("/account/login");
+    navigate("/account/login", { state: { value: { newId } } });
   };
 
   // MakeIdPage 내용
@@ -166,6 +166,8 @@ const MakePwPage = ({ newId }) => {
   const [newPw, setNewPw] = useState(""); // 비밀번호 상태 생성
   const [checkPwPage, setCheckPwPage] = useState(false);
 
+  const memoizedNewId = useMemo(() => newId, [newId]);
+
   // 비번 확인 페이지로 이동
   const handleCheckPwPage = () => {
     setCheckPwPage(true);
@@ -182,7 +184,7 @@ const MakePwPage = ({ newId }) => {
   }
 
   const handleLogin = () => {
-    navigate("/account/login");
+    navigate("/account/login", { state: { value: { newId, newPw } } });
   };
 
   // MakePwPage 내용
@@ -227,11 +229,14 @@ const CheckPwPage = ({ newId, newPw }) => {
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
+  const memoizedNewId = useMemo(() => newId, [newId]);
+  const memoizedNewPw = useMemo(() => newPw, [newPw]);
+
   // 회원가입 완료
   const handleCompleteSignup = async (e) => {
     e.preventDefault();
 
-    if (newPw !== enteredPw) {
+    if (newPw.trim() !== enteredPw.trim()) {
       alert("비밀번호가 일치하지 않아요.");
       return;
     }
