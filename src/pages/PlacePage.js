@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { Map, MapMarker } from "react-kakao-maps-sdk";
+import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
 
@@ -28,7 +28,9 @@ const PlacePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
   const [sortOpen, setSortOpen] = useState(false);
   const [searchText, setSearchText] = useState(""); // 검색어 상태 변수
+  const [selectedPlace, setSelectedPlace] = useState(null);
 
+  // 필터 & 정렬
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
   };
@@ -42,6 +44,7 @@ const PlacePage = () => {
     setSortOpen(false);
   };
 
+  // 카카오맵
   const locations = PlaceData.map((place) => ({
     title: place.name,
     latlng: { lat: place.latitude, lng: place.longitude },
@@ -59,6 +62,7 @@ const PlacePage = () => {
     });
   };
 
+  // 장소 검색
   const [text, setText] = useState("");
 
   const onChange = (e) => {
@@ -79,6 +83,24 @@ const PlacePage = () => {
     setSearchText(text);
   };
 
+  const handleMarkerClick = (index) => {
+    if (selectedPlace) {
+      // 이미 장소 정보가 선택된 상태일 경우 다시 원래대로
+      setSelectedPlace(null);
+    } else {
+      const place = PlaceData[index];
+      setSelectedPlace(place);
+    }
+  };
+
+  const handleCopy = async (text) => {
+    try {
+      await navigator.clipboard.writeText(text);
+    } catch (error) {
+      console.error("복사 실패", error);
+    }
+  };
+
   return (
     <Wrapper>
       <TopBar />
@@ -97,16 +119,18 @@ const PlacePage = () => {
             </DeleteBtn>
           )}
         </InputContainer>
-        <SFBtn>
-          <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
+        <SFBtnContainer>
+          <SFBtn>
+            <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
 
-          <img
-            className="filter-icon"
-            src={filterOpen ? filterchecked : filter}
-            alt="필터 버튼"
-            onClick={handleFilterClick}
-          />
-        </SFBtn>
+            <img
+              className="filter-icon"
+              src={filterOpen ? filterchecked : filter}
+              alt="필터 버튼"
+              onClick={handleFilterClick}
+            />
+          </SFBtn>
+        </SFBtnContainer>
       </SearchFilter>
       <Sort>
         <span
@@ -191,8 +215,8 @@ const PlacePage = () => {
       <Map
         center={{
           // 지도의 중심좌표
-          lat: 37.58153269,
-          lng: 127.002336,
+          lat: 37.57590409,
+          lng: 126.976842,
         }}
         style={{
           // 지도의 크기
@@ -202,23 +226,112 @@ const PlacePage = () => {
           marginTop: "10px",
           marginBottom: "10px",
         }}
-        level={5} // 지도의 확대 레벨
+        level={1} // 지도의 확대 레벨
       >
-        {locations.map((loc, idx) => (
-          <MapMarker
-            key={`${loc.title}-${loc.latlng}`}
-            position={loc.latlng}
-            image={{
-              src: isHovered[idx] ? pinHover : pin,
-              size: { width: 36, height: 35 },
-            }}
-            title={loc.title}
-            onMouseEnter={() => handleMarkerHover(idx, true)}
-            onMouseLeave={() => handleMarkerHover(idx, false)}
-          />
-        ))}
+        <MarkerClusterer
+          averageCenter={true}
+          gridSize={50}
+          minLevel={2}
+          minClusterSize={5}
+        >
+          {locations.map((loc, idx) => (
+            <MapMarker
+              key={`${loc.title}-${loc.latlng}`}
+              position={loc.latlng}
+              image={{
+                src: isHovered[idx] ? pinHover : pin,
+                size: { width: 36, height: 35 },
+              }}
+              title={loc.title}
+              onClick={() => handleMarkerClick(idx)}
+              onMouseEnter={() => handleMarkerHover(idx, true)}
+              onMouseLeave={() => handleMarkerHover(idx, false)}
+            />
+          ))}
+        </MarkerClusterer>
       </Map>
-      {searchText ? (
+      {selectedPlace ? (
+        <SelectedPlaceInfo>
+          <li
+            style={{
+              marginBottom: "2px",
+              marginLeft: "28px",
+              width: "300px",
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-evenly",
+              alignItems: "center",
+              gap: "10px",
+            }}
+          >
+            <div className="name-category">
+              <p
+                style={{
+                  /*width: "86px",*/
+                  fontSize: "1rem",
+                  fontWeight: "400",
+                  lineHeight: "140%",
+                  color: "var(--n-neutral-10, #1A1C1E)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                  overflow: "hidden",
+                }}
+              >
+                {selectedPlace.name}
+              </p>
+              <p
+                style={{
+                  /*width: "70px",*/
+                  fontSize: "0.75rem",
+                  fontWeight: 400,
+                  lineHeight: "140%",
+                  color: "var(--s-secondary-40, #52606F)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                }}
+              >
+                {selectedPlace.category}
+              </p>
+            </div>
+            <p
+              style={{
+                width: "130px",
+                fontSize: "0.75rem",
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "var(--n-neutral-40, #5D5E61)",
+                fontFamily: "Pretendard",
+                fontStyle: "normal",
+              }}
+            >
+              {selectedPlace.address}
+            </p>
+            <button
+              onClick={() => handleCopy(selectedPlace.address)}
+              style={{
+                width: "70px",
+                height: "32px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                gap: "8px",
+                border: "none",
+                borderRadius: "12px",
+                background: "var(--p-primary-90, #CFE5FF)",
+                fontSize: "0.75rem",
+                fontWeight: 400,
+                lineHeight: "140%",
+                color: "var(--p-primary-10, #001D33)",
+                fontFamily: "Pretendard",
+                fontStyle: "normal",
+                cursor: "pointer",
+              }}
+            >
+              주소 복사
+            </button>
+          </li>
+        </SelectedPlaceInfo>
+      ) : searchText ? (
         <SearchedPlaceList searchText={searchText} />
       ) : (
         <MainPlaceList />
@@ -289,19 +402,25 @@ const Input = styled.input`
   line-height: 140%;
 `;
 
+const SFBtnContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+`;
+
 const SFBtn = styled.div`
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-end;
   align-items: center;
-  gap: 8px;
+  gap: 25px;
 
   img {
     width: 18px;
     height: 18px;
     flex-shrink: 0;
-    margin-left: 7px;
-    margin-right: 16px;
     cursor: pointer;
   }
 `;
@@ -361,6 +480,27 @@ const SortBtn = styled.div`
     width: 12px;
     height: 12px;
     margin-left: 40px;
+  }
+`;
+
+const SelectedPlaceInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin-left: -30px;
+  width: 320px;
+  li {
+    width: 320px;
+    height: 100px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .name-category {
+    width: 120px;
   }
 `;
 
