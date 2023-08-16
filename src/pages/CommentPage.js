@@ -11,7 +11,6 @@ import MenuBar from "../components/MenuBar";
 const CommentPage = () => {
   const location = useLocation();
   const artId = location.state.id;
-  const [render, setRender] = useState(0);
   const [lists, setLists] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -19,7 +18,7 @@ const CommentPage = () => {
 
   useEffect(() => {
     getComments(artId);
-  }, [render]);
+  }, []);
 
   //댓글 목록 받아오기
   const getComments = async (id) => {

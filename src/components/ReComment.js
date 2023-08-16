@@ -36,6 +36,29 @@ const ReComment = ({ commentId, comment, username }) => {
     }
   };
 
+  //답글 수정
+  const editReComment = async () => {
+    try {
+      await http.put(`/main/posts/${commentId}/recomments/${comment.id}/`, {
+        content: "수정 내용",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //답글 삭제
+  const delReComment = async () => {
+    try {
+      await http.delete(
+        `/main/comments/${commentId}/recomments/${comment.id}/`
+      );
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Wrapper>
       <Info>
@@ -54,6 +77,12 @@ const ReComment = ({ commentId, comment, username }) => {
             <img src={likeImgSrc} />
             <span liked={likeStatus}>{comment.relikes_count}</span>
           </Btn>
+          {username === comment.author_username && (
+            <EditBox>
+              <img id="edit" src={edit} onClick={editReComment}></img>
+              <img id="del" src={del} onClick={delReComment}></img>
+            </EditBox>
+          )}
         </BtnBox>
       </Info>
       <Content showMore={showMore}>{comment.content}</Content>
@@ -127,7 +156,22 @@ const Profile = styled.img`
 
 const BtnBox = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 10px;
+  #edit {
+    margin-left: 6px;
+    width: 11.5px;
+    height: 11.5px;
+  }
+  #del {
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+const EditBox = styled.div`
+  display: flex;
+  align-items: center;
   gap: 8px;
 `;
 
