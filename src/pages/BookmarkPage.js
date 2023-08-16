@@ -28,8 +28,7 @@ const BookmarkPage = () => {
   const myScraps = async () => {
     try {
       const response = await http.get("/account/mypage/my_scraped");
-      setScraps(response.data);
-      console.log(response.data);
+      setScraps([...response.data.data]);
     } catch (error) {
       console.log(error);
     }

@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { http } from "../api/Http";
 
 import profile from "../assets/icons/profileBasic.svg";
 import like from "../assets/icons/like.svg";
@@ -12,31 +13,73 @@ import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = ({ list, artId }) => {
   const [showMore, setShowMore] = useState(false);
+  const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
+  const [likeImgSrc, setLikeImgSrc] = useState(like);
   const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
-  //더보기 버튼
+  useEffect(() => {
+    getUsername();
+  }, []);
+
+  //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
   };
 
+  const getUsername = async () => {
+    try {
+      const response = await http.get("/account/mypage");
+      setUsername(response.data.data.username);
+      console.log(username);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   //댓글 좋아요 상태 관리
   const handleLike = async () => {
-    await axios
-      .post(`${BASE_URL}/main/posts/${artId}/comments/${list.id}/likes/`, {
-        liked: likeStatus,
-      })
-      .then((response) => {
-        setLikeStatus(!likeStatus);
-      })
-      .catch((error) => console.log(error));
+    try {
+      const newLikeStatus = !likeStatus;
+      setLikeStatus(newLikeStatus);
+      setLikeImgSrc(newLikeStatus ? likeClicked : like);
+      await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
+        liked: newLikeStatus,
+      });
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //댓글 수정
+  const editComment = async () => {
+    try {
+      await http.put(`/main/posts/${artId}/comments/${list.id}/`, {
+        content: "수정 내용",
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  //댓글 삭제
+  const delComment = async () => {
+    try {
+      await http.delete(`/main/posts/${artId}/comments/${list.id}/`);
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const moveReComment = () => {
-    navigate("/art/detail/comment/re", { state: { id: list.id } });
+    navigate("/art/detail/comment/re", {
+      state: { id: list.id, username: username },
+    });
   };
 
   return (
@@ -55,9 +98,15 @@ const Comment = ({ list, artId }) => {
               onClick={handleLike}
               isLiked={likeStatus}
             >
-              <img src={likeStatus ? likeClicked : like} />
+              <img src={likeImgSrc} />
               <span isLiked={likeStatus}>{list.likes_count}</span>
             </Btn>
+            {username === list.author_username && (
+              <EditBox>
+                <img id="edit" src={edit} onClick={editComment}></img>
+                <img id="del" src={del} onClick={delComment}></img>
+              </EditBox>
+            )}
           </BtnBox>
         </Info>
         <Content showMore={showMore}>{list.content}</Content>
@@ -143,18 +192,32 @@ const Profile = styled.img`
 
 const BtnBox = styled.div`
   display: flex;
-  align-items: flex-start;
+  align-items: center;
+  gap: 10px;
+  #edit {
+    margin-left: 6px;
+    width: 11.5px;
+    height: 11.5px;
+  }
+  #del {
+    width: 27px;
+    height: 27px;
+  }
+`;
+
+const EditBox = styled.div`
+  display: flex;
+  align-items: center;
   gap: 8px;
 `;
 
 const Btn = styled.div`
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   img {
     display: flex;
     align-items: center;
-    gap: 8px;
   }
   span {
     color: ${({ isLiked }) =>

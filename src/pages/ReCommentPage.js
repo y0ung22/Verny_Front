@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import axios from "axios";
+//import axios from "axios";
 import { http } from "../api/Http";
 import { styled } from "styled-components";
 
@@ -12,6 +12,7 @@ import MenuBar from "../components/MenuBar";
 const ReCommentPage = () => {
   const location = useLocation();
   const commentId = location.state.id;
+  const username = location.state.username;
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -52,7 +53,12 @@ const ReCommentPage = () => {
       <CommentList>
         {comments &&
           comments.map((comment) => (
-            <ReComment key={comment.id} comment={comment} />
+            <ReComment
+              key={comment.id}
+              commentId={commentId}
+              comment={comment}
+              username={username}
+            />
           ))}
       </CommentList>
       <WriteComment>

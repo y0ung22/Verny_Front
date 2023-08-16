@@ -20,6 +20,7 @@ const ArtPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [text, setText] = useState("");
   const [arts, setArts] = useState([]);
+  const [userId, setUserId] = useState("");
   const [manager, setManager] = useState();
 
   const handleCategoryClick = (category) => {
@@ -75,6 +76,7 @@ const ArtPage = () => {
     try {
       const response = await http.get("/account/mypage/");
       setManager(response.data.data.is_manager);
+      setUserId(response.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -118,7 +120,14 @@ const ArtPage = () => {
       <ArtCnt>작품 {filteredArts.length}개를 감상해보세요!</ArtCnt>
       <ArtList>
         {filteredArts &&
-          filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
+          filteredArts.map((art) => (
+            <ArtBox
+              key={art.id}
+              art={art}
+              scraps={art.scraps}
+              userId={userId}
+            />
+          ))}
       </ArtList>
       {manager && (
         <Link to="/art/upload" style={{ textDecoration: "none" }}>

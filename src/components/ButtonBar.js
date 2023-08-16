@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
 
@@ -6,19 +7,26 @@ import comment from "../assets/icons/comment.svg";
 import bookmark from "../assets/icons/bookmark.svg";
 import bookmarkClicked from "../assets/icons/bookmarkClicked.svg";
 
-const ButtonBar = ({ artDetail }) => {
+const ButtonBar = ({ artDetail, userId, scraps }) => {
   const navigate = useNavigate();
   const [bookMark, setBookMark] = useState(false);
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
   //북마크 함수
-  const savekBookMark = () => {
-    if (bookMark) {
-      setBookMark(false);
-      setBookMarkSrc(bookmark);
-    } else {
-      setBookMark(true);
-      setBookMarkSrc(bookmarkClicked);
+  const handleBookmark = async (e) => {
+    try {
+      const postData = bookMark ? { scrapped: false } : { scrapped: true };
+      await http.post(`/main/posts/${artDetail.id}/scrap/`, postData);
+
+      setBookMark((prevBookMark) => !prevBookMark);
+      if (scraps.includes(userId)) {
+        setBookMarkSrc(bookmarkClicked);
+      } else {
+        setBookMarkSrc(bookmark);
+      }
+      window.location.reload();
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -32,7 +40,7 @@ const ButtonBar = ({ artDetail }) => {
         <img src={comment} />
         <span>{artDetail.comment_count}</span>
       </Btn>
-      <Btn onClick={savekBookMark}>
+      <Btn onClick={handleBookmark}>
         <img src={bookMarkSrc} />
         <span id="bookmark" liked={bookMark}>
           {artDetail.scraps_count}
