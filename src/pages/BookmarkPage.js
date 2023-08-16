@@ -44,14 +44,17 @@ const BookmarkPage = () => {
         </UserImg>
         <UserId>{userId}</UserId>
       </UserInfo>
-      <ArtList>
-        {scraps.length > 0 ? (
-          scraps.map((scrap) => <ArtBox key={scrap.id} art={scrap} />)
-        ) : (
+      {scraps.length > 0 ? (
+        <ArtList>
+          {scraps.map((scrap) => (
+            <ArtBox key={scrap.id} art={scrap} />
+          ))}
+        </ArtList>
+      ) : (
+        <NoArt>
           <p>즐겨찾기한 작품이 없습니다.</p>
-        )}
-      </ArtList>
-
+        </NoArt>
+      )}
       <MenuBar />
     </Wrapper>
   );
@@ -109,10 +112,15 @@ const ArtList = styled.div`
   &::-webkit-scrollbar {
     display: none;
   }
+`;
+
+const NoArt = styled.div`
+  margin-top: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   p {
-    position: absolute;
-    top: 350px;
-    left: 222px;
     color: var(--n-neutral-10, #1a1c1e);
     font-family: Pretendard;
     font-size: 0.88rem;

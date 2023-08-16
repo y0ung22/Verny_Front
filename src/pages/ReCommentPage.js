@@ -25,7 +25,7 @@ const ReCommentPage = () => {
   const getReComments = async (id) => {
     try {
       const response = await http.get(`/main/comments/${id}/recomments`);
-      setComments([response.data.data]);
+      setComments(response.data.data);
     } catch (error) {
       console.log(error);
     }

@@ -20,6 +20,7 @@ const ArtPage = () => {
   const [selectedCategory, setSelectedCategory] = useState(categories[0]);
   const [text, setText] = useState("");
   const [arts, setArts] = useState([]);
+  const [manager, setManager] = useState();
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
@@ -52,6 +53,7 @@ const ArtPage = () => {
   //리렌더링
   useEffect(() => {
     getAllArts();
+    isManager();
   }, []);
 
   //미술품 정보 불러오기
@@ -60,7 +62,7 @@ const ArtPage = () => {
       const response = await http.get("/main/posts");
       setArts(response.data.posts);
     } catch (error) {
-      console.error(error);
+      console.log(error);
     }
   };
 
@@ -69,7 +71,14 @@ const ArtPage = () => {
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
 
-  console.log(arts);
+  const isManager = async () => {
+    try {
+      const response = await http.get("/account/mypage/");
+      setManager(response.data.data.is_manager);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Wrapper>
@@ -111,11 +120,13 @@ const ArtPage = () => {
         {filteredArts &&
           filteredArts.map((art) => <ArtBox key={art.id} art={art} />)}
       </ArtList>
-      <Link to="/art/upload" style={{ textDecoration: "none" }}>
-        <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
-          <img src={isHovered ? WriteHover : Write} />
-        </WriteArtBtn>
-      </Link>
+      {manager && (
+        <Link to="/art/upload" style={{ textDecoration: "none" }}>
+          <WriteArtBtn onMouseEnter={MouseHover} onMouseLeave={MouseLeave}>
+            <img src={isHovered ? WriteHover : Write} />
+          </WriteArtBtn>
+        </Link>
+      )}
       <MenuBar />
     </Wrapper>
   );
