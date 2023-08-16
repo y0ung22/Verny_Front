@@ -81,7 +81,6 @@ const SignupPage = () => {
 const MakeIdPage = ({ setNewId, setNewPw, newId }) => {
   const navigate = useNavigate();
   const [makePwPage, setMakePwPage] = useState(false);
-  const [checkPwPage, setCheckPwPage] = useState(false);
   // const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -182,7 +181,7 @@ const MakePwPage = ({ newId, newPw, setNewPw }) => {
 
   // 비번 확인 페이지로 이동
   const handleCheckPwPage = () => {
-    setNewPw(newPw);
+    setCheckPwPage(true);
   };
 
   if (checkPwPage) {
@@ -190,7 +189,7 @@ const MakePwPage = ({ newId, newPw, setNewPw }) => {
       <CheckPwPage
         setCheckPwPage={setCheckPwPage}
         newId={newId}
-        newPw={newPw} // newPw를 전달
+        newPw={newPw}
       />
     );
   }
