@@ -254,7 +254,7 @@ const PlacePage = () => {
           marginTop: "10px",
           marginBottom: "10px",
         }}
-        level={1} // 지도의 확대 레벨
+        level={3} // 지도의 확대 레벨
       >
         <MarkerClusterer
           averageCenter={true}

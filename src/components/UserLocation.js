@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import styled from "styled-components";
+import useGeolocation from "react-hook-geolocation";
 
 function UserLocation() {
   const [userLocation, setUserLocation] = useState(null);
-
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
-  useEffect(() => {
+  const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -32,6 +31,10 @@ function UserLocation() {
         }
       );
     }
+  };
+
+  useEffect(() => {
+    getLocation();
   }, []);
 
   return <></>;
