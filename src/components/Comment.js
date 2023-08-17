@@ -48,7 +48,6 @@ const Comment = ({ list, artId, updateCommentList }) => {
       await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
         liked: newLikeStatus,
       });
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -109,11 +108,11 @@ const Comment = ({ list, artId, updateCommentList }) => {
           </BtnBox>
         </Info>
         <Content showMore={showMore}>{list.content}</Content>
-        {!showMore && list.content.length > 100 && (
+        {/* {!showMore && list.content && list.content.length > 100 && (
           <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
             더보기
           </ShowMoreButton>
-        )}
+        )} */}
         <ReComment>
           <ReCommentBtn onClick={moveReComment}>
             <img src={commentWrite} />
@@ -144,14 +143,22 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 0px 12px;
-  overflow: hidden;
+  width: 296px;
   color: var(--n-neutral-10, #1a1c1e);
-  text-overflow: ${({ showMore }) => (showMore ? "initial" : "ellipsis")};
+  /*   text-overflow: ${({ showMore }) =>
+    showMore ? "initial" : "ellipsis"}; */
   font-family: Pretendard;
   font-size: 0.88rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+  white-space: pre-wrap;
+  /* .truncate-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  } */
 `;
 
 const Info = styled.div`
@@ -233,6 +240,7 @@ const Btn = styled.div`
 `;
 
 const ShowMoreButton = styled.div`
+  margin-left: 13px;
   color: var(--n-neutral-40, #5d5e61);
   font-family: Pretendard;
   font-size: 0.75rem;

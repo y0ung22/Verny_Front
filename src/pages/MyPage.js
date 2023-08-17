@@ -43,7 +43,11 @@ const MyPage = () => {
 
   const deleteProfile = async () => {
     try {
-      await http.delete("/account/delete/");
+      await http.delete("/account/delete/", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
       navigate("/");
     } catch (error) {
       console.log(error);
