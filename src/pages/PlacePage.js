@@ -58,17 +58,29 @@ const PlacePage = () => {
     const clickedPlace = PlaceData[index];
 
     if (!selectedPlace || selectedPlace !== clickedPlace) {
+      if (selectedPlace) {
+        const prevSelectedIndex = PlaceData.findIndex(
+          (place) => place === selectedPlace
+        );
+        setIsHovered((prevHover) => {
+          const newHover = [...prevHover];
+          newHover[prevSelectedIndex] = false; // 기존 선택된 마커의 이미지를 pin으로 변경
+          newHover[index] = true; // 클릭한 마커의 이미지를 pinHover로 변경
+          return newHover;
+        });
+      } else {
+        setIsHovered((prevHover) => {
+          const newHover = [...prevHover];
+          newHover[index] = true; // 클릭한 마커의 이미지를 pinHover로 변경
+          return newHover;
+        });
+      }
       setSelectedPlace(clickedPlace);
-      setIsHovered((prevHover) => {
-        const newHover = [...prevHover];
-        newHover[index] = true; // 마커 이미지를 pinHover로 변경
-        return newHover;
-      });
     } else {
       setSelectedPlace(null);
       setIsHovered((prevHover) => {
         const newHover = [...prevHover];
-        newHover[index] = false; // 마커 이미지를 pin으로 변경
+        newHover[index] = false; // 클릭한 마커의 이미지를 pin으로 변경
         return newHover;
       });
     }
