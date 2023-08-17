@@ -10,7 +10,8 @@ import plus from "../assets/icons/plus.svg";
 const UploadArtPage = () => {
   const textareaRef = useRef(null);
   const inputRef = useRef(null);
-  const [uploadImg, setUploadImg] = useState("");
+  const [image, setImage] = useState("");
+  const [imgSrc, setImgSrc] = useState("");
   const [newTitle, setNewTitle] = useState("");
   const [newDescription, setNewDescription] = useState("");
   const [newPainter, setNewPainter] = useState("");
@@ -32,30 +33,35 @@ const UploadArtPage = () => {
     }
   };
 
-  //이미지 업로드
-  const handleImageUpload = (event) => {
-    const selectedImage = event.target.files[0];
-    if (selectedImage) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        setUploadImg(e.target.result);
-      };
-      reader.readAsDataURL(selectedImage);
-    }
+  //이미지 미리보기
+  const loadImg = (e) => {
+    setImage(e.target.files[0]);
+    const selectedImage = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      setImgSrc(e.target.result);
+    };
+    reader.readAsDataURL(selectedImage);
+    setImgSrc(selectedImage);
   };
 
   //게시글 POST
   const uploadArt = async () => {
     try {
-      const response = await http.post(`/main/postsadd/`, {
-        image: uploadImg,
-        description: newDescription,
-        title: newTitle,
-        painter: newPainter,
-        drawing_technique: newTechnique,
-        content: newContent,
-        work_year: newYear,
-        type: newType,
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("description", newDescription);
+      formData.append("title", newTitle);
+      formData.append("painter", newPainter);
+      formData.append("drawing_technique", newTechnique);
+      formData.append("content", newContent);
+      formData.append("work_year", newYear);
+      formData.append("type", newType);
+
+      const response = await http.post(`/main/postsadd/`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
 
       if (response.status === 200) {
@@ -88,10 +94,10 @@ const UploadArtPage = () => {
                 ref={inputRef}
                 style={{ display: "none" }}
                 accept="image/*"
-                onChange={handleImageUpload}
+                onChange={(e) => loadImg(e)}
               />
-              {uploadImg && (
-                <img id="uploadedImg" src={uploadImg} alt="Uploaded Art" />
+              {image && (
+                <img id="uploadedImg" src={imgSrc} alt="Uploaded Art" />
               )}
             </UploadImg>
           </ImgContainer>

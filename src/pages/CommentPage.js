@@ -9,7 +9,7 @@ import MenuBar from "../components/MenuBar";
 
 const CommentPage = () => {
   const location = useLocation();
-  const artId = location.state.id;
+  const artId = location.state?.id;
   const [lists, setLists] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -17,7 +17,7 @@ const CommentPage = () => {
 
   useEffect(() => {
     getComments(artId);
-  }, []);
+  }, [artId]);
 
   //댓글 목록 받아오기
   const getComments = async (id) => {
@@ -29,22 +29,25 @@ const CommentPage = () => {
     }
   };
 
-  console.log(lists);
-
   //댓글 작성하기
   const uploadComment = async (id) => {
     try {
-      await http.post(`/main/posts/${id}/commentsadd/`, {
+      const response = await http.post(`/main/posts/${id}/commentsadd/`, {
         content: newComment,
       });
+      console.log("Upload Comment Response:", response);
+      setLists((prevLists) => [...prevLists, response.data]);
       setNewComment("");
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
   };
 
-  console.log(newComment);
+  //댓글 목록 업데이트
+  const updateCommentList = (commentId) => {
+    const updatedList = lists.filter((comment) => comment.id !== commentId);
+    setLists(updatedList);
+  };
 
   return (
     <Wrapper>
@@ -52,7 +55,12 @@ const CommentPage = () => {
       <CommentList>
         {lists &&
           lists.map((list) => (
-            <Comment key={list.id} list={list} artId={artId} />
+            <Comment
+              key={list.id}
+              list={list}
+              artId={artId}
+              updateCommentList={updateCommentList}
+            />
           ))}
       </CommentList>
       <WriteComment>
@@ -84,7 +92,7 @@ const Wrapper = styled.div`
 `;
 
 const CommentList = styled.div`
-  height: 500px;
+  height: 560px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;

@@ -8,7 +8,7 @@ import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 
-const ReComment = ({ commentId, comment, username }) => {
+const ReComment = ({ commentId, comment, username, updateCommentList }) => {
   const [showMore, setShowMore] = useState(false);
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeImgSrc, setLikeImgSrc] = useState(like);
@@ -53,7 +53,7 @@ const ReComment = ({ commentId, comment, username }) => {
       await http.delete(
         `/main/comments/${commentId}/recomments/${comment.id}/`
       );
-      window.location.reload();
+      updateCommentList(comment.id);
     } catch (error) {
       console.log(error);
     }

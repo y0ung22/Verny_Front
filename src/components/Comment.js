@@ -11,7 +11,7 @@ import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 import commentWrite from "../assets/icons/commentWrite.svg";
 
-const Comment = ({ list, artId }) => {
+const Comment = ({ list, artId, updateCommentList }) => {
   const [showMore, setShowMore] = useState(false);
   const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
@@ -34,7 +34,6 @@ const Comment = ({ list, artId }) => {
     try {
       const response = await http.get("/account/mypage");
       setUsername(response.data.data.username);
-      console.log(username);
     } catch (error) {
       console.log(error);
     }
@@ -70,7 +69,7 @@ const Comment = ({ list, artId }) => {
   const delComment = async () => {
     try {
       await http.delete(`/main/posts/${artId}/comments/${list.id}/`);
-      window.location.reload();
+      updateCommentList(list.id);
     } catch (error) {
       console.log(error);
     }

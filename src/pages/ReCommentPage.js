@@ -9,8 +9,8 @@ import MenuBar from "../components/MenuBar";
 
 const ReCommentPage = () => {
   const location = useLocation();
-  const commentId = location.state.id;
-  const username = location.state.username;
+  const commentId = location.state?.id;
+  const username = location.state?.username;
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -18,7 +18,7 @@ const ReCommentPage = () => {
 
   useEffect(() => {
     getReComments(commentId);
-  }, []);
+  }, [commentId]);
 
   //답글 목록 받아오기
   const getReComments = async (id) => {
@@ -38,10 +38,19 @@ const ReCommentPage = () => {
       const response = await http.post(`/main/comments/${id}/recommentsadd/`, {
         content: newComment,
       });
-      getReComments(id);
+      setComments((prevComments) => [...prevComments, response.data.data]);
+      setNewComment("");
     } catch (error) {
       console.log(error);
     }
+  };
+
+  console.log(newComment);
+
+  //댓글 목록 업데이트
+  const updateCommentList = (commentId) => {
+    const updatedList = comments.filter((comment) => comment.id !== commentId);
+    setComments(updatedList);
   };
 
   //원댓글 출력 제외한 상태!
@@ -56,6 +65,7 @@ const ReCommentPage = () => {
               commentId={commentId}
               comment={comment}
               username={username}
+              updateCommentList={updateCommentList}
             />
           ))}
       </CommentList>
