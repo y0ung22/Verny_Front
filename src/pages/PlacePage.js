@@ -20,9 +20,9 @@ import dropdownOpened from "../assets/icons/dropdownOpened.svg";
 import filterInit from "../assets/icons/filterInit.svg";
 import close from "../assets/icons/close.svg";
 import pin from "../assets/icons/pin.svg";
-import pinHover from "../assets/icons/pinHover.svg";
+import pinHovered from "../assets/icons/pinHovered.svg";
 import delBtn from "../assets/icons/deleteSecondary.svg";
-import pinClicked from "../assets/icons/pinClicked.svg";
+import pinSelected from "../assets/icons/pinSelected.svg";
 
 const PlacePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
@@ -50,16 +50,54 @@ const PlacePage = () => {
     latlng: { lat: place.latitude, lng: place.longitude },
   }));
 
-  const [isHovered, setIsHovered] = useState(
-    new Array(locations.length).fill(false)
+  const [markerStates, setMarkerStates] = useState(
+    new Array(locations.length).fill("default")
   );
 
-  const handleMarkerHover = (idx, hover) => {
-    setIsHovered((prevHover) => {
-      const newHover = [...prevHover];
-      newHover[idx] = hover;
-      return newHover;
-    });
+  const getMarkerImage = (index, state) => {
+    switch (state) {
+      case "hover":
+        return pinHovered;
+      case "selected":
+        return pinSelected;
+      default:
+        return pin;
+    }
+  };
+
+  const handleMarkerClick = (index) => {
+    const clickedPlace = PlaceData[index];
+    const newMarkerStates = markerStates.map((state, idx) =>
+      idx === index
+        ? state === "selected"
+          ? "default"
+          : "selected"
+        : "default"
+    );
+
+    setMarkerStates(newMarkerStates);
+    setSelectedPlace(selectedPlace === clickedPlace ? null : clickedPlace);
+  };
+
+  const handleMarkerMouseOver = (index) => {
+    if (markerStates[index] !== "selected") {
+      const newMarkerStates = [...markerStates];
+      newMarkerStates[index] = "hover";
+      setMarkerStates(newMarkerStates);
+    }
+  };
+
+  const handleMarkerMouseOut = (index) => {
+    if (markerStates[index] === "hover") {
+      const newMarkerStates = [...markerStates];
+      newMarkerStates[index] = "default";
+      setMarkerStates(newMarkerStates);
+    }
+  };
+
+  const handleResetMarkerState = () => {
+    setMarkerStates(new Array(locations.length).fill("default"));
+    setSelectedPlace(null);
   };
 
   // 장소 검색
@@ -81,16 +119,6 @@ const PlacePage = () => {
   const handleSearchClick = () => {
     // 검색 버튼을 누른 경우 검색어 상태를 업데이트하고 필터링된 결과를 보여줌
     setSearchText(text);
-  };
-
-  const handleMarkerClick = (index) => {
-    if (selectedPlace) {
-      // 이미 장소 정보가 선택된 상태일 경우 다시 원래대로
-      setSelectedPlace(null);
-    } else {
-      const place = PlaceData[index];
-      setSelectedPlace(place);
-    }
   };
 
   const handleCopy = async (text) => {
@@ -239,13 +267,13 @@ const PlacePage = () => {
               key={`${loc.title}-${loc.latlng}`}
               position={loc.latlng}
               image={{
-                src: isHovered[idx] ? pinHover : pin,
+                src: getMarkerImage(idx, markerStates[idx]),
                 size: { width: 36, height: 35 },
               }}
               title={loc.title}
               onClick={() => handleMarkerClick(idx)}
-              onMouseEnter={() => handleMarkerHover(idx, true)}
-              onMouseLeave={() => handleMarkerHover(idx, false)}
+              onMouseOver={() => handleMarkerMouseOver(idx)} // 마우스 올릴 때 호출되는 함수 추가
+              onMouseOut={() => handleMarkerMouseOut(idx)} // 마우스 나갈 때 호출되는 함수 추가
             />
           ))}
         </MarkerClusterer>

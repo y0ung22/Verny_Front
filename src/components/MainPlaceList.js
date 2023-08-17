@@ -61,7 +61,6 @@ const MainPlaceList = () => {
               color: "var(--n-neutral-10, #1A1C1E)",
               fontFamily: "Pretendard",
               fontStyle: "normal",
-
               overflow: "hidden",
             }}
           >
