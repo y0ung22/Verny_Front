@@ -54,12 +54,24 @@ const PlacePage = () => {
     new Array(locations.length).fill(false)
   );
 
-  const handleMarkerHover = (idx, hover) => {
-    setIsHovered((prevHover) => {
-      const newHover = [...prevHover];
-      newHover[idx] = hover;
-      return newHover;
-    });
+  const handleMarkerClick = (index) => {
+    const clickedPlace = PlaceData[index];
+
+    if (!selectedPlace || selectedPlace !== clickedPlace) {
+      setSelectedPlace(clickedPlace);
+      setIsHovered((prevHover) => {
+        const newHover = [...prevHover];
+        newHover[index] = true; // 마커 이미지를 pinHover로 변경
+        return newHover;
+      });
+    } else {
+      setSelectedPlace(null);
+      setIsHovered((prevHover) => {
+        const newHover = [...prevHover];
+        newHover[index] = false; // 마커 이미지를 pin으로 변경
+        return newHover;
+      });
+    }
   };
 
   // 장소 검색
@@ -81,16 +93,6 @@ const PlacePage = () => {
   const handleSearchClick = () => {
     // 검색 버튼을 누른 경우 검색어 상태를 업데이트하고 필터링된 결과를 보여줌
     setSearchText(text);
-  };
-
-  const handleMarkerClick = (index) => {
-    if (selectedPlace) {
-      // 이미 장소 정보가 선택된 상태일 경우 다시 원래대로
-      setSelectedPlace(null);
-    } else {
-      const place = PlaceData[index];
-      setSelectedPlace(place);
-    }
   };
 
   const handleCopy = async (text) => {
@@ -244,8 +246,6 @@ const PlacePage = () => {
               }}
               title={loc.title}
               onClick={() => handleMarkerClick(idx)}
-              onMouseEnter={() => handleMarkerHover(idx, true)}
-              onMouseLeave={() => handleMarkerHover(idx, false)}
             />
           ))}
         </MarkerClusterer>
