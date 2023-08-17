@@ -11,7 +11,7 @@ import edit from "../assets/icons/edit.svg";
 import del from "../assets/icons/delete.svg";
 import commentWrite from "../assets/icons/commentWrite.svg";
 
-const Comment = ({ list, artId }) => {
+const Comment = ({ list, artId, updateCommentList }) => {
   const [showMore, setShowMore] = useState(false);
   const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
@@ -34,7 +34,6 @@ const Comment = ({ list, artId }) => {
     try {
       const response = await http.get("/account/mypage");
       setUsername(response.data.data.username);
-      console.log(username);
     } catch (error) {
       console.log(error);
     }
@@ -55,7 +54,7 @@ const Comment = ({ list, artId }) => {
     }
   };
 
-  //댓글 수정
+  /*   //댓글 수정
   const editComment = async () => {
     try {
       await http.put(`/main/posts/${artId}/comments/${list.id}/`, {
@@ -64,13 +63,13 @@ const Comment = ({ list, artId }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
 
   //댓글 삭제
   const delComment = async () => {
     try {
       await http.delete(`/main/posts/${artId}/comments/${list.id}/`);
-      window.location.reload();
+      updateCommentList(list.id);
     } catch (error) {
       console.log(error);
     }
@@ -103,7 +102,7 @@ const Comment = ({ list, artId }) => {
             </Btn>
             {username === list.author_username && (
               <EditBox>
-                <img id="edit" src={edit} onClick={editComment}></img>
+                {/*  <img id="edit" src={edit} onClick={editComment}></img> */}
                 <img id="del" src={del} onClick={delComment}></img>
               </EditBox>
             )}
@@ -202,6 +201,7 @@ const BtnBox = styled.div`
   #del {
     width: 27px;
     height: 27px;
+    margin-bottom: 1px;
   }
 `;
 
