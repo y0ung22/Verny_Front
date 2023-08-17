@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { useNavigate } from "react-router-dom";
-//import axios from "axios";
 import { http } from "../api/Http";
 
 import comment from "../assets/icons/comment.svg";

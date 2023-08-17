@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
@@ -45,10 +45,9 @@ const UploadArtPage = () => {
   };
 
   //게시글 POST
-  const uploadArt = async (e) => {
-    e.preventDefault();
-    await axios
-      .post(`${BASE_URL}/main/postsadd/`, {
+  const uploadArt = async () => {
+    try {
+      const response = await http.post(`/main/postsadd/`, {
         image: uploadImg,
         description: newDescription,
         title: newTitle,
@@ -57,11 +56,17 @@ const UploadArtPage = () => {
         content: newContent,
         work_year: newYear,
         type: newType,
-      })
-      .then((response) => {
+      });
+
+      if (response.status === 200) {
+        console.log(response);
         navigate("/art");
-      })
-      .catch((error) => console.log(error));
+      } else {
+        console.log("Upload failed");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

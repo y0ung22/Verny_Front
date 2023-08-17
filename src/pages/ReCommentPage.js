@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-//import axios from "axios";
 import { http } from "../api/Http";
 import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
-//import Comment from "../components/Comment";
 import ReComment from "../components/ReComment";
 import MenuBar from "../components/MenuBar";
 

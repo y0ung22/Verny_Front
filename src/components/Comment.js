@@ -55,7 +55,7 @@ const Comment = ({ list, artId }) => {
     }
   };
 
-  //댓글 수정
+  /*   //댓글 수정
   const editComment = async () => {
     try {
       await http.put(`/main/posts/${artId}/comments/${list.id}/`, {
@@ -64,7 +64,7 @@ const Comment = ({ list, artId }) => {
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
 
   //댓글 삭제
   const delComment = async () => {
@@ -103,7 +103,7 @@ const Comment = ({ list, artId }) => {
             </Btn>
             {username === list.author_username && (
               <EditBox>
-                <img id="edit" src={edit} onClick={editComment}></img>
+                {/*  <img id="edit" src={edit} onClick={editComment}></img> */}
                 <img id="del" src={del} onClick={delComment}></img>
               </EditBox>
             )}
@@ -202,6 +202,7 @@ const BtnBox = styled.div`
   #del {
     width: 27px;
     height: 27px;
+    margin-bottom: 1px;
   }
 `;
 

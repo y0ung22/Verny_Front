@@ -36,16 +36,16 @@ const ReComment = ({ commentId, comment, username }) => {
     }
   };
 
-  //답글 수정
+  /*  //답글 수정
   const editReComment = async () => {
     try {
-      await http.put(`/main/posts/${commentId}/recomments/${comment.id}/`, {
+      await http.put(`/main/comments/${commentId}/recomments/${comment.id}/`, {
         content: "수정 내용",
       });
     } catch (error) {
       console.log(error);
     }
-  };
+  }; */
 
   //답글 삭제
   const delReComment = async () => {
@@ -79,7 +79,7 @@ const ReComment = ({ commentId, comment, username }) => {
           </Btn>
           {username === comment.author_username && (
             <EditBox>
-              <img id="edit" src={edit} onClick={editReComment}></img>
+              {/*  <img id="edit" src={edit} onClick={editReComment}></img> */}
               <img id="del" src={del} onClick={delReComment}></img>
             </EditBox>
           )}
