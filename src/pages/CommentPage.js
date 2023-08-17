@@ -35,7 +35,6 @@ const CommentPage = () => {
       const response = await http.post(`/main/posts/${id}/commentsadd/`, {
         content: newComment,
       });
-      console.log("Upload Comment Response:", response);
       setLists((prevLists) => [...prevLists, response.data]);
       setNewComment("");
     } catch (error) {

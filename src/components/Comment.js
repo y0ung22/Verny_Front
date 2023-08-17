@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { http } from "../api/Http";
 
-import profile from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
@@ -86,7 +86,7 @@ const Comment = ({ list, artId, updateCommentList }) => {
       <Wrapper pathname={pathname}>
         <Info>
           <Writer>
-            <Profile src={profile} />
+            <Profile src={profileImg} />
             <span id="name">{list.author_username}</span>
             <span>·</span>
             <span id="time">{list.created_at}</span>

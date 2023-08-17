@@ -31,7 +31,7 @@ const TopBar = () => {
   else if (pathname === "/place") titleText = "문예관광지도";
   else if (pathname === "/mypage") titleText = "마이페이지";
   else if (pathname === "/mypage/myarts") titleText = "내가 쓴 글 보기";
-  else if (pathname === "/mypage/profile") titleText = "프로필";
+  else if (pathname === "/mypage/profile") titleText = "내 활동 보기";
   else if (pathname === "/mypage/profile/edit") titleText = "프로필 수정";
   else if (pathname === "/mypage/bookmark") titleText = "즐겨찾기한 미술";
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { http } from "../api/Http";
 import { styled } from "styled-components";
 
-import profile from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
@@ -63,7 +63,7 @@ const ReComment = ({ commentId, comment, username, updateCommentList }) => {
     <Wrapper>
       <Info>
         <Writer>
-          <Profile src={profile} />
+          <Profile src={profileImg} />
           <span id="name" alt="">
             {comment.author_username}
           </span>

@@ -183,6 +183,7 @@ const ArtImg = styled.img`
   height: 200px;
   border-radius: 12px;
   background: url(<path-to-image>), lightgray 50% / cover no-repeat;
+  object-fit: cover;
 `;
 
 const ArtDetail = styled.div`

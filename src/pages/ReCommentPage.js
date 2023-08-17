@@ -38,6 +38,7 @@ const ReCommentPage = () => {
       const response = await http.post(`/main/comments/${id}/recommentsadd/`, {
         content: newComment,
       });
+      console.log(response);
       setComments((prevComments) => [...prevComments, response.data.data]);
       setNewComment("");
     } catch (error) {
@@ -53,7 +54,6 @@ const ReCommentPage = () => {
     setComments(updatedList);
   };
 
-  //원댓글 출력 제외한 상태!
   return (
     <Wrapper>
       <TopBar />
@@ -77,7 +77,7 @@ const ReCommentPage = () => {
             value={newComment}
             placeholder="내용을 입력해주세요!"
           />
-          <SubmitButton onSubmit={() => uploadReComment(commentId)}>
+          <SubmitButton onClick={() => uploadReComment(commentId)}>
             등록
           </SubmitButton>
         </form>
@@ -100,7 +100,7 @@ const Wrapper = styled.div`
 `;
 
 const CommentList = styled.div`
-  height: 500px;
+  height: 560px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;

@@ -33,8 +33,6 @@ const MyPage = () => {
     navigate("/");
   };
 
-  const quitApp = () => {};
-
   const showQuitModal = () => {
     setQuitModal(true);
   };
@@ -45,7 +43,7 @@ const MyPage = () => {
 
   const deleteProfile = async () => {
     try {
-      await http.delete("/account/delete");
+      await http.delete("/account/delete/");
       navigate("/");
     } catch (error) {
       console.log(error);
