@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
-import profileBasic from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import ArtBox from "../components/ArtBox";
 
 const BookmarkPage = () => {
@@ -39,7 +39,7 @@ const BookmarkPage = () => {
       <TopBar />
       <UserInfo>
         <UserImg>
-          <img src={profileBasic} />
+          <img src={profileImg} />
         </UserImg>
         <UserId>{userId}</UserId>
       </UserInfo>

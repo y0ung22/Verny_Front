@@ -4,7 +4,7 @@ import { styled } from "styled-components";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
-import ProfileBasic from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import Comment from "../components/Comment";
 import ReComment from "../components/ReComment";
 
@@ -55,7 +55,7 @@ const ProfilePage = () => {
       <TopBar />
       <UserInfo>
         <UserImg>
-          <img src={ProfileBasic} />
+          <img src={profileImg} />
         </UserImg>
         <UserId>{userId}</UserId>
       </UserInfo>
