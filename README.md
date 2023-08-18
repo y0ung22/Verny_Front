@@ -27,10 +27,13 @@
 
 - **기술 스택**
 
-  <span>Front-End: </span> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" height="30px"> <img src="https://img.shields.io/badge/styled_components-DB7093?style=flat-square&logo=styled-components&logoColor=white" height="30px">
-  <span>Package Manager: </span><img src="https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white" height="30px">
-  <span>Code Formatter: </span> <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=React&logoColor=white" height="30px">
-  <span>ETC: </span> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white" /> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white"/> 
+  <span>Front-End: </span> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" height="20px"> <img src="https://img.shields.io/badge/styled_components-DB7093?style=flat-square&logo=styled-components&logoColor=white" height="20px">
+  
+  <span>Package Manager: </span><img src="https://img.shields.io/badge/npm-CB3837?style=flat-square&logo=npm&logoColor=white" height="20px">
+  
+  <span>Code Formatter: </span> <img src="https://img.shields.io/badge/Prettier-F7B93E?style=flat-square&logo=React&logoColor=white" height="20px">
+  
+  <span>ETC: </span> <img src="https://img.shields.io/badge/Figma-F24E1E?style=flat-square&logo=Figma&logoColor=white" height="20px"/> <img src="https://img.shields.io/badge/GitHub-181717?style=flat-square&logo=GitHub&logoColor=white" height="20px"/> 
 
 
 <br/>
