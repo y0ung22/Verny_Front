@@ -61,22 +61,53 @@
 - **폴더 구조**
 
   ```
-  📂 all_project
-  └─ my_project
-   ├─ my_project
-   │  ├─ __init__.py
-   │  ├─ asgi.py
-   │  ├─ settings.py
-   │  ├─ urls.py
-   │  └─ wsgi.py
-   ├─ myapp/
-   │  ├─ __init__.py
-   │  ├─ admin.py
-   │  ├─ apps.py
-   │  ├─ models.py
-   │  ├─ tests.py
-   │  └─ views.py
-   └─ manage.py
+  📂 public
+⎪   └─  index.html
+📂 src
+├─ 📂 components
+⎪  ⎪   └─  ArtBox.js
+⎪  ⎪   └─  ButtonBar.js
+⎪  ⎪   └─  Comment.js     
+⎪  ⎪   └─  DelModal.js     
+⎪  ⎪   └─  Dropdown.js
+⎪  ⎪   └─  MainPlaceList.js   
+⎪  ⎪   └─  MenuBar.js 
+⎪  ⎪   └─  QuitModal.js
+⎪  ⎪   └─  ReComment.js 
+⎪  ⎪   └─  SearchBar.js
+⎪  ⎪   └─  SearchedPlaceList.js
+⎪  ⎪   └─  TopBar.js
+⎪  ⎪   └─  WriteComment.js
+⎪  📂 assets                 
+|  |
+├─ 📂 database
+⎪  ⎪   └─  PlaceData.js              
+|  |   
+├─ 📂 pages
+⎪  ⎪   └─  ArtDetailPage.js            
+⎪  ⎪   └─  ArtPage.js        
+⎪  ⎪   └─  BookmarkPage.js         
+⎪  ⎪   └─  CommentPage.js        
+⎪  ⎪   └─  EditArtPage.js           
+⎪  ⎪   └─  EditProfilePage.js              
+⎪  ⎪   └─  LoginPage.js                  
+⎪  ⎪   └─  MyArtPage.js           
+⎪  ⎪   └─  MyPage.js         
+⎪  ⎪   └─  PlaceDetailPage.js        
+⎪  ⎪   └─  PlacePage.js         
+⎪  ⎪   └─  ProfilePage.js  
+⎪  ⎪   └─  ReCommentPage.js 
+⎪  ⎪   └─  SearchPage.js 
+⎪  ⎪   └─  SignupPage.js 
+⎪  ⎪   └─  StartPage.js 
+⎪  ⎪   └─  UploadArtPage.js 
+├─   App.js      
+├─   index.js               
+└─   styles.js
+├─ .gitignore
+├─ package-lock.json
+├─ package.json
+└─ README.md
   ```
 
 <br/>
