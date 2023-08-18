@@ -43,15 +43,20 @@ const UploadArtPage = () => {
   //게시글 PUT
   const editArt = async () => {
     try {
-      const response = await http.put(`/main/posts/${art.id}/edit`, {
-        image: image,
-        description: newDescription,
-        title: newTitle,
-        painter: newPainter,
-        drawing_technique: newTechnique,
-        content: newContent,
-        work_year: newYear,
-        type: newType,
+      const formData = new FormData();
+      formData.append("image", image);
+      formData.append("description", newDescription);
+      formData.append("title", newTitle);
+      formData.append("painter", newPainter);
+      formData.append("drawing_technique", newTechnique);
+      formData.append("content", newContent);
+      formData.append("work_year", newYear);
+      formData.append("type", newType);
+
+      const response = await http.put(`/main/posts/${art.id}/edit`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       });
       console.log(response);
       navigate("/art");
