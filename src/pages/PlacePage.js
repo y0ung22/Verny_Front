@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Map, MapMarker, MarkerClusterer } from "react-kakao-maps-sdk";
 import TopBar from "../components/TopBar";
@@ -10,13 +10,12 @@ import PlaceData from "../database/PlaceData.json";
 import PlaceFilterModal from "../components/PlaceFilterModal";
 
 import styled from "styled-components";
+import axios from "axios";
 
 import search from "../assets/icons/search.svg";
 import filter from "../assets/icons/filter.svg";
 import filterchecked from "../assets/icons/filterChecked.svg";
 import banner from "../assets/etc/banner.svg";
-import dropdownClosed from "../assets/icons/dropdownClosed.svg";
-import dropdownOpened from "../assets/icons/dropdownOpened.svg";
 import filterInit from "../assets/icons/filterInit.svg";
 import close from "../assets/icons/close.svg";
 import pin from "../assets/icons/pin.svg";
@@ -26,22 +25,54 @@ import pinSelected from "../assets/icons/pinSelected.svg";
 
 const PlacePage = () => {
   const [filterOpen, setFilterOpen] = useState(false);
-  const [sortOpen, setSortOpen] = useState(false);
   const [searchText, setSearchText] = useState(""); // 검색어 상태 변수
   const [selectedPlace, setSelectedPlace] = useState(null);
+  // 정렬 상태를 관리하는 상태 변수
+  const [sortType, setSortType] = useState("alphabet");
 
-  // 필터 & 정렬
+  // 거리순 정렬된 장소 리스트를 받아올 상태 변수
+  const [distanceSortList, setDistanceSortList] = useState([]);
+
+  // 정렬 버튼 클릭 핸들러
+  const handleSortClick = (type) => {
+    if (selectedPlace || (searchText && type === "distance")) {
+      return; // 선택된 장소나 검색 결과가 있을 때는 distance sort 버튼 클릭 불가능
+    }
+
+    setSortType(type);
+  };
+
+  const BASE_URL = "https://yewon1209.pythonanywhere.com";
+
+  // 거리순 정렬된 장소 리스트를 백엔드에서 받아오는 함수
+  const getDistanceSortList = async () => {
+    try {
+      const response = await axios.get(
+        `${BASE_URL}//map/placedistancelist/?order_by=distance`
+      );
+      setDistanceSortList(response.data.data);
+    } catch (error) {
+      console.error(
+        "거리순 정렬된 장소 리스트를 받아오는데 실패했습니다.",
+        error
+      );
+    }
+  };
+
+  // 정렬 타입이 변경될 때마다 거리순 정렬된 장소 리스트를 업데이트
+  useEffect(() => {
+    if (sortType === "distance") {
+      getDistanceSortList();
+    }
+  }, [sortType]);
+
+  // 필터 모달
   const handleFilterClick = () => {
     setFilterOpen(!filterOpen);
   };
 
-  const handleSortClick = () => {
-    setSortOpen(!sortOpen);
-  };
-
   const handleCloseModal = () => {
     setFilterOpen(false);
-    setSortOpen(false);
   };
 
   // 카카오맵
@@ -93,11 +124,6 @@ const PlacePage = () => {
       newMarkerStates[index] = "default";
       setMarkerStates(newMarkerStates);
     }
-  };
-
-  const handleResetMarkerState = () => {
-    setMarkerStates(new Array(locations.length).fill("default"));
-    setSelectedPlace(null);
   };
 
   // 장소 검색
@@ -163,7 +189,7 @@ const PlacePage = () => {
       <Sort>
         <span
           style={{
-            width: "220px",
+            width: "160px",
             color: "var(--s-secondary-40, #52606F)",
             fontFamily: "Pretendard",
             fontSize: "0.75rem",
@@ -172,15 +198,58 @@ const PlacePage = () => {
             lineHeight: "140%",
           }}
         >
-          1만 개 이상의 문예관광지를 만나보세요!
+          1천 개 이상의 검색결과가 있어요!
         </span>
-        <SortBtn onClick={handleSortClick}>
-          <p>정렬</p>
-          <img
-            className="dropdown-icon"
-            src={sortOpen ? dropdownOpened : dropdownClosed}
-            alt="드롭다운 기호"
-          />
+        <SortBtn>
+          <button
+            className={`sort-button ${
+              sortType === "alphabet" ? "selected" : ""
+            }`}
+            onClick={() => handleSortClick("alphabet")}
+            style={{
+              backgroundColor:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "var(--n-neutral-0, #000)"
+                  : "",
+              opacity:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "0.38"
+                  : "",
+              color:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "white"
+                  : "",
+              cursor: selectedPlace ? "default" : "pointer",
+            }}
+          >
+            가나다순
+          </button>
+          <button
+            className={`sort-button ${
+              sortType === "distance" ? "selected" : ""
+            }`}
+            onClick={() => handleSortClick("distance")}
+            style={{
+              backgroundColor:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "var(--n-neutral-0, #000)"
+                  : "",
+              opacity:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "0.38"
+                  : "",
+              color:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "white"
+                  : "",
+              cursor:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "default"
+                  : "pointer",
+            }}
+          >
+            거리순
+          </button>
         </SortBtn>
       </Sort>
       {filterOpen && <Backdrop onClick={handleCloseModal} />}
@@ -295,7 +364,6 @@ const PlacePage = () => {
             <div className="name-category">
               <p
                 style={{
-                  /*width: "86px",*/
                   fontSize: "1rem",
                   fontWeight: "400",
                   lineHeight: "140%",
@@ -309,7 +377,6 @@ const PlacePage = () => {
               </p>
               <p
                 style={{
-                  /*width: "70px",*/
                   fontSize: "0.75rem",
                   fontWeight: 400,
                   lineHeight: "140%",
@@ -361,8 +428,90 @@ const PlacePage = () => {
         </SelectedPlaceInfo>
       ) : searchText ? (
         <SearchedPlaceList searchText={searchText} />
-      ) : (
+      ) : sortType === "alphabet" ? (
         <MainPlaceList />
+      ) : (
+        <DstSortPlaceList>
+          {distanceSortList.map((place, index) => (
+            <li
+              key={index}
+              style={{
+                marginBottom: "2px",
+                marginLeft: "28px",
+                width: "300px",
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-evenly",
+                alignItems: "center",
+                gap: "10px",
+              }}
+            >
+              <div className="name-category">
+                <p
+                  style={{
+                    fontSize: "1rem",
+                    fontWeight: "400",
+                    lineHeight: "140%",
+                    color: "var(--n-neutral-10, #1A1C1E)",
+                    fontFamily: "Pretendard",
+                    fontStyle: "normal",
+                    overflow: "hidden",
+                  }}
+                >
+                  {place.name}
+                </p>
+                <p
+                  style={{
+                    fontSize: "0.75rem",
+                    fontWeight: 400,
+                    lineHeight: "140%",
+                    color: "var(--s-secondary-40, #52606F)",
+                    fontFamily: "Pretendard",
+                    fontStyle: "normal",
+                  }}
+                >
+                  {place.category}
+                </p>
+              </div>
+              <p
+                style={{
+                  width: "130px",
+                  fontSize: "0.75rem",
+                  fontWeight: 400,
+                  lineHeight: "140%",
+                  color: "var(--n-neutral-40, #5D5E61)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                }}
+              >
+                {place.address}
+              </p>
+              <button
+                onClick={() => handleCopy(place.address)}
+                style={{
+                  width: "70px",
+                  height: "32px",
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  gap: "8px",
+                  border: "none",
+                  borderRadius: "12px",
+                  background: "var(--p-primary-90, #CFE5FF)",
+                  fontSize: "0.75rem",
+                  fontWeight: 400,
+                  lineHeight: "140%",
+                  color: "var(--p-primary-10, #001D33)",
+                  fontFamily: "Pretendard",
+                  fontStyle: "normal",
+                  cursor: "pointer",
+                }}
+              >
+                주소복사
+              </button>
+            </li>
+          ))}
+        </DstSortPlaceList>
       )}
       <MenuBar />
     </Wrapper>
@@ -479,12 +628,7 @@ const Sort = styled.div`
   flex-shrink: 0;
   background: var(--n-neutral-100, #fff);
   box-shadow: 0px 4px 4px 0px rgba(0, 51, 84, 0.04);
-  color: var(--s-secondary-40, #52606f);
-  font-family: Pretendard;
-  font-size: 0.75rem;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 140%;
+  gap: 15px;
 `;
 
 const SortBtn = styled.div`
@@ -492,22 +636,31 @@ const SortBtn = styled.div`
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  gap: 10px;
-  p {
-    border: none;
-    background: transparent;
-    cursor: pointer;
-    color: var(--s-secondary-40, #52606f);
+  gap: 5px;
+
+  .sort-button {
+    width: 68px;
+    height: 29px;
+    display: flex;
+    padding: 6px 12px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
     font-family: Pretendard;
-    font-size: 0.875rem;
+    font-size: 0.75rem;
     font-style: normal;
     font-weight: 400;
     line-height: 140%;
+    cursor: pointer;
+    border: 1.5px solid var(--s-secondary-30, #3a4857);
+    background: var(--n-neutral-100, #fff);
+    color: var(--s-secondary-30, #3a4857);
   }
-  img {
-    width: 12px;
-    height: 12px;
-    margin-left: 40px;
+
+  .selected {
+    background: var(--s-secondary-30, #3a4857);
+    color: var(--s-secondary-100, #fff);
+    border: 1.5px solid var(--s-secondary-30, #3a4857);
   }
 `;
 
@@ -526,6 +679,25 @@ const SelectedPlaceInfo = styled.div`
     justify-content: space-between;
     align-items: center;
   }
+
+  .name-category {
+    width: 120px;
+  }
+`;
+
+const DstSortPlaceList = styled.div`
+  width: 330px;
+  height: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  overflow-y: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  margin-bottom: 70px;
+  margin-left: -32px;
 
   .name-category {
     width: 120px;
@@ -604,36 +776,3 @@ const FilterTop = styled.div`
     padding: 12px;
   }
 `;
-
-// const SortModal = styled.div`
-//   position: absolute;
-//   padding: 0px 10px 0px 250px;
-//   margin-top: 100px;
-//   display: ${({ isOpen }) => (isOpen ? "flex" : "none")};
-//   flex-direction: column;
-//   justify-content: center;
-//   align-items: center;
-//   width: 85.505px;
-//   height: 103.55px;
-//   z-index: 2;
-
-//   button {
-//     display: flex;
-//     width: 85.505px;
-//     height: 34.516px;
-//     padding: 9.723px 10.15px 9.794px 52.355px;
-//     align-items: center;
-//     flex-shrink: 0;
-//     border: 1px solid #000;
-//     background: #a5a5a5;
-//     flex-direction: row;
-//   }
-//   p {
-//     color: #000;
-//     font-family: Inter;
-//     font-size: 12px;
-//     font-style: normal;
-//     font-weight: 400;
-//     line-height: normal;
-//   }
-// `;
