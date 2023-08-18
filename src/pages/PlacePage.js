@@ -7,14 +7,11 @@ import MenuBar from "../components/MenuBar";
 import MainPlaceList from "../components/MainPlaceList";
 import SearchedPlaceList from "../components/SearchedPlaceList";
 import PlaceData from "../database/PlaceData.json";
-import PlaceFilterModal from "../components/PlaceFilterModal";
 
 import styled from "styled-components";
 import axios from "axios";
 
 import search from "../assets/icons/search.svg";
-import filter from "../assets/icons/filter.svg";
-import filterchecked from "../assets/icons/filterChecked.svg";
 import banner from "../assets/etc/banner.svg";
 import filterInit from "../assets/icons/filterInit.svg";
 import close from "../assets/icons/close.svg";
@@ -24,7 +21,6 @@ import delBtn from "../assets/icons/deleteSecondary.svg";
 import pinSelected from "../assets/icons/pinSelected.svg";
 
 const PlacePage = () => {
-  const [filterOpen, setFilterOpen] = useState(false);
   const [searchText, setSearchText] = useState(""); // 검색어 상태 변수
   const [selectedPlace, setSelectedPlace] = useState(null);
   // 정렬 상태를 관리하는 상태 변수
@@ -48,7 +44,7 @@ const PlacePage = () => {
   const getDistanceSortList = async () => {
     try {
       const response = await axios.get(
-        `${BASE_URL}//map/placedistancelist/?order_by=distance`
+        `${BASE_URL}//map/placelist/?order_by=distance`
       );
       setDistanceSortList(response.data.data);
     } catch (error) {
@@ -65,15 +61,6 @@ const PlacePage = () => {
       getDistanceSortList();
     }
   }, [sortType]);
-
-  // 필터 모달
-  const handleFilterClick = () => {
-    setFilterOpen(!filterOpen);
-  };
-
-  const handleCloseModal = () => {
-    setFilterOpen(false);
-  };
 
   // 카카오맵
   const locations = PlaceData.map((place) => ({
@@ -159,7 +146,7 @@ const PlacePage = () => {
     <Wrapper>
       <TopBar />
       <Banner />
-      <SearchFilter>
+      <Search>
         <InputContainer>
           <Input
             type="text"
@@ -173,19 +160,10 @@ const PlacePage = () => {
             </DeleteBtn>
           )}
         </InputContainer>
-        <SFBtnContainer>
-          <SFBtn>
-            <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
-
-            <img
-              className="filter-icon"
-              src={filterOpen ? filterchecked : filter}
-              alt="필터 버튼"
-              onClick={handleFilterClick}
-            />
-          </SFBtn>
-        </SFBtnContainer>
-      </SearchFilter>
+        <SFBtn>
+          <img src={search} alt="검색 버튼" onClick={handleSearchClick} />
+        </SFBtn>
+      </Search>
       <Sort>
         <span
           style={{
@@ -252,68 +230,11 @@ const PlacePage = () => {
           </button>
         </SortBtn>
       </Sort>
-      {filterOpen && <Backdrop onClick={handleCloseModal} />}
-      <FilterModalWrapper
-        isOpen={filterOpen}
-        onRequestClose={handleCloseModal}
-        contentLabel="필터"
-      >
-        <FilterTop>
-          <p
-            style={{
-              color: " var(--n-neutral-10, #1A1C1E)",
-              fontFamily: "Pretendard",
-              fontSize: "1.25rem",
-              fontStyle: "normal",
-              fontWeight: 600,
-              lineHeight: "140%",
-              marginLeft: "10px",
-            }}
-          >
-            필터
-          </p>
-          <div className="filter-top-img">
-            <img className="filter-init" src={filterInit} alt="필터 초기화" />
-            <p
-              style={{
-                color: " var(--n-neutral-10, #1A1C1E)",
-                fontFamily: "Pretendard",
-                fontSize: "0.75rem",
-                fontStyle: "normal",
-                fontWeight: 400,
-                lineHeight: "140%",
-              }}
-            >
-              필터 초기화
-            </p>
-            <div className="close-icon-wrapper" onClick={handleCloseModal}>
-              <img className="close-icon" src={close} alt="닫기" />
-            </div>
-          </div>
-        </FilterTop>
-        <PlaceFilterModal />
-      </FilterModalWrapper>
-
-      {/* <SortModal
-            isOpen={sortOpen}
-            onRequestClose={handleCloseModal}
-            contentLabel="정렬"
-          >
-            <button>
-              <p>정렬</p>
-            </button>
-            <button>
-              <p>거리순</p>
-            </button>
-            <button>
-              <p>가나다순</p>
-            </button>
-          </SortModal> */}
       <Map
         center={{
           // 지도의 중심좌표
-          lat: 37.57590409,
-          lng: 126.976842,
+          lat: 37.4685064,
+          lng: 127.0391872,
         }}
         style={{
           // 지도의 크기
@@ -541,7 +462,7 @@ const Banner = styled.div`
   background-position: center center;
 `;
 
-const SearchFilter = styled.div`
+const Search = styled.div`
   position: relative;
   display: flex;
   justify-content: flex-start;
@@ -559,9 +480,8 @@ const InputContainer = styled.div`
 `;
 
 const Input = styled.input`
-  width: 216px;
+  width: 242px;
   display: flex;
-  flex-direction: row;
   padding: 12px 16px;
   align-items: center;
   gap: 8px;
@@ -579,26 +499,20 @@ const Input = styled.input`
   line-height: 140%;
 `;
 
-const SFBtnContainer = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  flex: 1;
-`;
-
 const SFBtn = styled.div`
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
-  align-items: center;
-  gap: 25px;
-
+  position: absolute;
+  top: 19px;
+  right: 5px;
+  padding: 0;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
   img {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     flex-shrink: 0;
-    cursor: pointer;
   }
 `;
 
@@ -611,6 +525,7 @@ const DeleteBtn = styled.div`
   justify-content: center;
   align-items: center;
   flex-shrink: 0;
+  cursor: pointer;
   img {
     width: 16px;
     height: 16px;

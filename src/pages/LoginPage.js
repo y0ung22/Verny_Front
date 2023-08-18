@@ -8,7 +8,6 @@ import { Container } from "../styles";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
-import kakao from "../assets/icons/kakao.svg";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -17,11 +16,6 @@ const LoginPage = () => {
   const [inputPw, setInputPw] = useState("");
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
-  // 카카오 계정으로 로그인
-  const handleKakaoLogin = () => {
-    // 카카오 계정으로 로그인 기능 구현 카카오 api?
-  };
 
   // 아이디로 로그인할 때 페이지 이동
   const handleIdLogin = () => {
@@ -112,12 +106,8 @@ const LoginPage = () => {
             />
           </Logo>
           <Buttons>
-            <button className="kakao-btn" onClick={handleKakaoLogin}>
-              <img className="kakao" src={kakao} alt="카카오" />
-              <span>카카오 계정으로 로그인</span>
-            </button>
             <button className="id-btn" onClick={handleIdLogin}>
-              <span>아이디로 로그인</span>
+              <span className="id-text">아이디로 로그인</span>
             </button>
             <HandleSignupStyle>
               <span>아직 회원이 아니신가요?</span>
@@ -137,6 +127,31 @@ const FirstWrapper = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+`;
+
+const HandleSignupStyle = styled.div`
+  margin-top: 24px;
+  span {
+    color: var(--n-neutral-0, #000);
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+  }
+
+  button {
+    color: var(--p-primary-80, #98cbff);
+    font-family: Pretendard;
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 140%;
+    text-decoration-line: underline;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+  }
 `;
 
 const Logo = styled.div`
@@ -166,30 +181,9 @@ const Buttons = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 160px;
-  gap: 8px;
+  margin-top: 230px;
 
-  .kakao-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 328px;
-    height: 46px;
-    align-self: stretch;
-    border-radius: 12px;
-    background: #fee500;
-    border: none;
-    gap: 10px;
-    cursor: pointer;
-  }
-
-  .kakao {
-    width: 20px;
-    height: 18px;
-  }
-
-  span {
+  .id-text {
     color: rgba(0, 0, 0, 0.85);
     font-family: Pretendard;
     font-size: 1rem;
@@ -285,30 +279,6 @@ const Bottom = styled.div`
     background: var(--p-primary-30, #004a77);
     border: none;
     color: white;
-    cursor: pointer;
-  }
-`;
-
-const HandleSignupStyle = styled.div`
-  span {
-    color: var(--n-neutral-0, #000);
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-  }
-
-  button {
-    color: var(--p-primary-80, #98cbff);
-    font-family: Pretendard;
-    font-size: 0.75rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 140%;
-    text-decoration-line: underline;
-    border: none;
-    background-color: transparent;
     cursor: pointer;
   }
 `;
