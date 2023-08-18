@@ -91,13 +91,14 @@ const Wrapper = styled.div`
   top: 695px;
   display: flex;
   width: 360px;
-  height: 60px;
+  height: 105px;
   align-items: flex-start;
   flex-shrink: 0;
   background: var(--nv-neutral-variant-99, #fcfcff);
 `;
 
 const Btn = styled.div`
+  margin-bottom: 45px;
   display: flex;
   flex-direction: column;
   padding: 8.5px 0px;
