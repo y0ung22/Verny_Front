@@ -11,9 +11,15 @@
 음성해설문 가이드라인을 준수한 고전·현대미술품의 기술 및 해석과, 배리어프리 문화예술관광지 정보를 제공합니다.
 
 
+<br/>
+
+
 - **기술 스택**
 
-  <span>프론트엔드: </span> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white" height="30px"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="30px"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="30px"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" height="30px">
+  <span>프론트엔드: </span> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white" height="20px"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="20px"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="20px"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" height="20px">
+
+
+<br/>
 
 
 - **팀원 소개**
@@ -38,6 +44,9 @@
   </table>
 
 
+  <br/>
+
+
 - **폴더 구조**
 
   ```
@@ -58,6 +67,8 @@
    │  └─ views.py
    └─ manage.py
   ```
+
+<br/>
 
 
 - **개발환경에서의 실행 방법**
