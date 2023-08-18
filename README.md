@@ -50,7 +50,7 @@
      </tr>
       <tr width="100%">
           <td  align="center"><p>미술품 조회/검색/업로드/수정</p></p><p>댓글, 답글 조회/작성/삭제</p><p>마이페이지</p></td>
-          <td  align="center"><p>담당 기능 A</p><p>담당 기능 B</p><p>담당 기능 C</p></td>
+          <td  align="center"><p>로그인/회원가입</p><p>카카오맵/맵마커</p><p>장소 검색/정렬</p></td>
      </tr>
   </table>
 
