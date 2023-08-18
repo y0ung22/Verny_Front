@@ -19,6 +19,9 @@ const ArtBox = ({ art, scraps, userId }) => {
     navigate("/art/detail", { state: { id: art.id, scraps: scraps } });
   };
 
+  console.log(scraps);
+  console.log(userId);
+
   //댓글 이동
   const moveComment = () => {
     navigate("/art/detail/comment", { state: { id: art.id } });
