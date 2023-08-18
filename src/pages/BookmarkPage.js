@@ -9,6 +9,7 @@ import ArtBox from "../components/ArtBox";
 
 const BookmarkPage = () => {
   const [userId, setUserId] = useState("");
+  const [userpk, setUserpk] = useState("");
   const [scraps, setScraps] = useState([]);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const BookmarkPage = () => {
     try {
       const response = await http.get("/account/mypage");
       setUserId(response.data.data.username);
+      setUserpk(response.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +48,7 @@ const BookmarkPage = () => {
       {scraps.length > 0 ? (
         <ArtList>
           {scraps.map((scrap) => (
-            <ArtBox key={scrap.id} art={scrap} />
+            <ArtBox key={scrap.id} art={scrap} userId={userpk} />
           ))}
         </ArtList>
       ) : (
