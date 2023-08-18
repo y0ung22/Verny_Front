@@ -35,8 +35,8 @@ const PlacePage = () => {
 
   // 정렬 버튼 클릭 핸들러
   const handleSortClick = (type) => {
-    if ((selectedPlace || searchText) && type === "distance") {
-      return; // 선택된 장소나 검색어가 있을 때는 distance sort 버튼을 선택하지 않도록
+    if (selectedPlace || (searchText && type === "distance")) {
+      return; // 선택된 장소나 검색 결과가 있을 때는 distance sort 버튼 클릭 불가능
     }
 
     setSortType(type);
@@ -206,6 +206,21 @@ const PlacePage = () => {
               sortType === "alphabet" ? "selected" : ""
             }`}
             onClick={() => handleSortClick("alphabet")}
+            style={{
+              backgroundColor:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "var(--n-neutral-0, #000)"
+                  : "",
+              opacity:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "0.38"
+                  : "",
+              color:
+                selectedPlace || (searchText && sortType === "alphabet")
+                  ? "white"
+                  : "",
+              cursor: selectedPlace ? "default" : "pointer",
+            }}
           >
             가나다순
           </button>
@@ -214,6 +229,24 @@ const PlacePage = () => {
               sortType === "distance" ? "selected" : ""
             }`}
             onClick={() => handleSortClick("distance")}
+            style={{
+              backgroundColor:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "var(--n-neutral-0, #000)"
+                  : "",
+              opacity:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "0.38"
+                  : "",
+              color:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "white"
+                  : "",
+              cursor:
+                selectedPlace || (searchText && sortType === "distance")
+                  ? "default"
+                  : "pointer",
+            }}
           >
             거리순
           </button>
