@@ -13,11 +13,9 @@ const CommentPage = () => {
   const [lists, setLists] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
   useEffect(() => {
     getComments(artId);
-  }, [artId]);
+  }, [lists]);
 
   //댓글 목록 받아오기
   const getComments = async (id) => {
@@ -30,12 +28,12 @@ const CommentPage = () => {
   };
 
   //댓글 작성하기
-  const uploadComment = async (id) => {
+  const uploadComment = async (e) => {
+    e.preventDefault();
     try {
-      const response = await http.post(`/main/posts/${id}/commentsadd/`, {
+      const response = await http.post(`/main/posts/${artId}/commentsadd/`, {
         content: newComment,
       });
-      console.log("Upload Comment Response:", response);
       setLists((prevLists) => [...prevLists, response.data]);
       setNewComment("");
     } catch (error) {
@@ -64,14 +62,14 @@ const CommentPage = () => {
           ))}
       </CommentList>
       <WriteComment>
-        <form className="input-container">
+        <form className="input-container" onSubmit={(e) => uploadComment(e)}>
           <Input
             type="text"
             onChange={(e) => setNewComment(e.target.value)}
             value={newComment}
             placeholder="내용을 입력해주세요!"
           />
-          <SubmitButton onClick={() => uploadComment(artId)}>등록</SubmitButton>
+          <SubmitButton type="submit">등록</SubmitButton>
         </form>
       </WriteComment>
       <MenuBar />

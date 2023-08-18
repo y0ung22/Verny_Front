@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import TopBar from "../components/TopBar";
 import MenuBar from "../components/MenuBar";
-import ProfileBasic from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import QuitModal from "../components/QuitModal";
 
 const MyPage = () => {
@@ -43,7 +43,11 @@ const MyPage = () => {
 
   const deleteProfile = async () => {
     try {
-      await http.delete("/account/delete");
+      await http.delete("/account/delete/", {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access_token"),
+        },
+      });
       navigate("/");
     } catch (error) {
       console.log(error);
@@ -55,7 +59,7 @@ const MyPage = () => {
       <TopBar />
       <UserInfo>
         <UserImg>
-          <img src={ProfileBasic} alt="프로필 사진" />
+          <img src={profileImg} alt="프로필 사진" />
         </UserImg>
         <UserId>{userId}</UserId>
       </UserInfo>
@@ -74,9 +78,9 @@ const MyPage = () => {
           </Link>
         </Menu>
         <Edit>
-          <Link to="/mypage/profile/edit" style={{ textDecoration: "none" }}>
+          {/* <Link to="/mypage/profile/edit" style={{ textDecoration: "none" }}>
             <button>프로필 수정</button>
-          </Link>
+          </Link> */}
           <button onClick={logout}>로그아웃</button>
         </Edit>
         <QuitBtn>

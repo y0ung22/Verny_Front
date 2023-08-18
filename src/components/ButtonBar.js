@@ -13,7 +13,7 @@ const ButtonBar = ({ artDetail, userId, scraps }) => {
   const [bookMarkSrc, setBookMarkSrc] = useState(bookmark);
 
   //북마크 함수
-  const handleBookmark = async (e) => {
+  const handleBookmark = async () => {
     try {
       const postData = bookMark ? { scrapped: false } : { scrapped: true };
       await http.post(`/main/posts/${artDetail.id}/scrap/`, postData);

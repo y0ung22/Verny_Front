@@ -25,13 +25,14 @@ const TopBar = () => {
   else if (pathname === "/art") titleText = "미술";
   else if (pathname === "/search") titleText = "미술";
   else if (pathname === "/art/upload") titleText = "미술품 업로드";
+  else if (pathname === "/art/edit") titleText = "미술품 수정";
   else if (pathname === "/art/detail") titleText = "미술품";
   else if (pathname === "/art/detail/comment") titleText = "댓글";
   else if (pathname === "/art/detail/comment/re") titleText = "답글";
   else if (pathname === "/place") titleText = "문예관광지도";
   else if (pathname === "/mypage") titleText = "마이페이지";
   else if (pathname === "/mypage/myarts") titleText = "내가 쓴 글 보기";
-  else if (pathname === "/mypage/profile") titleText = "프로필";
+  else if (pathname === "/mypage/profile") titleText = "내 활동 보기";
   else if (pathname === "/mypage/profile/edit") titleText = "프로필 수정";
   else if (pathname === "/mypage/bookmark") titleText = "즐겨찾기한 미술";
 

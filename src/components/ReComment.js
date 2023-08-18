@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { http } from "../api/Http";
 import { styled } from "styled-components";
 
-import profile from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
@@ -13,24 +13,22 @@ const ReComment = ({ commentId, comment, username, updateCommentList }) => {
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeImgSrc, setLikeImgSrc] = useState(like);
 
-  //더보기 버튼 상태 관리
+  /* //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
-  };
+  }; */
 
   //댓글 좋아요 상태 관리
   const handleLike = async () => {
     try {
       const newLikeStatus = !likeStatus;
       setLikeStatus(newLikeStatus);
-      setLikeImgSrc(newLikeStatus ? likeClicked : like);
       await http.post(
         `/main/comments/${commentId}/recomments/${comment.id}/relikes`,
         {
           liked: newLikeStatus,
         }
       );
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -63,7 +61,7 @@ const ReComment = ({ commentId, comment, username, updateCommentList }) => {
     <Wrapper>
       <Info>
         <Writer>
-          <Profile src={profile} />
+          <Profile src={profileImg} />
           <span id="name" alt="">
             {comment.author_username}
           </span>
@@ -86,11 +84,11 @@ const ReComment = ({ commentId, comment, username, updateCommentList }) => {
         </BtnBox>
       </Info>
       <Content showMore={showMore}>{comment.content}</Content>
-      {!showMore && comment.content.length > 100 && (
+      {/*       {!showMore && comment.content && comment.content.length > 100 && (
         <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
           더보기
         </ShowMoreButton>
-      )}
+      )} */}
     </Wrapper>
   );
 };
@@ -109,14 +107,22 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 0px 12px;
-  overflow: hidden;
+  width: 272px;
   color: var(--n-neutral-10, #1a1c1e);
-  text-overflow: ${({ showMore }) => (showMore ? "initial" : "ellipsis")};
+  /*   text-overflow: ${({ showMore }) =>
+    showMore ? "initial" : "ellipsis"}; */
   font-family: Pretendard;
   font-size: 0.88rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+  white-space: pre-wrap;
+  /* .truncate-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  } */
 `;
 
 const Info = styled.div`
@@ -185,8 +191,10 @@ const Btn = styled.div`
     gap: 8px;
   }
   span {
-    color: ${({ liked }) =>
-      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
+    color: ${({ likeStatus }) =>
+      likeStatus
+        ? "var(--p-primary-40, #00639c)"
+        : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;

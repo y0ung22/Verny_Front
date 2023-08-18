@@ -24,6 +24,8 @@ const ArtBox = ({ art, scraps, userId }) => {
     navigate("/art/detail/comment", { state: { id: art.id } });
   };
 
+  console.log(scraps);
+
   //북마크 관리 함수
   const handleBookmark = async () => {
     try {

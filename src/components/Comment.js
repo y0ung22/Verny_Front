@@ -4,7 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { http } from "../api/Http";
 
-import profile from "../assets/icons/profileBasic.svg";
+import profileImg from "../assets/icons/profileImg3.svg";
 import like from "../assets/icons/like.svg";
 import likeClicked from "../assets/icons/likeClicked.svg";
 import edit from "../assets/icons/edit.svg";
@@ -13,10 +13,10 @@ import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = ({ list, artId, updateCommentList }) => {
   const [showMore, setShowMore] = useState(false);
+  const [userpk, setUserpk] = useState("");
   const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeImgSrc, setLikeImgSrc] = useState(like);
-  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -25,15 +25,16 @@ const Comment = ({ list, artId, updateCommentList }) => {
     getUsername();
   }, []);
 
-  //더보기 버튼 상태 관리
+  /*  //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
-  };
+  }; */
 
   const getUsername = async () => {
     try {
       const response = await http.get("/account/mypage");
       setUsername(response.data.data.username);
+      setUserpk(response.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -44,11 +45,10 @@ const Comment = ({ list, artId, updateCommentList }) => {
     try {
       const newLikeStatus = !likeStatus;
       setLikeStatus(newLikeStatus);
-      setLikeImgSrc(newLikeStatus ? likeClicked : like);
+
       await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
         liked: newLikeStatus,
       });
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -83,10 +83,10 @@ const Comment = ({ list, artId, updateCommentList }) => {
 
   return (
     list && (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Info>
           <Writer>
-            <Profile src={profile} />
+            <Profile src={profileImg} />
             <span id="name">{list.author_username}</span>
             <span>·</span>
             <span id="time">{list.created_at}</span>
@@ -109,11 +109,11 @@ const Comment = ({ list, artId, updateCommentList }) => {
           </BtnBox>
         </Info>
         <Content showMore={showMore}>{list.content}</Content>
-        {!showMore && list.content.length > 100 && (
+        {/* {!showMore && list.content && list.content.length > 100 && (
           <ShowMoreButton alt="더보기 버튼" onClick={handleShowMore}>
             더보기
           </ShowMoreButton>
-        )}
+        )} */}
         <ReComment>
           <ReCommentBtn onClick={moveReComment}>
             <img src={commentWrite} />
@@ -129,10 +129,7 @@ const Comment = ({ list, artId, updateCommentList }) => {
 export default Comment;
 
 const Wrapper = styled.div`
-  background-color: ${({ pathname }) =>
-    pathname === "/art/detail/comment/re"
-      ? "var(--nv-neutral-variant-95, #EDF1F9)"
-      : "var(--n-neutral-100, #FFF)"};
+  background-color: var(--n-neutral-100, #fff);
   width: 308px;
   display: flex;
   padding: 20px 32px 20px 20px;
@@ -144,14 +141,22 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 0px 12px;
-  overflow: hidden;
+  width: 272px;
   color: var(--n-neutral-10, #1a1c1e);
-  text-overflow: ${({ showMore }) => (showMore ? "initial" : "ellipsis")};
+  /*   text-overflow: ${({ showMore }) =>
+    showMore ? "initial" : "ellipsis"}; */
   font-family: Pretendard;
   font-size: 0.88rem;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
+  white-space: pre-wrap;
+  /* .truncate-content {
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+  } */
 `;
 
 const Info = styled.div`
@@ -220,8 +225,8 @@ const Btn = styled.div`
     align-items: center;
   }
   span {
-    color: ${({ isLiked }) =>
-      isLiked
+    color: ${({ likeStatus }) =>
+      likeStatus
         ? "var(--p-primary-40, #00639c)"
         : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
@@ -233,6 +238,7 @@ const Btn = styled.div`
 `;
 
 const ShowMoreButton = styled.div`
+  margin-left: 13px;
   color: var(--n-neutral-40, #5d5e61);
   font-family: Pretendard;
   font-size: 0.75rem;

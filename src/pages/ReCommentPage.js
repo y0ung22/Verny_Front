@@ -14,11 +14,9 @@ const ReCommentPage = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
   useEffect(() => {
     getReComments(commentId);
-  }, [commentId]);
+  }, [comments]);
 
   //답글 목록 받아오기
   const getReComments = async (id) => {
@@ -30,14 +28,16 @@ const ReCommentPage = () => {
     }
   };
 
-  console.log(comments);
-
   //답글 작성하기
-  const uploadReComment = async (id) => {
+  const uploadReComment = async (e) => {
+    e.preventDefault();
     try {
-      const response = await http.post(`/main/comments/${id}/recommentsadd/`, {
-        content: newComment,
-      });
+      const response = await http.post(
+        `/main/comments/${commentId}/recommentsadd/`,
+        {
+          content: newComment,
+        }
+      );
       setComments((prevComments) => [...prevComments, response.data.data]);
       setNewComment("");
     } catch (error) {
@@ -45,15 +45,12 @@ const ReCommentPage = () => {
     }
   };
 
-  console.log(newComment);
-
   //댓글 목록 업데이트
   const updateCommentList = (commentId) => {
     const updatedList = comments.filter((comment) => comment.id !== commentId);
     setComments(updatedList);
   };
 
-  //원댓글 출력 제외한 상태!
   return (
     <Wrapper>
       <TopBar />
@@ -70,16 +67,14 @@ const ReCommentPage = () => {
           ))}
       </CommentList>
       <WriteComment>
-        <form className="input-container">
+        <form className="input-container" onSubmit={(e) => uploadReComment(e)}>
           <Input
             type="text"
             onChange={(e) => setNewComment(e.target.value)}
             value={newComment}
             placeholder="내용을 입력해주세요!"
           />
-          <SubmitButton onSubmit={() => uploadReComment(commentId)}>
-            등록
-          </SubmitButton>
+          <SubmitButton type="submit">등록</SubmitButton>
         </form>
       </WriteComment>
       <MenuBar />
@@ -100,7 +95,7 @@ const Wrapper = styled.div`
 `;
 
 const CommentList = styled.div`
-  height: 500px;
+  height: 560px;
   overflow-y: scroll;
   &::-webkit-scrollbar {
     display: none;
