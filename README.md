@@ -1,6 +1,8 @@
 # Verny_Front
 
+
 - **서비스 소개**
+
 
 **모두가 문화예술을 각자의 감각으로 받아들일 수 있도록, 베르니 (Verny)**
 
@@ -11,9 +13,11 @@
 
 - **기술 스택**
 
-  <span>프론트엔드: </span> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white">
+  <span>프론트엔드: </span> <img src="https://img.shields.io/badge/html-E34F26?style=for-the-badge&logo=html5&logoColor=white" height="30px"> <img src="https://img.shields.io/badge/css-1572B6?style=for-the-badge&logo=css3&logoColor=white" height="30px"> <img src="https://img.shields.io/badge/javascript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black" height="30px"> <img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=white" height="30px">
+
 
 - **팀원 소개**
+
   <table border="" cellspacing="0" cellpadding="0" width="100%">
   <tr width="100%">
   <td align="center">김가영</a></td>
@@ -32,6 +36,7 @@
           <td  align="center"><p>담당 기능 A</p><p>담당 기능 B</p><p>담당 기능 C</p></td>
      </tr>
   </table>
+
 
 - **폴더 구조**
 
@@ -54,8 +59,10 @@
    └─ manage.py
   ```
 
+
 - **개발환경에서의 실행 방법**
   ```
+  $ git clone https://github.com/2023-Hackathon-Team3/Verny_Front.git
   $ npm i
   $ npm run start
   ```
