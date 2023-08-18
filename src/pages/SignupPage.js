@@ -7,7 +7,6 @@ import axios from "axios";
 
 import logoSymbol from "../assets/icons/logoSymbol.svg";
 import logoWord from "../assets/icons/logoWordBlack.svg";
-import kakao from "../assets/icons/kakao.svg";
 import check from "../assets/icons/check.svg";
 
 const SignupPage = () => {
@@ -22,11 +21,6 @@ const SignupPage = () => {
   if (makeIdPage) {
     return <MakeIdPage />;
   }
-
-  // 카카오 계정으로 회원가입 버튼 클릭하여 이동
-  const handleKakaoSignup = () => {
-    // 카카오 계정으로 회원가입 기능 구현
-  };
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -51,20 +45,16 @@ const SignupPage = () => {
           />
         </Logo>
         <Buttons>
-          <button className="kakao-btn" onClick={handleKakaoSignup}>
-            <img className="kakao" src={kakao} alt="카카오" />
-            <span>카카오 계정으로 회원가입</span>
-          </button>
           <button className="id-btn" onClick={handleMakeId}>
-            <span>아이디로 회원가입</span>
+            <span className="id-text">아이디로 회원가입</span>
           </button>
+          <HandleLoginStyle>
+            <span>이미 회원이신가요?</span>
+            <button className="handle-login" onClick={handleLogin}>
+              로그인하기
+            </button>
+          </HandleLoginStyle>
         </Buttons>
-        <HandleLoginStyle>
-          <span>이미 회원이신가요?</span>
-          <button className="handle-login" onClick={handleLogin}>
-            로그인하기
-          </button>
-        </HandleLoginStyle>
       </SignupPageStyle>
     </Container>
   );
@@ -72,7 +62,7 @@ const SignupPage = () => {
 
 const MakeIdPage = () => {
   const navigate = useNavigate();
-  const [inputId, setInputId] = useState("");
+
   const [newId, setNewId] = useState(""); // 아이디 상태 생성
   const [makePwPage, setMakePwPage] = useState(false);
 
@@ -92,13 +82,12 @@ const MakeIdPage = () => {
     e.preventDefault();
     try {
       const response = await axios.post(`${BASE_URL}/account/uniquecheck/`, {
-        username: inputId,
+        username: newId,
       });
       console.log(response.data);
-      if (response.detail === "You can use this ID") {
+      if (response.data.detail === "You can use this ID") {
         alert("사용할 수 있는 아이디예요");
-        setNewId(inputId);
-      } else if (response.detail === "This field must be unique.") {
+      } else if (response.data.detail === "This field must be unique.") {
         alert("이미 존재하는 아이디예요.");
       } else {
         alert("" + response.data.detail);
@@ -134,8 +123,8 @@ const MakeIdPage = () => {
         <InputStyle>
           <input
             type="text"
-            value={inputId}
-            onChange={(e) => setInputId(e.target.value)}
+            value={newId}
+            onChange={(e) => setNewId(e.target.value)}
             placeholder="아이디를 입력해주세요."
           />
           <button onClick={handleIdCheck}>중복확인</button>
@@ -308,7 +297,7 @@ const Bottom = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 150px;
+  margin-top: 167px;
   .btn {
     display: flex;
     padding: 12px 16px;
@@ -332,7 +321,7 @@ const Bottom = styled.div`
 `;
 
 const HandleLoginStyle = styled.div`
-  margin-top: 10px;
+  margin-top: 24px;
   span {
     color: var(--n-neutral-0, #000);
     font-family: Pretendard;
@@ -391,30 +380,10 @@ const Buttons = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-top: 160px;
+  margin-top: 230px;
   gap: 8px;
 
-  .kakao-btn {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 328px;
-    height: 46px;
-    align-self: stretch;
-    border-radius: 12px;
-    background: #fee500;
-    border: none;
-    gap: 10px;
-    cursor: pointer;
-  }
-
-  .kakao {
-    width: 20px;
-    height: 18px;
-  }
-
-  span {
+  .id-text {
     color: rgba(0, 0, 0, 0.85);
     font-family: Pretendard;
     font-size: 1rem;
