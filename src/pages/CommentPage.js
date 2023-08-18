@@ -13,8 +13,6 @@ const CommentPage = () => {
   const [lists, setLists] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
   useEffect(() => {
     getComments(artId);
   }, [lists]);

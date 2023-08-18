@@ -13,6 +13,7 @@ import ProfilePage from "./pages/ProfilePage";
 import EditProfilePage from "./pages/EditProfilePage";
 import BookmarkPage from "./pages/BookmarkPage";
 import ReCommentPage from "./pages/ReCommentPage";
+import EditArtPage from "./pages/EditArtPage";
 import UploadArtPage from "./pages/UploadArtPage";
 import SearchPage from "./pages/SearchPage";
 import MyArtPage from "./pages/MyArtPage";
@@ -32,6 +33,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         {/*세부 화면*/}
         <Route path="/art/upload" element={<UploadArtPage />} />
+        <Route path="/art/edit" element={<EditArtPage />} />
         <Route path="/art/detail" element={<ArtDetailPage />} />
         <Route path="/art/detail/comment" element={<CommentPage />} />
         <Route path="/art/detail/comment/re" element={<ReCommentPage />} />

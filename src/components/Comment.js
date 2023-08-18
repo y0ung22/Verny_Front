@@ -13,10 +13,10 @@ import commentWrite from "../assets/icons/commentWrite.svg";
 
 const Comment = ({ list, artId, updateCommentList }) => {
   const [showMore, setShowMore] = useState(false);
+  const [userpk, setUserpk] = useState("");
   const [username, setUsername] = useState("");
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeImgSrc, setLikeImgSrc] = useState(like);
-  const { pathname } = useLocation();
   const navigate = useNavigate();
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
@@ -25,15 +25,16 @@ const Comment = ({ list, artId, updateCommentList }) => {
     getUsername();
   }, []);
 
-  //더보기 버튼 상태 관리
+  /*  //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
-  };
+  }; */
 
   const getUsername = async () => {
     try {
       const response = await http.get("/account/mypage");
       setUsername(response.data.data.username);
+      setUserpk(response.data.data.id);
     } catch (error) {
       console.log(error);
     }
@@ -44,7 +45,7 @@ const Comment = ({ list, artId, updateCommentList }) => {
     try {
       const newLikeStatus = !likeStatus;
       setLikeStatus(newLikeStatus);
-      setLikeImgSrc(newLikeStatus ? likeClicked : like);
+
       await http.post(`/main/posts/${artId}/comments/${list.id}/likes/`, {
         liked: newLikeStatus,
       });
@@ -82,7 +83,7 @@ const Comment = ({ list, artId, updateCommentList }) => {
 
   return (
     list && (
-      <Wrapper pathname={pathname}>
+      <Wrapper>
         <Info>
           <Writer>
             <Profile src={profileImg} />
@@ -128,10 +129,7 @@ const Comment = ({ list, artId, updateCommentList }) => {
 export default Comment;
 
 const Wrapper = styled.div`
-  background-color: ${({ pathname }) =>
-    pathname === "/art/detail/comment/re"
-      ? "var(--nv-neutral-variant-95, #EDF1F9)"
-      : "var(--n-neutral-100, #FFF)"};
+  background-color: var(--n-neutral-100, #fff);
   width: 308px;
   display: flex;
   padding: 20px 32px 20px 20px;
@@ -143,7 +141,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 0px 12px;
-  width: 296px;
+  width: 272px;
   color: var(--n-neutral-10, #1a1c1e);
   /*   text-overflow: ${({ showMore }) =>
     showMore ? "initial" : "ellipsis"}; */
@@ -227,8 +225,8 @@ const Btn = styled.div`
     align-items: center;
   }
   span {
-    color: ${({ isLiked }) =>
-      isLiked
+    color: ${({ likeStatus }) =>
+      likeStatus
         ? "var(--p-primary-40, #00639c)"
         : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;

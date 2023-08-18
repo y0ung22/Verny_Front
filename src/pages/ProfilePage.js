@@ -79,6 +79,7 @@ const ProfilePage = () => {
                 key={comment.id}
                 comment={comment}
                 artId={comment.post}
+                username={userId}
               />
             ))
           ) : (

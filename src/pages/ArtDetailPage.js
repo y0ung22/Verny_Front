@@ -22,6 +22,8 @@ const ArtDetailPage = () => {
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
+  console.log(artDetail);
+
   useEffect(() => {
     getArtDetail(artId);
     getUserInfo();
@@ -46,12 +48,9 @@ const ArtDetailPage = () => {
     }
   };
 
-  //미술품 수정
-  const editArt = async () => {
-    try {
-    } catch (error) {
-      console.log(error);
-    }
+  //미술품 수정 페이지 이동
+  const goEdit = () => {
+    navigate("/art/edit", { state: { art: artDetail } });
   };
 
   //미술품 삭제
@@ -84,7 +83,9 @@ const ArtDetailPage = () => {
           />{" "}
           {showBtnBox && (
             <BtnBox>
-              <button id="edit">수정하기</button>
+              <button id="edit" onClick={goEdit}>
+                수정하기
+              </button>
               <button id="del" onClick={showDelModal}>
                 삭제하기
               </button>

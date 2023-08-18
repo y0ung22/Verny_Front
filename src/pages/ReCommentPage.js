@@ -14,8 +14,6 @@ const ReCommentPage = () => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
-  const BASE_URL = "https://yewon1209.pythonanywhere.com";
-
   useEffect(() => {
     getReComments(commentId);
   }, [comments]);

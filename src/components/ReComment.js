@@ -13,24 +13,22 @@ const ReComment = ({ commentId, comment, username, updateCommentList }) => {
   const [likeStatus, setLikeStatus] = useState(false);
   const [likeImgSrc, setLikeImgSrc] = useState(like);
 
-  //더보기 버튼 상태 관리
+  /* //더보기 버튼 상태 관리
   const handleShowMore = () => {
     setShowMore(true);
-  };
+  }; */
 
   //댓글 좋아요 상태 관리
   const handleLike = async () => {
     try {
       const newLikeStatus = !likeStatus;
       setLikeStatus(newLikeStatus);
-      setLikeImgSrc(newLikeStatus ? likeClicked : like);
       await http.post(
         `/main/comments/${commentId}/recomments/${comment.id}/relikes`,
         {
           liked: newLikeStatus,
         }
       );
-      window.location.reload();
     } catch (error) {
       console.log(error);
     }
@@ -109,7 +107,7 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   padding: 0px 12px;
-  width: 296px;
+  width: 272px;
   color: var(--n-neutral-10, #1a1c1e);
   /*   text-overflow: ${({ showMore }) =>
     showMore ? "initial" : "ellipsis"}; */
@@ -193,8 +191,10 @@ const Btn = styled.div`
     gap: 8px;
   }
   span {
-    color: ${({ liked }) =>
-      liked ? "var(--p-primary-40, #00639c)" : "var(--n-neutral-10, #1a1c1e)"};
+    color: ${({ likeStatus }) =>
+      likeStatus
+        ? "var(--p-primary-40, #00639c)"
+        : "var(--n-neutral-10, #1a1c1e)"};
     font-family: Pretendard;
     font-size: 0.75rem;
     font-style: normal;

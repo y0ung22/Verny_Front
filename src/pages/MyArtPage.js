@@ -38,8 +38,6 @@ const MyArtPage = () => {
       ? arts
       : arts.filter((art) => art.type === selectedCategory);
 
-  console.log(arts);
-
   return (
     <Wrapper>
       <TopBar />
