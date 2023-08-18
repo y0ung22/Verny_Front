@@ -61,7 +61,7 @@ const ProfilePage = () => {
       </UserInfo>
       <MyComment>
         <CommentList>
-          <CommentBar>아이디 님이 쓴 댓글</CommentBar>
+          <CommentBar>{userId} 님이 쓴 댓글</CommentBar>
           {myComments.length > 0 ? (
             myComments.map((comment) => (
               <Comment key={comment.id} list={comment} />
@@ -72,7 +72,7 @@ const ProfilePage = () => {
           <Comment />
         </CommentList>
         <CommentList>
-          <CommentBar id="recomment">아이디 님이 쓴 답글</CommentBar>
+          <CommentBar id="recomment">{userId} 님이 쓴 답글</CommentBar>
           {myReComments.length > 0 ? (
             myReComments.map((comment) => (
               <ReComment

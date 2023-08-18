@@ -24,8 +24,6 @@ const ArtBox = ({ art, scraps, userId }) => {
     navigate("/art/detail/comment", { state: { id: art.id } });
   };
 
-  console.log(scraps);
-
   //북마크 관리 함수
   const handleBookmark = async () => {
     try {
@@ -91,6 +89,7 @@ const Image = styled.img`
   width: 156px;
   height: 210px;
   border-radius: 12px;
+  object-fit: cover;
 `;
 
 const Info = styled.div`
