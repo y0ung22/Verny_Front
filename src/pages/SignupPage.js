@@ -72,9 +72,9 @@ const SignupPage = () => {
 
 const MakeIdPage = () => {
   const navigate = useNavigate();
+  const [inputId, setInputId] = useState("");
   const [newId, setNewId] = useState(""); // 아이디 상태 생성
   const [makePwPage, setMakePwPage] = useState(false);
-  // const [usableId, setUsableId] = useState(false);
 
   const BASE_URL = "https://yewon1209.pythonanywhere.com";
 
@@ -88,30 +88,25 @@ const MakeIdPage = () => {
   }
 
   // 아이디 중복 확인 함수
-  /*const handleIdCheck = async (e) => {
+  const handleIdCheck = async (e) => {
     e.preventDefault();
-
     try {
-      const response = await fetch(`${BASE_URL}/account/signup/checkid`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ username: newId }),
+      const response = await axios.post(`${BASE_URL}/account/uniquecheck/`, {
+        username: inputId,
       });
-
-      if (response.status === 200) {
-        alert("사용할 수 있는 아이디예요.");
-        setUsableId(true);
-      } else if (response.status === 409) {
+      console.log(response.data);
+      if (response.detail === "You can use this ID") {
+        alert("사용할 수 있는 아이디예요");
+        setNewId(inputId);
+      } else if (response.detail === "This field must be unique.") {
         alert("이미 존재하는 아이디예요.");
       } else {
-        alert("오류가 발생했거나 사용할 수 없는 아이디예요.");
+        alert("" + response.data.detail);
       }
     } catch (error) {
       console.error("아이디 중복확인 에러:", error);
     }
-  };*/
+  };
 
   // 하단 로그인페이지로 이동 버튼
   const handleLogin = () => {
@@ -129,7 +124,7 @@ const MakeIdPage = () => {
         <div className="id-condition">
           <div className="first-condition">
             <img className="check" src={check} alt="체크" />
-            <span>9자 이내여야 해요</span>
+            <span>3자 이상, 9자 이내여야 해요</span>
           </div>
           <div className="second-condition">
             <img className="check" src={check} alt="체크" />
@@ -139,11 +134,11 @@ const MakeIdPage = () => {
         <InputStyle>
           <input
             type="text"
-            value={newId}
-            onChange={(e) => setNewId(e.target.value)}
+            value={inputId}
+            onChange={(e) => setInputId(e.target.value)}
             placeholder="아이디를 입력해주세요."
           />
-          <button /*onClick={handleIdCheck}*/>중복확인</button>
+          <button onClick={handleIdCheck}>중복확인</button>
         </InputStyle>
         <Bottom>
           <div>
